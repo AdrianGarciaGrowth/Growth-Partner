@@ -3,880 +3,408 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="Agencia de branding, diseño web y marketing digital enfocada en crecimiento y conversión." />
-  <meta name="theme-color" content="#0E0E0E" />
-  <title>Adrián García | Growth Partner</title>
+  <title>Adrián García</title>
 
-  <!-- Google Fonts -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
   <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;700&display=swap" rel="stylesheet">
 
-  <!-- Icons -->
-  <script src="https://unpkg.com/lucide@latest"></script>
-
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
+    body{
+      background:#0E0E0E;
+      color:#F0EDE6;
+      font-family:'DM Sans',sans-serif;
+      overflow-x:hidden;
     }
 
-    :root {
-      --bg: #0E0E0E;
-      --bg-secondary: #151515;
-      --text: #F0EDE6;
-      --muted: rgba(240, 237, 230, 0.6);
-      --gold: #C9A84C;
-      --border: rgba(255,255,255,0.08);
-      --container: 1300px;
+    .font-bebas{
+      font-family:'Bebas Neue',sans-serif;
     }
 
-    html {
-      scroll-behavior: smooth;
+    .stroke-gold{
+      -webkit-text-stroke:1.5px #C9A84C;
+      color:transparent;
     }
 
-    body {
-      font-family: 'DM Sans', sans-serif;
-      background: var(--bg);
-      color: var(--text);
-      overflow-x: hidden;
-      line-height: 1.5;
+    .gold{
+      color:#C9A84C;
     }
 
-    img {
-      max-width: 100%;
-      display: block;
+    .gold-bg{
+      background:#C9A84C;
     }
 
-    a {
-      text-decoration: none;
-      color: inherit;
+    .grid-bg{
+      background-size:40px 40px;
+      background-image:
+      linear-gradient(to right, rgba(201,168,76,.03) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(201,168,76,.03) 1px, transparent 1px);
     }
 
-    .container {
-      width: 92%;
-      max-width: var(--container);
-      margin: auto;
+    html{
+      scroll-behavior:smooth;
     }
 
-    .bebas {
-      font-family: 'Bebas Neue', sans-serif;
+    ::-webkit-scrollbar{
+      width:6px;
     }
 
-    /* NAVBAR */
-
-    header {
-      position: fixed;
-      width: 100%;
-      top: 0;
-      left: 0;
-      z-index: 999;
-      background: rgba(14,14,14,0.85);
-      backdrop-filter: blur(10px);
-      border-bottom: 1px solid rgba(255,255,255,0.05);
-    }
-
-    .nav {
-      height: 80px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-
-    .logo {
-      font-size: 2rem;
-      letter-spacing: 3px;
-    }
-
-    .logo span {
-      color: var(--gold);
-    }
-
-    .nav-links {
-      display: flex;
-      align-items: center;
-      gap: 2rem;
-    }
-
-    .nav-links a {
-      font-size: 0.8rem;
-      text-transform: uppercase;
-      letter-spacing: 2px;
-      transition: 0.3s ease;
-    }
-
-    .nav-links a:hover {
-      color: var(--gold);
-    }
-
-    .btn {
-      background: var(--gold);
-      color: #000;
-      padding: 14px 28px;
-      border-radius: 12px;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 10px;
-      font-weight: bold;
-      transition: 0.3s ease;
-      border: none;
-      cursor: pointer;
-    }
-
-    .btn:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 10px 30px rgba(201,168,76,0.25);
-    }
-
-    .menu-btn {
-      display: none;
-      background: none;
-      border: none;
-      color: white;
-      cursor: pointer;
-    }
-
-    /* MOBILE MENU */
-
-    .mobile-menu {
-      position: fixed;
-      inset: 0;
-      background: rgba(0,0,0,0.97);
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      gap: 2rem;
-      transform: translateX(100%);
-      transition: 0.4s ease;
-      z-index: 998;
-    }
-
-    .mobile-menu.active {
-      transform: translateX(0);
-    }
-
-    .mobile-menu a {
-      font-size: 2rem;
-      font-family: 'Bebas Neue', sans-serif;
-      letter-spacing: 3px;
-    }
-
-    /* HERO */
-
-    .hero {
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-      text-align: center;
-      padding-top: 100px;
-      position: relative;
-    }
-
-    .hero-subtitle {
-      color: var(--gold);
-      text-transform: uppercase;
-      letter-spacing: 5px;
-      font-size: 0.75rem;
-      margin-bottom: 20px;
-      font-weight: 700;
-    }
-
-    .hero h1 {
-      font-size: clamp(5rem, 16vw, 12rem);
-      line-height: 0.8;
-      margin-bottom: 2rem;
-    }
-
-    .stroke {
-      color: transparent;
-      -webkit-text-stroke: 2px var(--gold);
-    }
-
-    .hero p {
-      max-width: 750px;
-      margin: auto;
-      color: var(--muted);
-      font-size: 1.1rem;
-      margin-bottom: 2.5rem;
-    }
-
-    .hero-stats {
-      display: flex;
-      justify-content: center;
-      gap: 2rem;
-      flex-wrap: wrap;
-      margin-top: 3rem;
-    }
-
-    .hero-stats div {
-      border: 1px solid var(--border);
-      padding: 1rem 1.5rem;
-      border-radius: 14px;
-      background: rgba(255,255,255,0.02);
-    }
-
-    .hero-stats strong {
-      display: block;
-      font-size: 1.4rem;
-      color: var(--gold);
-    }
-
-    section {
-      padding: 100px 0;
-    }
-
-    .section-title {
-      text-align: center;
-      font-size: clamp(3rem, 8vw, 6rem);
-      margin-bottom: 4rem;
-      line-height: 0.9;
-    }
-
-    /* ABOUT */
-
-    .about-grid {
-      display: grid;
-      grid-template-columns: repeat(2,1fr);
-      gap: 4rem;
-      align-items: center;
-    }
-
-    .about-image {
-      background: var(--bg-secondary);
-      border: 1px solid var(--border);
-      border-radius: 24px;
-      overflow: hidden;
-      aspect-ratio: 4/5;
-    }
-
-    .about-image img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
-
-    .about-content h2 {
-      font-size: clamp(3rem, 7vw, 5rem);
-      line-height: 0.9;
-      margin-bottom: 2rem;
-    }
-
-    .about-content p {
-      color: var(--muted);
-      margin-bottom: 2rem;
-      font-size: 1.05rem;
-    }
-
-    .about-cards {
-      display: grid;
-      grid-template-columns: repeat(2,1fr);
-      gap: 1rem;
-      margin-top: 2rem;
-    }
-
-    .about-card {
-      background: var(--bg-secondary);
-      border: 1px solid var(--border);
-      border-radius: 20px;
-      padding: 1.5rem;
-    }
-
-    .about-card strong {
-      color: var(--gold);
-      display: block;
-      font-size: 2rem;
-      margin-bottom: 0.5rem;
-    }
-
-    /* SERVICES */
-
-    .services-grid {
-      display: grid;
-      grid-template-columns: repeat(4,1fr);
-      gap: 1.5rem;
-    }
-
-    .service-card {
-      background: var(--bg-secondary);
-      border: 1px solid var(--border);
-      padding: 2rem;
-      border-radius: 24px;
-      transition: 0.3s ease;
+    ::-webkit-scrollbar-thumb{
+      background:#C9A84C;
     }
 
-    .service-card:hover {
-      transform: translateY(-8px);
-      border-color: rgba(201,168,76,0.5);
+    .card-hover:hover img{
+      transform:scale(1.08);
+      filter:grayscale(0);
+      opacity:1;
     }
 
-    .service-card i {
-      color: var(--gold);
-      width: 36px;
-      height: 36px;
-      margin-bottom: 1.5rem;
+    .card-hover img{
+      transition:.7s;
+      filter:grayscale(1);
+      opacity:.8;
     }
 
-    .service-card h3 {
-      font-size: 2rem;
-      margin-bottom: 1rem;
+    .overlay{
+      opacity:0;
+      transition:.5s;
     }
-
-    .service-card p {
-      color: var(--muted);
-      margin-bottom: 1.5rem;
-    }
-
-    .service-card ul {
-      list-style: none;
-    }
-
-    .service-card li {
-      margin-bottom: 0.7rem;
-      color: var(--gold);
-      font-size: 0.9rem;
-    }
-
-    /* PORTFOLIO */
-
-    .portfolio-grid {
-      display: grid;
-      grid-template-columns: repeat(3,1fr);
-      gap: 1.5rem;
-    }
-
-    .portfolio-card {
-      position: relative;
-      overflow: hidden;
-      border-radius: 24px;
-      border: 1px solid var(--border);
-      background: var(--bg-secondary);
-      aspect-ratio: 1/1;
-    }
-
-    .portfolio-card img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      transition: 0.5s ease;
-    }
-
-    .portfolio-overlay {
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(to top, rgba(0,0,0,0.9), transparent);
-      display: flex;
-      flex-direction: column;
-      justify-content: flex-end;
-      padding: 2rem;
-      opacity: 0;
-      transition: 0.4s ease;
-    }
-
-    .portfolio-card:hover img {
-      transform: scale(1.08);
-    }
-
-    .portfolio-card:hover .portfolio-overlay {
-      opacity: 1;
-    }
-
-    .portfolio-overlay span {
-      color: var(--gold);
-      text-transform: uppercase;
-      letter-spacing: 3px;
-      font-size: 0.7rem;
-      margin-bottom: 0.7rem;
-    }
-
-    .portfolio-overlay h4 {
-      font-size: 2rem;
-      margin-bottom: 1rem;
-    }
-
-    /* TESTIMONIALS */
-
-    .testimonials {
-      background: #111;
-    }
-
-    .testimonials-grid {
-      display: grid;
-      grid-template-columns: repeat(3,1fr);
-      gap: 1.5rem;
-    }
-
-    .testimonial {
-      background: var(--bg-secondary);
-      border: 1px solid var(--border);
-      padding: 2rem;
-      border-radius: 24px;
-    }
-
-    .testimonial p {
-      color: var(--muted);
-      margin-bottom: 1.5rem;
-    }
-
-    .testimonial strong {
-      color: var(--gold);
-    }
-
-    /* CONTACT */
-
-    .contact {
-      text-align: center;
-    }
-
-    .contact h2 {
-      font-size: clamp(4rem, 12vw, 10rem);
-      line-height: 0.8;
-      margin-bottom: 2rem;
-    }
-
-    .contact p {
-      color: var(--muted);
-      max-width: 700px;
-      margin: auto;
-      margin-bottom: 3rem;
-    }
-
-    .contact-buttons {
-      display: flex;
-      justify-content: center;
-      gap: 1.5rem;
-      flex-wrap: wrap;
-    }
-
-    .outline-btn {
-      border: 1px solid var(--border);
-      color: white;
-      background: transparent;
-    }
-
-    .outline-btn:hover {
-      background: white;
-      color: black;
-    }
-
-    footer {
-      padding: 3rem 0;
-      border-top: 1px solid rgba(255,255,255,0.05);
-      text-align: center;
-      color: rgba(255,255,255,0.4);
-      font-size: 0.9rem;
-    }
-
-    /* FLOATING BUTTON */
-
-    .whatsapp-float {
-      position: fixed;
-      right: 20px;
-      bottom: 20px;
-      width: 65px;
-      height: 65px;
-      z-index: 999;
-      animation: pulse 2s infinite;
-    }
-
-    .whatsapp-float img {
-      width: 100%;
-    }
-
-    @keyframes pulse {
-      0% { transform: scale(1); }
-      50% { transform: scale(1.08); }
-      100% { transform: scale(1); }
-    }
-
-    /* RESPONSIVE */
-
-    @media (max-width: 1100px) {
-      .services-grid,
-      .portfolio-grid,
-      .testimonials-grid {
-        grid-template-columns: repeat(2,1fr);
-      }
-    }
-
-    @media (max-width: 900px) {
-      .about-grid {
-        grid-template-columns: 1fr;
-      }
-
-      .about-image {
-        max-width: 500px;
-        margin: auto;
-      }
-    }
-
-    @media (max-width: 768px) {
-      .nav-links {
-        display: none;
-      }
-
-      .menu-btn {
-        display: block;
-      }
-
-      section {
-        padding: 80px 0;
-      }
-
-      .services-grid,
-      .portfolio-grid,
-      .testimonials-grid,
-      .about-cards {
-        grid-template-columns: 1fr;
-      }
-
-      .hero-stats {
-        flex-direction: column;
-        align-items: center;
-      }
-
-      .contact-buttons {
-        flex-direction: column;
-      }
-
-      .btn {
-        width: 100%;
-      }
 
-      .hero h1 {
-        line-height: 0.9;
-      }
+    .card-hover:hover .overlay{
+      opacity:1;
     }
   </style>
 </head>
-<body>
 
-  <!-- MOBILE MENU -->
-
-  <div class="mobile-menu" id="mobileMenu">
-    <a href="#inicio">Inicio</a>
-    <a href="#sobre-mi">Sobre Mí</a>
-    <a href="#servicios">Servicios</a>
-    <a href="#portafolio">Portafolio</a>
-    <a href="#contacto">Contacto</a>
-  </div>
+<body class="grid-bg">
 
   <!-- NAVBAR -->
+  <nav class="fixed top-0 left-0 w-full z-50 backdrop-blur-md bg-[#0E0E0E]/90 border-b border-[#C9A84C]/10">
 
-  <header>
-    <div class="container nav">
-      <div class="logo bebas">ADRIÁN<span>.</span></div>
+    <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
 
-      <div class="nav-links">
-        <a href="#inicio">Inicio</a>
-        <a href="#sobre-mi">Sobre Mí</a>
-        <a href="#servicios">Servicios</a>
-        <a href="#portafolio">Portafolio</a>
-        <a href="#contacto">Contacto</a>
-
-        <a href="https://wa.link/l9llu6" target="_blank" class="btn">
-          Contactar
-        </a>
-      </div>
-
-      <button class="menu-btn" id="menuBtn" aria-label="Abrir menú">
-        <i data-lucide="menu"></i>
-      </button>
-    </div>
-  </header>
-
-  <!-- HERO -->
-
-  <section class="hero" id="inicio">
-    <div class="container">
-      <div class="hero-subtitle">
-        Estrategia Digital & Growth Management
-      </div>
-
-      <h1 class="bebas">
-        VENTAS <br>
-        <span class="stroke">EXPONENCIALES</span>
+      <h1 class="font-bebas text-3xl tracking-[0.2em]">
+        ADRIÁN GARCÍA<span class="gold">.</span>
       </h1>
 
-      <p>
-        Diseñamos sistemas de adquisición premium para marcas que quieren dominar su mercado con diseño, branding y estrategias digitales enfocadas en conversión.
-      </p>
+      <div class="hidden md:flex gap-8 items-center">
 
-      <a href="https://wa.link/l9llu6" target="_blank" class="btn">
-        ESCALAR MI NEGOCIO
-      </a>
+        <a href="#inicio" class="hover:text-[#C9A84C] transition">
+          Inicio
+        </a>
 
-      <div class="hero-stats">
-        <div>
-          <strong>+120</strong>
-          Marcas trabajadas
-        </div>
+        <a href="#sobre" class="hover:text-[#C9A84C] transition">
+          Sobre Mí
+        </a>
 
-        <div>
-          <strong>6X</strong>
-          ROAS promedio
-        </div>
+        <a href="#servicios" class="hover:text-[#C9A84C] transition">
+          Servicios
+        </a>
 
-        <div>
-          <strong>+4M</strong>
-          En ventas generadas
-        </div>
+        <a href="#portafolio" class="hover:text-[#C9A84C] transition">
+          Portafolio
+        </a>
+
+        <a
+          href="https://wa.link/l9llu6"
+          target="_blank"
+          class="gold-bg text-black px-6 py-2 font-bebas text-xl tracking-widest hover:bg-white transition"
+        >
+          CONTACTAR
+        </a>
+
       </div>
+
     </div>
-  </section>
 
-  <!-- ABOUT -->
+  </nav>
 
-  <section id="sobre-mi">
-    <div class="container about-grid">
+  <!-- HERO -->
+  <section id="inicio" class="min-h-screen flex items-center justify-center px-6 text-center">
 
-      <div class="about-image">
-        <!-- TU FOTO -->
-        <img src="images/foto-principal.jpg" alt="Adrián García" loading="lazy">
-      </div>
+    <div class="max-w-6xl mx-auto">
 
-      <div class="about-content">
-        <h2 class="bebas">
-          12 AÑOS EN <br>
-          VENTAS <span style="color: var(--gold);">TRADICIONALES</span>
-        </h2>
+      <span class="gold uppercase tracking-[0.3em] text-[10px] font-bold">
+        Estrategia Digital & Growth Management
+      </span>
 
-        <p>
-          Ayudo a emprendedores y empresas a crecer con estrategia, diseño y marketing enfocado en ventas reales.
-        </p>
+      <h2 class="font-bebas text-[20vw] md:text-[11rem] leading-[0.7] mt-4">
 
-        <div class="about-cards">
-          <div class="about-card">
-            <strong>+120</strong>
-            Proyectos completados
-          </div>
+        VENTAS
 
-          <div class="about-card">
-            <strong>6</strong>
-            Años en digital
-          </div>
+        <br>
 
-          <div class="about-card">
-            <strong>5</strong>
-            Países alcanzados
-          </div>
+        <span class="stroke-gold italic">
+          EXPONENCIALES
+        </span>
 
-          <div class="about-card">
-            <strong>98%</strong>
-            Clientes satisfechos
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- SERVICES -->
-
-  <section id="servicios">
-    <div class="container">
-
-      <h2 class="section-title bebas">
-        SOLUCIONES DE <span style="color: var(--gold);">IMPACTO</span>
       </h2>
 
-      <div class="services-grid">
+      <p class="max-w-xl mx-auto text-white/50 text-sm md:text-xl mt-6">
+        Diseñamos sistemas de adquisición premium para marcas que no aceptan menos que el dominio absoluto de su mercado.
+      </p>
 
-        <div class="service-card">
-          <i data-lucide="target"></i>
-          <h3 class="bebas">Pauta Digital</h3>
-          <p>
-            Facebook, Google y TikTok Ads optimizados para conversiones y crecimiento.
-          </p>
+      <a
+        href="#contacto"
+        class="inline-flex items-center gap-3 mt-10 gold-bg text-black px-10 py-4 font-bebas text-2xl tracking-widest hover:scale-105 transition"
+      >
+        ESCALAR VENTAS
+      </a>
 
-          <ul>
-            <li>✔ ROAS optimizado</li>
-            <li>✔ Escalabilidad</li>
-          </ul>
+    </div>
+
+  </section>
+
+  <!-- SOBRE MI -->
+  <section id="sobre" class="py-28 px-6 border-y border-white/5 bg-[#0B0B0B]">
+
+    <div class="max-w-7xl mx-auto grid lg:grid-cols-2 gap-16 items-center">
+
+      <div class="bg-[#151515] border border-[#C9A84C]/10 aspect-[4/5] flex items-center justify-center relative">
+
+        <div class="text-[#C9A84C]/10 text-[10rem] font-bebas">
+          ↑
         </div>
 
-        <div class="service-card">
-          <i data-lucide="globe"></i>
-          <h3 class="bebas">Desarrollo Web</h3>
-          <p>
-            Sitios web premium diseñados para convertir visitas en clientes.
+        <div class="absolute bottom-10 left-10">
+
+          <h3 class="font-bebas text-6xl">
+            ADRIÁN GARCÍA
+          </h3>
+
+          <div class="w-16 h-1 gold-bg mt-2 mb-3"></div>
+
+          <p class="gold uppercase tracking-[0.2em] text-[10px] font-bold">
+            Growth Partner
           </p>
 
-          <ul>
-            <li>✔ Diseño responsive</li>
-            <li>✔ UX moderna</li>
-          </ul>
-        </div>
-
-        <div class="service-card">
-          <i data-lucide="layers"></i>
-          <h3 class="bebas">Branding</h3>
-          <p>
-            Identidad visual de élite para posicionarte por encima de tu competencia.
-          </p>
-
-          <ul>
-            <li>✔ Autoridad visual</li>
-            <li>✔ Manual de marca</li>
-          </ul>
-        </div>
-
-        <div class="service-card">
-          <i data-lucide="pen-tool"></i>
-          <h3 class="bebas">Diseño Gráfico</h3>
-          <p>
-            Creativos y diseños enfocados en captar atención y vender.
-          </p>
-
-          <ul>
-            <li>✔ Alto CTR</li>
-            <li>✔ Diseño premium</li>
-          </ul>
         </div>
 
       </div>
+
+      <div>
+
+        <h2 class="font-bebas text-6xl md:text-8xl italic leading-[0.9]">
+
+          EXPERIENCIA
+
+          <span class="gold">
+            DIGITAL
+          </span>
+
+        </h2>
+
+        <p class="text-white/60 mt-8 italic text-lg">
+          “Ayudo a emprendedores y empresas a crecer con estrategia, diseño y marketing que vende.”
+        </p>
+
+        <div class="grid sm:grid-cols-2 gap-8 mt-12">
+
+          <div>
+
+            <h4 class="font-bebas text-4xl gold">
+              12 AÑOS
+            </h4>
+
+            <p class="text-white/40 text-sm">
+              Ventas tradicionales
+            </p>
+
+          </div>
+
+          <div>
+
+            <h4 class="font-bebas text-4xl gold">
+              6 AÑOS
+            </h4>
+
+            <p class="text-white/40 text-sm">
+              Marketing digital
+            </p>
+
+          </div>
+
+        </div>
+
+      </div>
+
     </div>
+
   </section>
 
-  <!-- PORTFOLIO -->
+  <!-- SERVICIOS -->
+  <section id="servicios" class="py-28 px-6">
 
-  <section id="portafolio">
-    <div class="container">
+    <div class="max-w-7xl mx-auto">
 
-      <h2 class="section-title bebas">
+      <h2 class="font-bebas text-7xl md:text-8xl italic text-center mb-20">
+
+        SOLUCIONES DE
+
+        <span class="gold">
+          IMPACTO
+        </span>
+
+      </h2>
+
+      <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+
+        <!-- CARD -->
+        <div class="bg-[#121212] border border-white/5 p-8 hover:border-[#C9A84C]/50 transition">
+
+          <h3 class="font-bebas text-4xl mb-4">
+            Pauta Digital
+          </h3>
+
+          <p class="text-white/40 text-sm leading-relaxed">
+            Facebook, Google y TikTok Ads con enfoque en ROI masivo.
+          </p>
+
+        </div>
+
+        <div class="bg-[#121212] border border-white/5 p-8 hover:border-[#C9A84C]/50 transition">
+
+          <h3 class="font-bebas text-4xl mb-4">
+            Desarrollo Web
+          </h3>
+
+          <p class="text-white/40 text-sm leading-relaxed">
+            Sitios High-End diseñados para convertir visitas en ventas.
+          </p>
+
+        </div>
+
+        <div class="bg-[#121212] border border-white/5 p-8 hover:border-[#C9A84C]/50 transition">
+
+          <h3 class="font-bebas text-4xl mb-4">
+            Branding
+          </h3>
+
+          <p class="text-white/40 text-sm leading-relaxed">
+            Identidad visual de élite para cobrar lo que realmente vales.
+          </p>
+
+        </div>
+
+        <div class="bg-[#121212] border border-white/5 p-8 hover:border-[#C9A84C]/50 transition">
+
+          <h3 class="font-bebas text-4xl mb-4">
+            Diseño Gráfico
+          </h3>
+
+          <p class="text-white/40 text-sm leading-relaxed">
+            Creativos publicitarios que detienen el scroll.
+          </p>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </section>
+
+  <!-- PORTAFOLIO -->
+  <section id="portafolio" class="py-28 px-6 bg-[#0B0B0B] border-y border-white/5">
+
+    <div class="max-w-7xl mx-auto">
+
+      <h2 class="font-bebas text-8xl italic mb-16">
         PORTAFOLIO
       </h2>
 
-      <div class="portfolio-grid">
+      <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
 
-        <!-- PROYECTO 1 -->
-        <div class="portfolio-card">
-          <img src="images/proyecto1.jpg" alt="Proyecto 1" loading="lazy">
+        <!-- CARD -->
+        <div class="relative aspect-square bg-[#111] overflow-hidden border border-white/5 card-hover">
 
-          <div class="portfolio-overlay">
-            <span>Branding</span>
-            <h4 class="bebas">Bufalux</h4>
+          <img
+            loading="lazy"
+            src="images/logo1.png"
+            alt=""
+            class="w-full h-full object-contain p-10"
+          >
+
+          <div class="overlay absolute inset-0 bg-gradient-to-t from-black/95 via-black/40 to-transparent flex flex-col justify-end p-10">
+
+            <span class="gold uppercase tracking-[0.3em] text-[10px] font-bold">
+              Logotipos
+            </span>
+
+            <h4 class="font-bebas text-5xl mt-2">
+              ALMA
+            </h4>
+
           </div>
-        </div>
 
-        <!-- PROYECTO 2 -->
-        <div class="portfolio-card">
-          <img src="images/proyecto2.jpg" alt="Proyecto 2" loading="lazy">
-
-          <div class="portfolio-overlay">
-            <span>Web Design</span>
-            <h4 class="bebas">Nova Integral</h4>
-          </div>
-        </div>
-
-        <!-- PROYECTO 3 -->
-        <div class="portfolio-card">
-          <img src="images/proyecto3.jpg" alt="Proyecto 3" loading="lazy">
-
-          <div class="portfolio-overlay">
-            <span>Logo</span>
-            <h4 class="bebas">Mastery Trading</h4>
-          </div>
         </div>
 
       </div>
+
     </div>
+
   </section>
 
-  <!-- TESTIMONIOS -->
+  <!-- CONTACTO -->
+  <section id="contacto" class="py-32 px-6 text-center">
 
-  <section class="testimonials">
-    <div class="container">
+    <div class="max-w-5xl mx-auto">
 
-      <h2 class="section-title bebas">
-        TESTIMONIOS
+      <h2 class="font-bebas text-[20vw] md:text-[12rem] leading-[0.7]">
+
+        LET'S
+
+        <br>
+
+        <span class="stroke-gold italic">
+          GROW
+        </span>
+
       </h2>
 
-      <div class="testimonials-grid">
-
-        <div class="testimonial">
-          <p>
-            “La percepción de nuestra marca cambió completamente. Ahora parecemos una empresa de otro nivel.”
-          </p>
-
-          <strong>— Cliente Branding</strong>
-        </div>
-
-        <div class="testimonial">
-          <p>
-            “El sitio web nos ayudó a cerrar más clientes y transmitir muchísima más confianza.”
-          </p>
-
-          <strong>— Cliente Web</strong>
-        </div>
-
-        <div class="testimonial">
-          <p>
-            “Las campañas generaron resultados mucho mejores de lo esperado.”
-          </p>
-
-          <strong>— Cliente Ads</strong>
-        </div>
-
-      </div>
-    </div>
-  </section>
-
-  <!-- CONTACT -->
-
-  <section class="contact" id="contacto">
-    <div class="container">
-
-      <h2 class="bebas">
-        LET'S <br>
-        <span class="stroke">GROW</span>
-      </h2>
-
-      <p>
-        Escalemos tu negocio con una marca que proyecte autoridad, confianza y resultados.
+      <p class="text-white/50 text-lg max-w-xl mx-auto mt-8">
+        Escalemos tu facturación con una marca que proyecte confianza y autoridad.
       </p>
 
-      <div class="contact-buttons">
+      <div class="flex flex-col md:flex-row gap-6 justify-center mt-12">
 
-        <a href="https://wa.link/l9llu6" target="_blank" class="btn">
-          WhatsApp
+        <a
+          href="https://wa.link/l9llu6"
+          target="_blank"
+          class="gold-bg text-black px-12 py-5 font-bebas text-4xl tracking-widest hover:scale-105 transition"
+        >
+          WHATSAPP
         </a>
 
-        <a href="https://instagram.com/adriangarcia.co" target="_blank" class="btn outline-btn">
-          Instagram
+        <a
+          href="https://instagram.com/adriangarcia.co"
+          target="_blank"
+          class="border border-white/10 px-12 py-5 font-bebas text-4xl tracking-widest hover:bg-white hover:text-black transition"
+        >
+          INSTAGRAM
         </a>
 
       </div>
+
     </div>
+
   </section>
 
-  <footer>
-    © 2026 Adrián García — Todos los derechos reservados.
+  <!-- FOOTER -->
+  <footer class="py-14 border-t border-white/5 text-center">
+
+    <h3 class="font-bebas text-4xl tracking-widest">
+      ADRIÁN GARCÍA<span class="gold">.</span>
+    </h3>
+
+    <p class="text-white/30 text-xs uppercase tracking-[0.2em] mt-4">
+      © 2026 - Todos los derechos reservados
+    </p>
+
   </footer>
-
-  <!-- FLOATING WHATSAPP -->
-
-  <a href="https://wa.link/l9llu6" target="_blank" class="whatsapp-float">
-    <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp">
-  </a>
-
-  <script>
-    lucide.createIcons();
-
-    const menuBtn = document.getElementById('menuBtn');
-    const mobileMenu = document.getElementById('mobileMenu');
-
-    menuBtn.addEventListener('click', () => {
-      mobileMenu.classList.toggle('active');
-    });
-
-    document.querySelectorAll('.mobile-menu a').forEach(link => {
-      link.addEventListener('click', () => {
-        mobileMenu.classList.remove('active');
-      });
-    });
-  </script>
 
 </body>
 </html>
