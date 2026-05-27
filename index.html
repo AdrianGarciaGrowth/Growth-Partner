@@ -1,24 +1,112 @@
-import React, { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { 
-  ArrowRight, 
-  Globe, 
-  Target, 
-  PenTool, 
-  Zap, 
-  Menu, 
-  X,
-  TrendingUp,
-  Layers,
-  ArrowUp,
-  Star
-} from 'lucide-react';
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Adrián García | Growth Partner</title>
 
-/**
- * ============================================================
- * PANEL DE CONTROL - EDITA ESTA SECCIÓN PARA CAMBIAR TODO
- * ============================================================
- */
+  <!-- GOOGLE FONTS -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@100..1000&display=swap" rel="stylesheet">
+
+  <!-- TAILWIND -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- REACT -->
+  <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+  <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+
+  <!-- BABEL -->
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+  <!-- FRAMER MOTION -->
+  <script src="https://unpkg.com/framer-motion/dist/framer-motion.js"></script>
+
+  <!-- LUCIDE -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <style>
+    *{
+      margin:0;
+      padding:0;
+      box-sizing:border-box;
+    }
+
+    html{
+      scroll-behavior:smooth;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    body{
+      background:#0E0E0E;
+      color:#F0EDE6;
+      overflow-x:hidden;
+      font-family:'DM Sans',sans-serif;
+    }
+
+    .font-bebas{
+      font-family:'Bebas Neue',sans-serif;
+    }
+
+    .stroke-gold{
+      -webkit-text-stroke:1.5px #C9A84C;
+    }
+
+    ::-webkit-scrollbar{
+      width:6px;
+    }
+
+    ::-webkit-scrollbar-track{
+      background:#0E0E0E;
+    }
+
+    ::-webkit-scrollbar-thumb{
+      background:#C9A84C;
+      border-radius:10px;
+    }
+
+    .bg-grid{
+      background-size:40px 40px;
+      background-image:
+        linear-gradient(to right, rgba(201,168,76,0.02) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(201,168,76,0.02) 1px, transparent 1px);
+      pointer-events:none;
+    }
+
+    .noise-overlay{
+      background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+      opacity:0.02;
+      mix-blend-mode:overlay;
+      pointer-events:none;
+    }
+
+    @keyframes shimmer{
+      0%{filter:drop-shadow(0 0 2px rgba(201,168,76,0.4));}
+      50%{filter:drop-shadow(0 0 10px rgba(201,168,76,0.7));}
+      100%{filter:drop-shadow(0 0 2px rgba(201,168,76,0.4));}
+    }
+
+    .animate-shimmer{
+      animation:shimmer 3s ease-in-out infinite;
+    }
+
+    img{
+      max-width:100%;
+      display:block;
+    }
+  </style>
+</head>
+
+<body>
+
+<div id="root"></div>
+
+<script type="text/babel">
+
+const { useState, useEffect } = React;
+const { motion, AnimatePresence } = Motion;
+
 const WEBSITE_DATA = {
   profile: {
     name: "ADRIÁN GARCÍA",
@@ -31,39 +119,44 @@ const WEBSITE_DATA = {
     experienceTitle: "Experiencia",
     experienceMain: "12 AÑOS EN VENTAS TRADICIONALES",
     experienceSecondary: "6 AÑOS EN DIGITAL",
-    whatsappLink: "https://wa.link/l9llu6", 
+    whatsappLink: "https://wa.link/l9llu6",
     instagram: "adriangarcia.co",
   },
+
   services: [
-    { 
-      id: "pauta", 
-      title: "Pauta Digital", 
-      icon: Target, 
+    {
+      id: "pauta",
+      title: "Pauta Digital",
+      icon: "target",
       desc: "Facebook, Google y TikTok Ads con enfoque en ROI masivo.",
-      benefits: ["Retorno (ROAS) optimizado", "Escalabilidad proyectada"] 
+      benefits: ["Retorno (ROAS) optimizado", "Escalabilidad proyectada"]
     },
-    { 
-      id: "web", 
-      title: "Desarrollo Web", 
-      icon: Globe, 
+
+    {
+      id: "web",
+      title: "Desarrollo Web",
+      icon: "globe",
       desc: "Sitios High-End diseñados para convertir visitas en ventas.",
-      benefits: ["Diseño responsive", "Arquitectura de conversión"] 
+      benefits: ["Diseño responsive", "Arquitectura de conversión"]
     },
-    { 
-      id: "brand", 
-      title: "Branding", 
-      icon: Layers, 
+
+    {
+      id: "brand",
+      title: "Branding",
+      icon: "layers",
       desc: "Identidad visual de élite para cobrar lo que realmente vales.",
-      benefits: ["Manual de marca", "Autoridad visual"] 
+      benefits: ["Manual de marca", "Autoridad visual"]
     },
-    { 
-      id: "design", 
-      title: "Diseño Gráfico", 
-      icon: PenTool, 
+
+    {
+      id: "design",
+      title: "Diseño Gráfico",
+      icon: "pen-tool",
       desc: "Creativos publicitarios que detienen el scroll.",
-      benefits: ["Alto CTR", "Copy persuasivo"] 
+      benefits: ["Alto CTR", "Copy persuasivo"]
     }
   ],
+
   portfolio: [
     { id: 1, src: 'LOGO FONDO OSCURO.png', title: 'ALMA - Aliado Legal', category: 'Logotipos' },
     { id: 2, src: 'Logo Nova.jpg', title: 'Nova Integral Services', category: 'Logotipos' },
@@ -77,19 +170,16 @@ const WEBSITE_DATA = {
     { id: 13, src: 'WhatsApp Image 2026-04-22 at 1.11.21 PM (1).jpeg', title: 'Mastery Trading Academy', category: 'Logotipos' },
     { id: 14, src: 'WhatsApp Image 2026-04-22 at 1.11.21 PM.jpeg', title: 'Webmotion', category: 'Logotipos' },
     { id: 10, src: 'WhatsApp Image 2026-04-16 at 12.56.13 PM (2).jpeg', title: 'Axioma Jurídico', category: 'Logotipos' },
+
     { id: 21, src: 'WhatsApp Image 2026-04-16 at 12.56.13 PM (4).jpeg', title: 'Dan Fit - Coach', category: 'Tarjetas' },
     { id: 24, src: 'WhatsApp Image 2026-04-16 at 12.56.13 PM.jpeg', title: 'Legal Identity - Mateo', category: 'Tarjetas' },
     { id: 15, src: 'Tarjetas de presentación Ángela1.png', title: 'Card Design - Psicología', category: 'Tarjetas' },
     { id: 17, src: 'Tarjetas de presentación Angélica1.png', title: 'Real Estate Card', category: 'Tarjetas' },
     { id: 19, src: 'Tarjetas de presentación Edison1.png', title: 'Corporate Identity', category: 'Tarjetas' },
+
     { id: 31, src: 'Logo Nova.jpg', title: 'Nova Integral Services', category: 'Páginas Web', url: 'https://novaintegralservices.com/' },
-    { id: 32, src: 'WhatsApp Image 2026-04-22 at 1.11.21 PM (1).jpeg', title: 'SYT Investments', category: 'Páginas Web', url: 'https://www.sytinvestments.com/' }, 
-    { id: 33, src: 'WhatsApp Image 2026-04-16 at 12.56.13 PM (2).jpeg', title: 'Evite Multas Ponal', category: 'Páginas Web', url: 'https://evitemultasponal.com/' }, 
-  ],
-  marqueePhrases: [
-    "SITIOS WEB QUE CONVIERTEN", 
-    "IDENTIDADES QUE VENDEN", 
-    "PRIMERA IMPRESIÓN IMBORRABLE"
+    { id: 32, src: 'WhatsApp Image 2026-04-22 at 1.11.21 PM (1).jpeg', title: 'SYT Investments', category: 'Páginas Web', url: 'https://www.sytinvestments.com/' },
+    { id: 33, src: 'WhatsApp Image 2026-04-16 at 12.56.13 PM (2).jpeg', title: 'Evite Multas Ponal', category: 'Páginas Web', url: 'https://evitemultasponal.com/' },
   ]
 };
 
@@ -101,408 +191,547 @@ const NAV_LINKS = [
   { name: 'Contacto', id: 'contacto' }
 ];
 
-const ProjectCard = React.forwardRef(({ project, ...rest }, ref) => (
-  <motion.div
-    ref={ref}
-    {...rest}
-    layout
-    initial={{ opacity: 0, y: 20 }}
-    animate={{ opacity: 1, y: 0 }}
-    exit={{ opacity: 0, scale: 0.95 }}
-    transition={{ duration: 0.5 }}
-    className="group relative aspect-square bg-[#111] overflow-hidden border border-white/5 hover:border-[#C9A84C]/50 transition-all duration-700"
-  >
-    <img 
-      src={project.src} 
-      alt={project.title}
-      className={`w-full h-full object-contain p-6 md:p-10 grayscale group-hover:grayscale-0 transition-all duration-700 opacity-80 group-hover:opacity-100 group-hover:scale-110`}
-    />
-    <div className="absolute inset-0 bg-gradient-to-t from-black/95 via-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-all duration-500 flex flex-col justify-end p-6 md:p-10">
-      <span className="text-[#C9A84C] text-[8px] md:text-[9px] font-bold uppercase tracking-[0.4em] mb-2 md:mb-3">{project.category}</span>
-      <h4 className="font-bebas text-2xl md:text-4xl text-white tracking-normal leading-none">{project.title}</h4>
-      
-      {project.url ? (
-        <a 
-          href={project.url} 
-          target="_blank" 
-          rel="noopener noreferrer"
-          className="mt-4 md:mt-6 flex items-center justify-center gap-3 bg-[#C9A84C] text-black py-2 md:py-3 px-4 md:px-6 font-bebas text-xl md:text-2xl tracking-widest hover:scale-105 hover:bg-white hover:shadow-[0_0_20px_rgba(201,168,76,0.6)] transition-all duration-300 relative z-30 cursor-pointer pointer-events-auto"
-        >
-          VISITAR WEB <Globe size={18} />
-        </a>
-      ) : (
-        <div className="w-0 h-[2px] bg-[#C9A84C] mt-4 md:mt-6 group-hover:w-full transition-all duration-700 delay-100"></div>
-      )}
-    </div>
-  </motion.div>
-));
+function App(){
 
-ProjectCard.displayName = "ProjectCard";
+  const [menu,setMenu] = useState(false);
+  const [filter,setFilter] = useState("Todos");
+  const [scrolled,setScrolled] = useState(false);
+  const [showScroll,setShowScroll] = useState(false);
 
-const App = () => {
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [filter, setFilter] = useState('Todos');
-  const [scrolled, setScrolled] = useState(false);
-  const [showScrollTop, setShowScrollTop] = useState(false);
-  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+  useEffect(()=>{
 
-  useEffect(() => {
-    const handleScroll = () => {
+    const handleScroll = ()=>{
       setScrolled(window.scrollY > 20);
-      setShowScrollTop(window.scrollY > 500);
-    };
+      setShowScroll(window.scrollY > 500);
+    }
 
-    const handleMouseMove = (e) => {
-      setMousePosition({ x: e.clientX, y: e.clientY });
-    };
+    window.addEventListener("scroll",handleScroll);
 
-    window.addEventListener('scroll', handleScroll);
-    window.addEventListener('mousemove', handleMouseMove);
-    return () => {
-      window.removeEventListener('scroll', handleScroll);
-      window.removeEventListener('mousemove', handleMouseMove);
-    };
-  }, []);
+    return ()=>{
+      window.removeEventListener("scroll",handleScroll);
+    }
 
-  const scrollToTop = () => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  };
+  },[]);
 
-  const handleNavClick = (e, targetId) => {
-    e.preventDefault();
-    setIsMenuOpen(false); 
-    
-    setTimeout(() => {
-        const element = document.getElementById(targetId);
-        if (element) {
-          const headerOffset = window.innerWidth < 768 ? 70 : 80;
-          const elementPosition = element.getBoundingClientRect().top;
-          const offsetPosition = elementPosition + window.scrollY - headerOffset;
-          
-          window.scrollTo({
-            top: offsetPosition,
-            behavior: "smooth"
-          });
-        }
-    }, 100);
-  };
+  useEffect(()=>{
+    lucide.createIcons();
+  });
 
-  const categories = ['Logotipos', 'Tarjetas', 'Páginas Web', 'Manual de Marca', 'Todos'];
-  
-  const filteredProjects = filter === 'Todos' 
-    ? WEBSITE_DATA.portfolio 
+  const categories = ["Logotipos","Tarjetas","Páginas Web","Manual de Marca","Todos"];
+
+  const filteredProjects = filter === "Todos"
+    ? WEBSITE_DATA.portfolio
     : WEBSITE_DATA.portfolio.filter(p => p.category === filter);
 
-  return (
-    <div className="relative bg-[#0E0E0E] text-[#F0EDE6] font-sans selection:bg-[#C9A84C] selection:text-black overflow-x-hidden min-h-screen">
-      <style>
-        {`
-          @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&display=swap');
-          
-          @media (pointer: fine) {
-            html, body {
-              cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="%23C9A84C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19l7-7 3 3-7 7-3-3z"></path><path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"></path><path d="M2 2l7.586 7.586"></path><circle cx="11" cy="11" r="2"></circle></svg>') 0 24, auto;
-            }
-            a, button, [role="button"], input, select, textarea {
-              cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="%23F0EDE6" stroke="%23C9A84C" stroke-width="1.5" d="M5 3l14 11-6.5.5 4 7.5-2.5 1.5-4-7.5-5 5z"/></svg>') 5 3, pointer !important;
-            }
-          }
+  const scrollToTop = ()=>{
+    window.scrollTo({
+      top:0,
+      behavior:"smooth"
+    });
+  }
 
-          .font-bebas { font-family: 'Bebas Neue', sans-serif; }
-          .font-dm { font-family: 'DM Sans', sans-serif; }
-          .stroke-gold { -webkit-text-stroke: 1.5px #C9A84C; }
-          
-          @keyframes stroke-shimmer {
-            0% { filter: drop-shadow(0 0 2px rgba(201, 168, 76, 0.4)); }
-            50% { filter: drop-shadow(0 0 10px rgba(201, 168, 76, 0.7)); }
-            100% { filter: drop-shadow(0 0 2px rgba(201, 168, 76, 0.4)); }
-          }
-          .animate-shimmer { animation: stroke-shimmer 3s ease-in-out infinite; }
+  const handleNavClick = (e,id)=>{
+    e.preventDefault();
 
-          html { scroll-behavior: smooth; -webkit-tap-highlight-color: transparent; }
-          ::-webkit-scrollbar { width: 6px; }
-          ::-webkit-scrollbar-track { background: #0E0E0E; }
-          ::-webkit-scrollbar-thumb { background: #C9A84C; border-radius: 10px; }
-          
-          .bg-grid {
-            background-size: 40px 40px;
-            background-image: 
-              linear-gradient(to right, rgba(201, 168, 76, 0.02) 1px, transparent 1px),
-              linear-gradient(to bottom, rgba(201, 168, 76, 0.02) 1px, transparent 1px);
-            pointer-events: none;
-          }
-          .noise-overlay {
-            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
-            opacity: 0.02;
-            mix-blend-mode: overlay;
-            pointer-events: none;
-          }
-          
-          @keyframes infinite-scroll {
-            from { transform: translateX(0); }
-            to { transform: translateX(-50%); }
-          }
-          .animate-infinite-scroll { animation: infinite-scroll 40s linear infinite; }
-        `}
-      </style>
+    setMenu(false);
 
-      {/* CAPAS DE FONDO ASEGURADAS CON POINTER-EVENTS-NONE */}
-      <div className="fixed inset-0 pointer-events-none z-[1] noise-overlay"></div>
-      <div className="fixed inset-0 pointer-events-none z-[0] bg-grid"></div>
+    setTimeout(()=>{
 
-      {/* NAVEGACIÓN */}
-      <nav className={`fixed w-full z-[160] transition-all duration-500 ${scrolled ? 'bg-[#0E0E0E]/95 backdrop-blur-md py-2 border-b border-[#C9A84C]/20' : 'bg-transparent py-4 md:py-6'}`}>
-        <div className="max-w-7xl mx-auto px-4 md:px-6 flex justify-between items-center relative">
-          <div className="text-xl md:text-2xl font-bebas tracking-[0.2em] relative z-[70]">
-            {WEBSITE_DATA.profile.name}<span className="text-[#C9A84C]">.</span>
+      const element = document.getElementById(id);
+
+      if(element){
+
+        const offset = window.innerWidth < 768 ? 70 : 80;
+
+        const top =
+          element.getBoundingClientRect().top +
+          window.scrollY -
+          offset;
+
+        window.scrollTo({
+          top,
+          behavior:"smooth"
+        });
+      }
+
+    },100);
+  }
+
+  return(
+
+    <div className="relative overflow-x-hidden min-h-screen bg-[#0E0E0E] text-[#F0EDE6]">
+
+      <div className="fixed inset-0 z-0 bg-grid"></div>
+      <div className="fixed inset-0 z-0 noise-overlay"></div>
+
+      {/* NAVBAR */}
+
+      <nav className={`fixed top-0 left-0 w-full z-50 transition-all duration-500 ${
+        scrolled
+          ? "bg-[#0E0E0E]/95 backdrop-blur-md border-b border-[#C9A84C]/20 py-2"
+          : "bg-transparent py-4 md:py-6"
+      }`}>
+
+        <div className="max-w-7xl mx-auto px-4 md:px-6 flex items-center justify-between">
+
+          <div className="font-bebas text-2xl tracking-[0.2em]">
+            {WEBSITE_DATA.profile.name}
+            <span className="text-[#C9A84C]">.</span>
           </div>
 
-          <div className="hidden md:flex gap-1 lg:gap-3 items-center relative z-[70]">
-            {NAV_LINKS.map((item) => (
-              <a 
-                key={item.id} 
-                href={`#${item.id}`} 
-                onClick={(e) => handleNavClick(e, item.id)}
-                className="px-3 py-1.5 rounded-lg text-[10px] font-dm uppercase tracking-[0.15em] font-bold hover:text-[#C9A84C] hover:bg-[#C9A84C]/10 transition-all duration-300 pointer-events-auto"
+          <div className="hidden md:flex items-center gap-4">
+
+            {NAV_LINKS.map((item)=>(
+              <a
+                key={item.id}
+                href={`#${item.id}`}
+                onClick={(e)=>handleNavClick(e,item.id)}
+                className="uppercase tracking-[0.15em] text-[10px] font-bold hover:text-[#C9A84C] transition"
               >
                 {item.name}
               </a>
             ))}
-            <a href={WEBSITE_DATA.profile.whatsappLink} target="_blank" rel="noopener noreferrer" className="ml-2 bg-[#C9A84C] text-black px-6 py-2 font-bebas text-lg tracking-wider hover:bg-white transition-all shadow-lg pointer-events-auto">
+
+            <a
+              href={WEBSITE_DATA.profile.whatsappLink}
+              target="_blank"
+              className="bg-[#C9A84C] text-black px-6 py-2 font-bebas text-lg tracking-wider"
+            >
               CONTACTAR
             </a>
+
           </div>
 
-          <button 
-            className="md:hidden text-[#C9A84C] relative z-[220] p-3 -mr-3 pointer-events-auto" 
-            onClick={() => setIsMenuOpen(!isMenuOpen)}
+          <button
+            className="md:hidden text-[#C9A84C]"
+            onClick={()=>setMenu(!menu)}
           >
-            {isMenuOpen ? <X size={32} /> : <Menu size={32} />}
+            {menu ? "✕" : "☰"}
           </button>
+
         </div>
+
       </nav>
 
-      {/* MENU MOVIL */}
+      {/* MOBILE MENU */}
+
       <AnimatePresence>
-        {isMenuOpen && (
-          <motion.div 
-            initial={{ opacity: 0, x: '100%' }}
-            animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0, x: '100%' }}
-            className="fixed inset-0 z-[200] bg-[#0E0E0E] flex flex-col items-center justify-center p-6 backdrop-blur-xl"
+
+        {menu && (
+
+          <motion.div
+            initial={{opacity:0,x:"100%"}}
+            animate={{opacity:1,x:0}}
+            exit={{opacity:0,x:"100%"}}
+            className="fixed inset-0 bg-[#0E0E0E] z-[100] flex flex-col items-center justify-center gap-8"
           >
-            <div className="flex flex-col items-center gap-4 w-full">
-              {NAV_LINKS.map((item) => (
-                <a 
-                  key={item.id} 
-                  href={`#${item.id}`} 
-                  onClick={(e) => handleNavClick(e, item.id)}
-                  className="w-full text-center py-5 text-4xl font-bebas tracking-widest text-white hover:text-[#C9A84C] pointer-events-auto"
-                >
-                  {item.name}
-                </a>
-              ))}
-              <a 
-                href={WEBSITE_DATA.profile.whatsappLink} 
-                target="_blank" 
-                rel="noopener noreferrer" 
-                className="mt-8 w-full max-w-xs bg-[#C9A84C] text-black text-center py-5 font-bebas text-3xl tracking-widest shadow-2xl pointer-events-auto"
+
+            {NAV_LINKS.map((item)=>(
+              <a
+                key={item.id}
+                href={`#${item.id}`}
+                onClick={(e)=>handleNavClick(e,item.id)}
+                className="font-bebas text-5xl tracking-widest hover:text-[#C9A84C]"
               >
-                CONTACTAR
+                {item.name}
               </a>
-            </div>
+            ))}
+
           </motion.div>
+
         )}
+
       </AnimatePresence>
 
-      {/* HERO - ESPACIADO REDUCIDO EN MÓVIL */}
-      <section id="inicio" className="relative min-h-screen flex items-center justify-center pt-20 pb-4 md:pb-12 px-4 md:px-6">
-        <div className="max-w-6xl mx-auto text-center relative z-10">
-          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 1 }}>
-            <span className="text-[#C9A84C] font-dm uppercase tracking-[0.3em] text-[9px] md:text-[11px] mb-4 block font-bold">{WEBSITE_DATA.profile.slogan}</span>
-            <h1 className="font-bebas text-[18vw] md:text-[11rem] leading-[0.68] mb-6 tracking-tighter drop-shadow-2xl">
-              <motion.div initial={{ y: 20, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ duration: 0.8 }} className="inline-block px-2">
-                {WEBSITE_DATA.profile.mainHeadline}
-              </motion.div>
-              <br/>
-              <motion.div initial={{ y: 20, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ duration: 0.8, delay: 0.2 }} className="inline-block px-2 text-transparent stroke-gold">
-                {WEBSITE_DATA.profile.subHeadline}
-              </motion.div>
-            </h1>
-            <p className="font-dm text-sm md:text-xl text-[#F0EDE6]/50 max-w-xl mx-auto mb-8 md:mb-12 px-4">
-              {WEBSITE_DATA.profile.description}
-            </p>
-            <div className="flex justify-center mb-6 md:mb-0">
-              <a 
-                href="#contacto" 
-                onClick={(e) => handleNavClick(e, 'contacto')} 
-                className="bg-[#C9A84C] text-black px-8 md:px-12 py-3 md:py-4 font-bebas text-xl md:text-2xl tracking-widest flex items-center gap-3 hover:scale-105 transition-all shadow-[0_0_40px_rgba(201,168,76,0.3)] relative z-50 pointer-events-auto cursor-pointer"
-              >
-                ESCALAR VENTAS <ArrowRight size={20} />
-              </a>
+      {/* HERO */}
+
+      <section
+        id="inicio"
+        className="min-h-screen flex items-center justify-center px-4 md:px-6 pt-20 pb-10 relative z-10"
+      >
+
+        <div className="max-w-6xl mx-auto text-center">
+
+          <span className="text-[#C9A84C] uppercase tracking-[0.3em] text-[10px] md:text-xs font-bold block mb-5">
+            {WEBSITE_DATA.profile.slogan}
+          </span>
+
+          <h1 className="font-bebas leading-[0.7] tracking-tight text-[18vw] md:text-[11rem] mb-6">
+
+            <div>
+              {WEBSITE_DATA.profile.mainHeadline}
             </div>
-          </motion.div>
+
+            <div className="text-transparent stroke-gold">
+              {WEBSITE_DATA.profile.subHeadline}
+            </div>
+
+          </h1>
+
+          <p className="max-w-xl mx-auto text-white/50 text-sm md:text-xl mb-10 px-4">
+            {WEBSITE_DATA.profile.description}
+          </p>
+
+          <a
+            href="#contacto"
+            onClick={(e)=>handleNavClick(e,"contacto")}
+            className="inline-flex items-center gap-3 bg-[#C9A84C] text-black px-8 md:px-12 py-3 md:py-4 font-bebas text-xl md:text-2xl tracking-widest shadow-[0_0_40px_rgba(201,168,76,0.3)]"
+          >
+            ESCALAR VENTAS
+          </a>
+
         </div>
+
       </section>
 
-      {/* SOBRE MÍ - TEXTO DE EXPERIENCIA AJUSTADO PARA MÓVIL */}
-      <section id="sobre-mi" className="py-24 md:py-32 px-4 md:px-6 bg-[#0B0B0B]/80 backdrop-blur-sm border-y border-white/5 relative z-10">
-        <div className="max-w-7xl mx-auto grid lg:grid-cols-2 gap-8 md:gap-16 items-center">
-          <div className="relative aspect-[4/5] bg-[#151515] border border-[#C9A84C]/10 overflow-hidden flex items-center justify-center order-2 lg:order-1">
-              <TrendingUp size={150} className="text-[#C9A84C]/5" />
-              <div className="absolute bottom-6 md:bottom-10 left-6 md:left-10 text-left">
-                 <h3 className="font-bebas text-4xl md:text-6xl text-white mb-2 leading-none">{WEBSITE_DATA.profile.name}</h3>
-                 <div className="h-1 w-12 md:w-16 bg-[#C9A84C] mb-3"></div>
-                 <p className="text-[#C9A84C] font-dm uppercase tracking-[0.2em] text-[9px] font-bold">{WEBSITE_DATA.profile.role}</p>
-              </div>
-          </div>
-          <div className="space-y-6 order-1 lg:order-2">
-            <h2 className="font-bebas text-5xl md:text-7xl leading-[1.1] md:leading-[0.9] italic">
-              {WEBSITE_DATA.profile.experienceTitle}
-              <br className="md:hidden" />
-              <span className="hidden md:inline"> - </span>
-              {WEBSITE_DATA.profile.experienceMain}
-              <br className="hidden md:block" /> 
-              <span className="text-[#C9A84C]">{WEBSITE_DATA.profile.experienceSecondary}</span>
-            </h2>
-            <p className="font-dm text-base md:text-lg text-white/60 leading-relaxed italic">"{WEBSITE_DATA.profile.bioQuote}"</p>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 md:gap-8">
-               <div className="space-y-1">
-                  <h4 className="font-bebas text-2xl md:text-3xl text-[#C9A84C]">SOCIO DE CRECIMIENTO</h4>
-                  <p className="text-xs md:text-sm text-white/40 font-dm">Rentabilidad total para tu negocio digital.</p>
-               </div>
-               <div className="space-y-1">
-                  <h4 className="font-bebas text-2xl md:text-3xl text-[#C9A84C]">ALTO TICKET</h4>
-                  <p className="text-xs md:text-sm text-white/40 font-dm">Posicionamiento de élite garantizado en el mercado.</p>
-               </div>
+      {/* SOBRE MI */}
+
+      <section
+        id="sobre-mi"
+        className="py-24 md:py-32 px-4 md:px-6 bg-[#0B0B0B]/80 border-y border-white/5 relative z-10"
+      >
+
+        <div className="max-w-7xl mx-auto grid lg:grid-cols-2 gap-10 items-center">
+
+          <div className="bg-[#151515] border border-[#C9A84C]/10 aspect-[4/5] flex items-center justify-center relative overflow-hidden">
+
+            <i data-lucide="trending-up" className="w-32 h-32 text-[#C9A84C]/10"></i>
+
+            <div className="absolute bottom-8 left-8">
+
+              <h3 className="font-bebas text-5xl leading-none">
+                {WEBSITE_DATA.profile.name}
+              </h3>
+
+              <div className="w-16 h-1 bg-[#C9A84C] my-3"></div>
+
+              <p className="uppercase tracking-[0.2em] text-[10px] text-[#C9A84C] font-bold">
+                {WEBSITE_DATA.profile.role}
+              </p>
+
             </div>
+
           </div>
+
+          <div>
+
+            <h2 className="font-bebas text-5xl md:text-7xl italic leading-[1] mb-8">
+
+              {WEBSITE_DATA.profile.experienceTitle}
+              <br />
+
+              {WEBSITE_DATA.profile.experienceMain}
+              <br />
+
+              <span className="text-[#C9A84C]">
+                {WEBSITE_DATA.profile.experienceSecondary}
+              </span>
+
+            </h2>
+
+            <p className="italic text-white/60 text-base md:text-lg leading-relaxed mb-8">
+              "{WEBSITE_DATA.profile.bioQuote}"
+            </p>
+
+            <div className="grid sm:grid-cols-2 gap-6">
+
+              <div>
+                <h4 className="font-bebas text-3xl text-[#C9A84C]">
+                  SOCIO DE CRECIMIENTO
+                </h4>
+
+                <p className="text-sm text-white/40">
+                  Rentabilidad total para tu negocio digital.
+                </p>
+              </div>
+
+              <div>
+                <h4 className="font-bebas text-3xl text-[#C9A84C]">
+                  ALTO TICKET
+                </h4>
+
+                <p className="text-sm text-white/40">
+                  Posicionamiento de élite garantizado.
+                </p>
+              </div>
+
+            </div>
+
+          </div>
+
         </div>
+
       </section>
 
       {/* SERVICIOS */}
-      <section id="servicios" className="py-24 md:py-32 px-4 md:px-6 relative z-10">
+
+      <section
+        id="servicios"
+        className="py-24 md:py-32 px-4 md:px-6 relative z-10"
+      >
+
         <div className="max-w-7xl mx-auto text-center">
-          <h2 className="font-bebas text-6xl md:text-8xl uppercase tracking-widest italic mb-16">SOLUCIONES DE <span className="text-[#C9A84C]">IMPACTO</span></h2>
-          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-5 text-left">
-            {WEBSITE_DATA.services.map((service, i) => {
-              const Icon = service.icon;
-              return (
-                <div key={i} className="p-8 bg-[#121212]/90 backdrop-blur-md border border-white/5 hover:border-[#C9A84C]/50 transition-all group flex flex-col justify-between">
-                  <div>
-                    <Icon size={28} className="text-[#C9A84C] mb-5 group-hover:scale-110 transition-transform" />
-                    <h3 className="font-bebas text-3xl md:text-4xl mb-3">{service.title}</h3>
-                    <p className="font-dm text-white/40 text-xs md:text-sm mb-5 leading-relaxed">{service.desc}</p>
-                  </div>
-                  <div className="space-y-1.5">
-                    {service.benefits.map((b, idx) => (
-                      <div key={idx} className="flex items-center gap-2 text-[9px] md:text-[10px] text-[#C9A84C] font-bold uppercase tracking-widest"><Zap size={10} /> {b}</div>
-                    ))}
-                  </div>
+
+          <h2 className="font-bebas text-6xl md:text-8xl italic mb-16">
+            SOLUCIONES DE
+            <span className="text-[#C9A84C]"> IMPACTO</span>
+          </h2>
+
+          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5 text-left">
+
+            {WEBSITE_DATA.services.map((service)=>(
+              <div
+                key={service.id}
+                className="bg-[#121212]/90 border border-white/5 hover:border-[#C9A84C]/50 transition p-8 flex flex-col justify-between"
+              >
+
+                <div>
+
+                  <i data-lucide={service.icon} className="w-8 h-8 text-[#C9A84C] mb-5"></i>
+
+                  <h3 className="font-bebas text-4xl mb-3">
+                    {service.title}
+                  </h3>
+
+                  <p className="text-sm text-white/40 leading-relaxed mb-5">
+                    {service.desc}
+                  </p>
+
                 </div>
-              );
-            })}
+
+                <div className="space-y-2">
+
+                  {service.benefits.map((b,idx)=>(
+                    <div
+                      key={idx}
+                      className="text-[#C9A84C] uppercase tracking-widest text-[10px] font-bold flex items-center gap-2"
+                    >
+                      ⚡ {b}
+                    </div>
+                  ))}
+
+                </div>
+
+              </div>
+            ))}
+
           </div>
+
         </div>
+
       </section>
 
       {/* PORTAFOLIO */}
-      <section id="portafolio" className="py-24 md:py-32 px-4 md:px-6 bg-[#0B0B0B]/80 backdrop-blur-sm border-y border-white/5 relative z-10">
+
+      <section
+        id="portafolio"
+        className="py-24 md:py-32 px-4 md:px-6 bg-[#0B0B0B]/80 border-y border-white/5 relative z-10"
+      >
+
         <div className="max-w-7xl mx-auto">
-          <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-12 gap-8">
+
+          <div className="flex flex-col md:flex-row justify-between gap-8 mb-14">
+
             <div>
-              <h2 className="font-bebas text-7xl md:text-9xl leading-none italic uppercase">PORTAFOLIO</h2>
-              <p className="text-white/40 font-dm tracking-[0.3em] uppercase text-[9px] mt-2 md:mt-4">Calidad Visual Estratégica</p>
+
+              <h2 className="font-bebas text-7xl md:text-9xl italic leading-none">
+                PORTAFOLIO
+              </h2>
+
+              <p className="uppercase tracking-[0.3em] text-[10px] text-white/40 mt-4">
+                Calidad Visual Estratégica
+              </p>
+
             </div>
-            <div className="flex flex-wrap gap-2 md:gap-3 relative z-30">
-              {categories.map(cat => (
-                <button 
-                  key={cat} 
-                  onClick={() => setFilter(cat)}
-                  className={`px-4 md:px-5 py-1.5 md:py-2 text-[8px] md:text-[9px] font-dm font-bold uppercase tracking-widest border transition-all pointer-events-auto ${filter === cat ? 'bg-[#C9A84C] text-black border-[#C9A84C]' : 'border-white/10 text-white/40 hover:border-[#C9A84C]/40'}`}
+
+            <div className="flex flex-wrap gap-3">
+
+              {categories.map(cat=>(
+                <button
+                  key={cat}
+                  onClick={()=>setFilter(cat)}
+                  className={`px-5 py-2 uppercase tracking-widest text-[10px] border transition ${
+                    filter === cat
+                      ? "bg-[#C9A84C] text-black border-[#C9A84C]"
+                      : "border-white/10 text-white/40 hover:border-[#C9A84C]/40"
+                  }`}
                 >
                   {cat}
                 </button>
               ))}
+
             </div>
+
           </div>
-          <motion.div layout className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
-            <AnimatePresence mode="popLayout">
-              {filteredProjects.map((project) => (
-                <ProjectCard key={project.id} project={project} />
-              ))}
-            </AnimatePresence>
-          </motion.div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+
+            {filteredProjects.map(project=>(
+
+              <div
+                key={project.id}
+                className="group relative aspect-square bg-[#111] overflow-hidden border border-white/5 hover:border-[#C9A84C]/50 transition duration-700"
+              >
+
+                <img
+                  src={project.src}
+                  alt={project.title}
+                  className="w-full h-full object-contain p-6 md:p-10 grayscale group-hover:grayscale-0 opacity-80 group-hover:opacity-100 group-hover:scale-110 transition duration-700"
+                />
+
+                <div className="absolute inset-0 bg-gradient-to-t from-black/95 via-black/40 to-transparent opacity-0 group-hover:opacity-100 transition duration-500 flex flex-col justify-end p-6 md:p-10">
+
+                  <span className="text-[#C9A84C] uppercase tracking-[0.4em] text-[9px] font-bold mb-3">
+                    {project.category}
+                  </span>
+
+                  <h4 className="font-bebas text-3xl md:text-4xl leading-none">
+                    {project.title}
+                  </h4>
+
+                  {project.url ? (
+
+                    <a
+                      href={project.url}
+                      target="_blank"
+                      className="mt-6 bg-[#C9A84C] text-black py-3 px-6 font-bebas text-2xl tracking-widest flex items-center justify-center gap-3 hover:bg-white transition"
+                    >
+                      VISITAR WEB
+                    </a>
+
+                  ) : (
+
+                    <div className="w-0 h-[2px] bg-[#C9A84C] mt-6 group-hover:w-full transition-all duration-700"></div>
+
+                  )}
+
+                </div>
+
+              </div>
+
+            ))}
+
+          </div>
+
         </div>
+
       </section>
 
       {/* CONTACTO */}
-      <section id="contacto" className="py-24 md:py-32 px-4 md:px-6 text-center relative z-10">
-        <div className="max-w-5xl mx-auto relative z-10">
-          <div className="mb-10 flex flex-col items-center">
-            <motion.div initial={{ scale: 0.9, opacity: 0 }} whileInView={{ scale: 1, opacity: 1 }} viewport={{ once: true }} transition={{ duration: 0.8 }} className="font-bebas text-[20vw] md:text-[14rem] leading-[0.7] text-white">LET'S</motion.div>
-            <motion.div initial={{ scale: 0.9, opacity: 0 }} whileInView={{ scale: 1, opacity: 1 }} viewport={{ once: true }} transition={{ duration: 0.8, delay: 0.2 }} className="font-bebas text-[20vw] md:text-[14rem] leading-[0.7] text-transparent stroke-gold italic animate-shimmer">GROW</motion.div>
+
+      <section
+        id="contacto"
+        className="py-24 md:py-32 px-4 md:px-6 text-center relative z-10"
+      >
+
+        <div className="max-w-5xl mx-auto">
+
+          <div className="mb-10">
+
+            <div className="font-bebas text-[20vw] md:text-[14rem] leading-[0.7]">
+              LET'S
+            </div>
+
+            <div className="font-bebas text-[20vw] md:text-[14rem] leading-[0.7] text-transparent stroke-gold italic animate-shimmer">
+              GROW
+            </div>
+
           </div>
-          <p className="font-dm text-base md:text-xl text-white/50 mb-12 max-w-xl mx-auto px-4">Escalemos tu facturación con una marca que proyecte confianza y autoridad.</p>
-          <div className="flex flex-col md:flex-row gap-4 md:gap-6 justify-center items-center relative z-50">
-            <a 
-              href={WEBSITE_DATA.profile.whatsappLink} 
-              target="_blank" rel="noopener noreferrer" 
-              className="w-full md:w-auto bg-[#C9A84C] text-black px-12 py-5 md:py-6 font-bebas text-3xl md:text-4xl tracking-widest flex items-center justify-center gap-4 hover:scale-105 transition-all shadow-xl pointer-events-auto cursor-pointer"
+
+          <p className="text-white/50 text-base md:text-xl max-w-xl mx-auto mb-12 px-4">
+            Escalemos tu facturación con una marca que proyecte confianza y autoridad.
+          </p>
+
+          <div className="flex flex-col md:flex-row gap-5 justify-center items-center">
+
+            <a
+              href={WEBSITE_DATA.profile.whatsappLink}
+              target="_blank"
+              className="w-full md:w-auto bg-[#C9A84C] text-black px-12 py-5 font-bebas text-3xl tracking-widest flex items-center justify-center gap-4"
             >
-              <img src="https://upload.wikimedia.org/wikipedia/commons/5/5e/WhatsApp_icon.png" alt="WhatsApp" className="w-8 h-8" /> WHATSAPP
+              WHATSAPP
             </a>
-            <a 
-              href={`https://instagram.com/${WEBSITE_DATA.profile.instagram}`} 
-              target="_blank" rel="noopener noreferrer" 
-              className="w-full md:w-auto border-2 border-white/10 text-white px-12 py-5 md:py-6 font-bebas text-3xl md:text-4xl tracking-widest flex items-center justify-center gap-4 hover:bg-white hover:text-black transition-all pointer-events-auto cursor-pointer"
+
+            <a
+              href={`https://instagram.com/${WEBSITE_DATA.profile.instagram}`}
+              target="_blank"
+              className="w-full md:w-auto border-2 border-white/10 px-12 py-5 font-bebas text-3xl tracking-widest hover:bg-white hover:text-black transition"
             >
-              <img src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Instagram_icon.png" alt="Instagram" className="w-8 h-8" /> INSTAGRAM
+              INSTAGRAM
             </a>
+
           </div>
+
         </div>
+
       </section>
 
-      <footer className="py-12 md:py-16 border-t border-white/5 px-4 md:px-6 relative z-10 bg-[#0E0E0E]/90">
-        <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-8 text-center md:text-left">
+      {/* FOOTER */}
+
+      <footer className="py-12 md:py-16 border-t border-white/5 px-4 md:px-6 bg-[#0E0E0E]/90 relative z-10">
+
+        <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-8 text-center md:text-left">
+
           <div>
-            <div className="text-2xl md:text-3xl font-bebas tracking-widest">{WEBSITE_DATA.profile.name}<span className="text-[#C9A84C]">.</span></div>
-            <p className="text-[8px] md:text-[9px] uppercase tracking-[0.4em] text-white/20 font-bold">{WEBSITE_DATA.profile.role} & Creative Agency</p>
+
+            <div className="font-bebas text-3xl tracking-widest">
+              {WEBSITE_DATA.profile.name}
+              <span className="text-[#C9A84C]">.</span>
+            </div>
+
+            <p className="uppercase tracking-[0.4em] text-[9px] text-white/20 font-bold">
+              {WEBSITE_DATA.profile.role} & Creative Agency
+            </p>
+
           </div>
-          <p className="text-[9px] md:text-[10px] uppercase tracking-[0.2em] text-white/30 font-dm font-bold italic md:border-x border-white/10 px-0 md:px-10 max-w-[250px] md:max-w-none">© {new Date().getFullYear()} - {WEBSITE_DATA.profile.name} - TODOS LOS DERECHOS RESERVADOS.</p>
-          <div className="flex gap-8 relative z-50">
-            <a href={`https://instagram.com/${WEBSITE_DATA.profile.instagram}`} target="_blank" rel="noopener noreferrer" className="opacity-30 hover:opacity-100 pointer-events-auto"><img src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Instagram_icon.png" alt="Instagram" className="w-6 h-6 grayscale" /></a>
-            <a href={WEBSITE_DATA.profile.whatsappLink} target="_blank" rel="noopener noreferrer" className="opacity-30 hover:opacity-100 pointer-events-auto"><img src="https://upload.wikimedia.org/wikipedia/commons/5/5e/WhatsApp_icon.png" alt="WhatsApp" className="w-6 h-6 grayscale" /></a>
-          </div>
+
+          <p className="uppercase tracking-[0.2em] text-[10px] text-white/30 italic">
+            © {new Date().getFullYear()} - {WEBSITE_DATA.profile.name} - TODOS LOS DERECHOS RESERVADOS.
+          </p>
+
         </div>
+
       </footer>
 
-      {/* BOTONES FLOTANTES REFORZADOS - Z-INDEX MÁXIMO */}
-      <div className="fixed bottom-6 md:bottom-10 right-6 md:right-10 z-[300] flex flex-col gap-4">
-        <AnimatePresence>
-          {showScrollTop && (
-            <motion.button 
-              initial={{ opacity: 0, scale: 0 }} 
-              animate={{ opacity: 1, scale: 1 }} 
-              exit={{ opacity: 0, scale: 0 }} 
-              onClick={scrollToTop} 
-              className="bg-[#1A1A1A] text-[#C9A84C] p-4 rounded-full shadow-lg border border-[#C9A84C]/20 flex items-center justify-center pointer-events-auto"
-            >
-              <ArrowUp size={24} />
-            </motion.button>
-          )}
-        </AnimatePresence>
-        <motion.a 
-          href={WEBSITE_DATA.profile.whatsappLink} 
-          target="_blank" rel="noopener noreferrer" 
-          whileHover={{ scale: 1.1 }} 
-          className="rounded-full shadow-2xl flex items-center justify-center pointer-events-auto"
-        >
-          <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp" className="w-14 h-14" />
-        </motion.a>
-      </div>
-    </div>
-  );
-};
+      {/* FLOATING BUTTONS */}
 
-export default App;
+      <div className="fixed bottom-6 right-6 z-[300] flex flex-col gap-4">
+
+        {showScroll && (
+
+          <button
+            onClick={scrollToTop}
+            className="bg-[#1A1A1A] text-[#C9A84C] p-4 rounded-full border border-[#C9A84C]/20"
+          >
+            ↑
+          </button>
+
+        )}
+
+        <a
+          href={WEBSITE_DATA.profile.whatsappLink}
+          target="_blank"
+          className="rounded-full overflow-hidden shadow-2xl"
+        >
+
+          <img
+            src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg"
+            alt="WhatsApp"
+            className="w-14 h-14"
+          />
+
+        </a>
+
+      </div>
+
+    </div>
+
+  )
+}
+
+ReactDOM.createRoot(document.getElementById("root")).render(<App />);
+
+</script>
+
+</body>
+</html>
