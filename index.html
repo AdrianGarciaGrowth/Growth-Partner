@@ -20,50 +20,33 @@
       --fg:        #F0EDE6;
       --fg-dim:    rgba(240,237,230,.45);
       --border:    rgba(255,255,255,.06);
-      --nav-h:     64px;   /* altura fija del nav en mobile  */
-      --nav-h-lg:  80px;   /* altura fija del nav en desktop */
+      --nav-h:     64px;
+      --nav-h-lg:  80px;
       --max-w:     1280px;
-      --px:        1.125rem;  /* padding horizontal mobile  */
-      --px-lg:     2rem;      /* padding horizontal desktop */
+      --px:        1.125rem;
+      --px-lg:     2rem;
     }
 
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
     html { scroll-behavior: smooth; -webkit-tap-highlight-color: transparent; }
-
-    body {
-      background: var(--bg);
-      color: var(--fg);
-      font-family: 'DM Sans', sans-serif;
-      overflow-x: hidden;
-      min-height: 100vh;
-    }
-
+    body { background: var(--bg); color: var(--fg); font-family: 'DM Sans', sans-serif; overflow-x: hidden; min-height: 100vh; }
     ::selection { background: var(--gold); color: #000; }
-
     ::-webkit-scrollbar { width: 5px; }
     ::-webkit-scrollbar-track { background: var(--bg); }
     ::-webkit-scrollbar-thumb { background: var(--gold); border-radius: 10px; }
 
-    /* ── CUSTOM CURSOR (only on fine pointer / desktop) ── */
     @media (pointer: fine) {
-      html, body {
-        cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="%23C9A84C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19l7-7 3 3-7 7-3-3z"/><path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"/><path d="M2 2l7.586 7.586"/><circle cx="11" cy="11" r="2"/></svg>') 0 24, auto;
-      }
-      a, button, [role="button"] {
-        cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="%23F0EDE6" stroke="%23C9A84C" stroke-width="1.5" d="M5 3l14 11-6.5.5 4 7.5-2.5 1.5-4-7.5-5 5z"/></svg>') 5 3, pointer !important;
-      }
+      html, body { cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="%23C9A84C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19l7-7 3 3-7 7-3-3z"/><path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"/><path d="M2 2l7.586 7.586"/><circle cx="11" cy="11" r="2"/></svg>') 0 24, auto; }
+      a, button, [role="button"] { cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="%23F0EDE6" stroke="%23C9A84C" stroke-width="1.5" d="M5 3l14 11-6.5.5 4 7.5-2.5 1.5-4-7.5-5 5z"/></svg>') 5 3, pointer !important; }
     }
 
     /* ═══════════════════════════════════════════════════
-       BACKGROUND LAYERS
+       BACKGROUND
     ═══════════════════════════════════════════════════ */
     .bg-grid {
       position: fixed; inset: 0; z-index: 0; pointer-events: none;
       background-size: 40px 40px;
-      background-image:
-        linear-gradient(to right,  rgba(201,168,76,.018) 1px, transparent 1px),
-        linear-gradient(to bottom, rgba(201,168,76,.018) 1px, transparent 1px);
+      background-image: linear-gradient(to right, rgba(201,168,76,.018) 1px, transparent 1px), linear-gradient(to bottom, rgba(201,168,76,.018) 1px, transparent 1px);
     }
     .noise-overlay {
       position: fixed; inset: 0; z-index: 1; pointer-events: none;
@@ -72,472 +55,232 @@
     }
 
     /* ═══════════════════════════════════════════════════
-       NAVIGATION
+       NAV
     ═══════════════════════════════════════════════════ */
     nav {
       position: fixed; top: 0; width: 100%; z-index: 160;
-      height: var(--nav-h);
-      display: flex; align-items: center;
+      height: var(--nav-h); display: flex; align-items: center;
       padding: 0 var(--px);
       transition: background .4s, border-color .4s, box-shadow .4s;
     }
-    nav.scrolled {
-      background: rgba(14,14,14,.96);
-      backdrop-filter: blur(14px);
-      border-bottom: 1px solid rgba(201,168,76,.18);
-      box-shadow: 0 2px 30px rgba(0,0,0,.5);
-    }
-    .nav-inner {
-      width: 100%; max-width: var(--max-w);
-      margin: 0 auto;
-      display: flex; justify-content: space-between; align-items: center;
-    }
-    .nav-logo {
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: 1.25rem; letter-spacing: .14em;
-      text-decoration: none; color: var(--fg); z-index: 70;
-      white-space: nowrap;
-    }
+    nav.scrolled { background: rgba(14,14,14,.96); backdrop-filter: blur(14px); border-bottom: 1px solid rgba(201,168,76,.18); box-shadow: 0 2px 30px rgba(0,0,0,.5); }
+    .nav-inner { width: 100%; max-width: var(--max-w); margin: 0 auto; display: flex; justify-content: space-between; align-items: center; }
+    .nav-logo { font-family: 'Bebas Neue', sans-serif; font-size: 1.25rem; letter-spacing: .14em; text-decoration: none; color: var(--fg); z-index: 70; white-space: nowrap; }
     .nav-logo span { color: var(--gold); }
-
-    /* Desktop links — hidden on mobile */
     .nav-links { display: none; gap: .2rem; align-items: center; }
-    .nav-links a {
-      padding: .35rem .7rem;
-      border-radius: .4rem;
-      font-size: .6rem;
-      text-transform: uppercase;
-      letter-spacing: .14em;
-      text-decoration: none;
-      color: var(--fg);
-      transition: color .25s, background .25s;
-    }
+    .nav-links a { padding: .35rem .7rem; border-radius: .4rem; font-size: .6rem; text-transform: uppercase; letter-spacing: .14em; text-decoration: none; color: var(--fg); transition: color .25s, background .25s; }
     .nav-links a:hover { color: var(--gold); background: var(--gold-dim); }
-    .nav-cta {
-      margin-left: .5rem;
-      background: var(--gold) !important;
-      color: #000 !important;
-      padding: .45rem 1.4rem !important;
-      font-family: 'Bebas Neue', sans-serif !important;
-      font-size: .95rem !important;
-      letter-spacing: .14em !important;
-      border-radius: 0 !important;
-    }
+    .nav-cta { margin-left: .5rem; background: var(--gold) !important; color: #000 !important; padding: .45rem 1.4rem !important; font-family: 'Bebas Neue', sans-serif !important; font-size: .95rem !important; letter-spacing: .14em !important; border-radius: 0 !important; }
     .nav-cta:hover { background: #fff !important; }
-
-    /* Hamburger */
-    .hamburger {
-      background: none; border: none;
-      color: var(--gold); padding: .5rem;
-      display: flex; align-items: center; justify-content: center;
-      position: relative; z-index: 220;
-    }
+    .hamburger { background: none; border: none; color: var(--gold); padding: .5rem; display: flex; align-items: center; justify-content: center; position: relative; z-index: 220; }
 
     /* ═══════════════════════════════════════════════════
        MOBILE MENU
     ═══════════════════════════════════════════════════ */
-    .mobile-menu {
-      display: none;
-      position: fixed; inset: 0; z-index: 200;
-      background: var(--bg);
-      flex-direction: column; align-items: center; justify-content: center;
-      gap: .75rem; padding: var(--px);
-    }
+    .mobile-menu { display: none; position: fixed; inset: 0; z-index: 200; background: var(--bg); flex-direction: column; align-items: center; justify-content: center; gap: .75rem; padding: var(--px); }
     .mobile-menu.open { display: flex; animation: slideIn .3s ease; }
-    @keyframes slideIn {
-      from { opacity: 0; transform: translateX(100%); }
-      to   { opacity: 1; transform: translateX(0); }
-    }
-    .mobile-menu a {
-      width: 100%; text-align: center;
-      padding: 1rem 0;
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: 2.25rem; letter-spacing: .1em;
-      text-decoration: none; color: #fff;
-      border-bottom: 1px solid var(--border);
-      transition: color .25s;
-    }
+    @keyframes slideIn { from { opacity: 0; transform: translateX(100%); } to { opacity: 1; transform: translateX(0); } }
+    .mobile-menu a { width: 100%; text-align: center; padding: 1rem 0; font-family: 'Bebas Neue', sans-serif; font-size: 2.25rem; letter-spacing: .1em; text-decoration: none; color: #fff; border-bottom: 1px solid var(--border); transition: color .25s; }
     .mobile-menu a:last-child { border-bottom: none; }
     .mobile-menu a:hover { color: var(--gold); }
-    .mobile-menu .mob-cta {
-      margin-top: 1.5rem; width: 100%; max-width: 300px;
-      background: var(--gold); color: #000;
-      padding: 1rem 0; border-bottom: none !important;
-      font-size: 1.6rem;
-      box-shadow: 0 8px 30px rgba(0,0,0,.4);
-    }
+    .mobile-menu .mob-cta { margin-top: 1.5rem; width: 100%; max-width: 300px; background: var(--gold); color: #000; padding: 1rem 0; border-bottom: none !important; font-size: 1.6rem; box-shadow: 0 8px 30px rgba(0,0,0,.4); }
 
     /* ═══════════════════════════════════════════════════
-       SHARED UTILITIES
+       UTILITIES
     ═══════════════════════════════════════════════════ */
     .container { max-width: var(--max-w); margin: 0 auto; }
-
     .section-pad { padding: 5rem var(--px); }
-
-    .section-title {
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: clamp(2.5rem, 9vw, 5.5rem);
-      text-transform: uppercase; letter-spacing: .1em;
-      font-style: italic; line-height: 1;
-      margin-bottom: 2.5rem;
-      text-align: center;
-    }
+    .section-title { font-family: 'Bebas Neue', sans-serif; font-size: clamp(2.5rem, 9vw, 5.5rem); text-transform: uppercase; letter-spacing: .1em; font-style: italic; line-height: 1; margin-bottom: 2.5rem; text-align: center; }
     .section-title span { color: var(--gold); }
 
-    .fade-in { opacity: 0; transform: translateY(22px); transition: opacity .75s, transform .75s; }
-    .fade-in.visible { opacity: 1; transform: none; }
+    /* ═══════════════════════════════════════════════════
+       SCROLL ANIMATIONS
+    ═══════════════════════════════════════════════════ */
+    .reveal {
+      opacity: 0;
+      transform: translateY(40px);
+      transition: opacity .8s cubic-bezier(.22,1,.36,1), transform .8s cubic-bezier(.22,1,.36,1);
+    }
+    .reveal.visible { opacity: 1; transform: none; }
+    .reveal-left  { opacity: 0; transform: translateX(-50px); transition: opacity .8s cubic-bezier(.22,1,.36,1), transform .8s cubic-bezier(.22,1,.36,1); }
+    .reveal-left.visible  { opacity: 1; transform: none; }
+    .reveal-right { opacity: 0; transform: translateX(50px);  transition: opacity .8s cubic-bezier(.22,1,.36,1), transform .8s cubic-bezier(.22,1,.36,1); }
+    .reveal-right.visible { opacity: 1; transform: none; }
+    .reveal-scale { opacity: 0; transform: scale(.9); transition: opacity .7s ease, transform .7s ease; }
+    .reveal-scale.visible { opacity: 1; transform: scale(1); }
+
+    /* Stagger delays */
+    .d1 { transition-delay: .1s; } .d2 { transition-delay: .2s; }
+    .d3 { transition-delay: .3s; } .d4 { transition-delay: .4s; }
 
     /* ═══════════════════════════════════════════════════
-       HERO
+       HERO ANIMATIONS
     ═══════════════════════════════════════════════════ */
-    #inicio {
-      position: relative; z-index: 10;
-      min-height: 100svh;
-      display: flex; align-items: center; justify-content: center;
-      padding: calc(var(--nav-h) + 3rem) var(--px) 3rem;
-      overflow: hidden;
-      text-align: center;
-    }
-    .hero-inner {
-      width: 100%;
-      max-width: 1100px;
-      overflow: hidden; /* contiene cualquier desborde del h1 */
-    }
+    #hero-canvas { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; z-index: 1; }
 
-    .hero-slogan {
-      display: block;
-      color: var(--gold);
-      font-size: clamp(.55rem, 2.2vw, .75rem);
-      text-transform: uppercase;
-      letter-spacing: .22em;
-      margin-bottom: 1rem;
-    }
-    .hero-h1 {
-      font-family: 'Bebas Neue', sans-serif;
-      line-height: .85;
-      letter-spacing: .02em;
-      margin-bottom: 1.5rem;
-      filter: drop-shadow(0 8px 30px rgba(0,0,0,.55));
-      width: 100%;
-    }
-    /* VENTAS — 6 chars, puede ser más grande */
-    .hero-h1 .line-ventas {
-      display: block;
-      font-size: clamp(3.5rem, 19vw, 11rem);
-    }
-    /* EXPONENCIALES — 13 chars, debe caber exacto.
-       Bebas Neue ~0.58 aspect ratio → 100vw / (13 × 0.60) ≈ 12.8vw por char
-       Restamos el padding horizontal (≈ 2×1.125rem = 2.25rem) */
-    .hero-outline {
-      display: block;
-      -webkit-text-stroke: 1.5px var(--gold);
-      color: transparent;
-      letter-spacing: 0;
-      font-size: clamp(2.5rem, 12.5vw, 11rem);
-      /* Scale to fit: will shrink if still overflows */
-      width: 100%;
-      white-space: nowrap;
-      overflow: hidden;
-    }
-    .hero-desc {
-      font-size: clamp(.85rem, 2.2vw, 1.15rem);
-      color: var(--fg-dim);
-      max-width: 34rem;
-      margin: 0 auto 2.5rem;
-      line-height: 1.65;
-    }
-    .btn-primary {
-      display: inline-flex; align-items: center; gap: .6rem;
-      background: var(--gold); color: #000;
-      padding: .9rem 2.5rem;
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: 1.15rem; letter-spacing: .2em;
-      text-decoration: none;
-      transition: transform .25s, box-shadow .25s;
-      box-shadow: 0 0 36px rgba(201,168,76,.28);
-      position: relative; z-index: 10;
-    }
+    .hero-rays { position: absolute; inset: 0; pointer-events: none; z-index: 2; overflow: hidden; }
+    .ray { position: absolute; bottom: -20%; left: 50%; width: 1px; background: linear-gradient(to top, transparent, rgba(201,168,76,.15), transparent); transform-origin: bottom center; animation: rayPulse 4s ease-in-out infinite; }
+    .ray:nth-child(1) { height: 80vh; transform: translateX(-50%) rotate(-40deg); animation-delay: 0s; }
+    .ray:nth-child(2) { height: 70vh; transform: translateX(-50%) rotate(-25deg); animation-delay: .4s; width: 2px; }
+    .ray:nth-child(3) { height: 90vh; transform: translateX(-50%) rotate(-12deg); animation-delay: .8s; }
+    .ray:nth-child(4) { height: 75vh; transform: translateX(-50%) rotate(0deg);   animation-delay: .2s; width: 3px; }
+    .ray:nth-child(5) { height: 85vh; transform: translateX(-50%) rotate(12deg);  animation-delay: .6s; }
+    .ray:nth-child(6) { height: 65vh; transform: translateX(-50%) rotate(25deg);  animation-delay: 1s; width: 2px; }
+    .ray:nth-child(7) { height: 80vh; transform: translateX(-50%) rotate(40deg);  animation-delay: .3s; }
+    @keyframes rayPulse { 0%,100% { opacity: .25; } 50% { opacity: .9; } }
+
+    /* Hero text entrance */
+    .hero-slogan { display: block; color: var(--gold); font-size: clamp(.55rem, 2.2vw, .75rem); text-transform: uppercase; letter-spacing: .22em; margin-bottom: 1rem; opacity: 0; animation: fadeDown .7s ease forwards .3s; }
+    .line-ventas  { display: block; font-size: clamp(3.5rem, 19vw, 11rem); clip-path: inset(0 100% 0 0); animation: revealR .85s cubic-bezier(.77,0,.175,1) forwards .7s; }
+    .hero-outline { display: block; -webkit-text-stroke: 1.5px var(--gold); color: transparent; letter-spacing: 0; font-size: clamp(2.5rem, 12.5vw, 11rem); width: 100%; white-space: nowrap; overflow: hidden; clip-path: inset(0 100% 0 0); animation: revealR .9s cubic-bezier(.77,0,.175,1) forwards 1.05s; }
+    .hero-desc    { font-size: clamp(.85rem, 2.2vw, 1.15rem); color: var(--fg-dim); max-width: 34rem; margin: 0 auto 2.5rem; line-height: 1.65; opacity: 0; animation: fadeUp .7s ease forwards 1.5s; }
+    .btn-primary  { display: inline-flex; align-items: center; gap: .6rem; background: var(--gold); color: #000; padding: .9rem 2.5rem; font-family: 'Bebas Neue', sans-serif; font-size: 1.15rem; letter-spacing: .2em; text-decoration: none; transition: transform .25s, box-shadow .25s; box-shadow: 0 0 36px rgba(201,168,76,.28); position: relative; z-index: 10; opacity: 0; animation: fadeUp .7s ease forwards 1.8s; }
     .btn-primary:hover { transform: scale(1.05); box-shadow: 0 0 50px rgba(201,168,76,.45); }
+
+    @keyframes revealR  { to { clip-path: inset(0 0% 0 0); } }
+    @keyframes fadeDown { from { opacity: 0; transform: translateY(-16px); } to { opacity: 1; transform: none; } }
+    @keyframes fadeUp   { from { opacity: 0; transform: translateY(20px);  } to { opacity: 1; transform: none; } }
+
+    /* ═══════════════════════════════════════════════════
+       HERO SECTION
+    ═══════════════════════════════════════════════════ */
+    #inicio { position: relative; z-index: 10; min-height: 100svh; display: flex; align-items: center; justify-content: center; padding: calc(var(--nav-h) + 3rem) var(--px) 3rem; overflow: hidden; text-align: center; }
+    .hero-inner { width: 100%; max-width: 1100px; overflow: hidden; position: relative; z-index: 10; }
+    .hero-h1 { font-family: 'Bebas Neue', sans-serif; line-height: .85; letter-spacing: .02em; margin-bottom: 1.5rem; filter: drop-shadow(0 8px 30px rgba(0,0,0,.55)); width: 100%; }
 
     /* ═══════════════════════════════════════════════════
        SOBRE MÍ
     ═══════════════════════════════════════════════════ */
-    #sobre-mi {
-      position: relative; z-index: 10;
-      background: rgba(10,10,10,.85);
-      backdrop-filter: blur(4px);
-      border-top: 1px solid var(--border);
-      border-bottom: 1px solid var(--border);
-    }
-    .about-grid {
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 2rem;
-      align-items: center;
-    }
-
-    /* Image block */
-    .about-image {
-      position: relative;
-      background: #151515;
-      border: 1px solid rgba(201,168,76,.1);
-      overflow: hidden;
-      display: flex; align-items: center; justify-content: center;
-      aspect-ratio: 4 / 5;
-      order: 1;
-    }
-    .about-photo {
-      width: 100%; height: 100%;
-      object-fit: cover; object-position: center top;
-      display: block;
-    }
-    .about-image-caption {
-      position: absolute; bottom: 1.5rem; left: 1.5rem;
-    }
-    .about-image-caption h3 {
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: clamp(1.5rem, 4vw, 2.5rem);
-      color: #fff; line-height: 1; letter-spacing: .08em;
-      margin-bottom: .4rem;
-    }
+    #sobre-mi { position: relative; z-index: 10; background: rgba(10,10,10,.85); backdrop-filter: blur(4px); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+    .about-grid { display: grid; grid-template-columns: 1fr; gap: 2rem; align-items: center; }
+    .about-image { position: relative; background: #151515; border: 1px solid rgba(201,168,76,.1); overflow: hidden; display: flex; align-items: center; justify-content: center; aspect-ratio: 4/5; order: 1; }
+    .about-photo { width: 100%; height: 100%; object-fit: cover; object-position: center top; display: block; }
+    .about-image-caption { position: absolute; bottom: 1.5rem; left: 1.5rem; }
+    .about-image-caption h3 { font-family: 'Bebas Neue', sans-serif; font-size: clamp(1.5rem, 4vw, 2.5rem); color: #fff; line-height: 1; letter-spacing: .08em; margin-bottom: .4rem; }
     .gold-bar { width: 2.5rem; height: 3px; background: var(--gold); margin-bottom: .6rem; }
-    .about-image-caption p {
-      color: var(--gold);
-      font-size: .65rem;
-      text-transform: uppercase;
-      letter-spacing: .2em;
-    }
-
-    /* Text block */
+    .about-image-caption p { color: var(--gold); font-size: .65rem; text-transform: uppercase; letter-spacing: .2em; }
     .about-content { order: 2; }
-    .about-content h2 {
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: clamp(1.75rem, 5.5vw, 3.5rem);
-      line-height: 1.05; font-style: italic;
-      letter-spacing: .03em;
-      margin-bottom: 1.25rem;
-    }
+    .about-content h2 { font-family: 'Bebas Neue', sans-serif; font-size: clamp(1.75rem, 5.5vw, 3.5rem); line-height: 1.05; font-style: italic; letter-spacing: .03em; margin-bottom: 1.25rem; }
     .about-content h2 span { color: var(--gold); }
-    .about-quote {
-      font-size: clamp(.82rem, 1.8vw, 1rem);
-      color: rgba(255,255,255,.55);
-      line-height: 1.75; font-style: italic;
-      margin-bottom: 1.5rem;
-    }
-    .about-pills {
-      display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem;
-    }
-    .about-pill h4 {
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: clamp(1rem, 2.5vw, 1.4rem);
-      color: var(--gold); letter-spacing: .12em;
-      margin-bottom: .2rem;
-    }
+    .about-quote { font-size: clamp(.82rem, 1.8vw, 1rem); color: rgba(255,255,255,.55); line-height: 1.75; font-style: italic; margin-bottom: 1.5rem; }
+    .about-pills { display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem; }
+    .about-pill h4 { font-family: 'Bebas Neue', sans-serif; font-size: clamp(1rem, 2.5vw, 1.4rem); color: var(--gold); letter-spacing: .12em; margin-bottom: .2rem; }
     .about-pill p { font-size: .72rem; color: rgba(255,255,255,.35); line-height: 1.5; }
 
     /* ═══════════════════════════════════════════════════
        SERVICIOS
     ═══════════════════════════════════════════════════ */
     #servicios { position: relative; z-index: 10; }
-
-    .services-grid {
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 1rem;
-      text-align: left;
-    }
-    .service-card {
-      padding: 1.75rem;
-      background: rgba(17,17,17,.95);
-      backdrop-filter: blur(8px);
-      border: 1px solid var(--border);
-      display: flex; flex-direction: column; justify-content: space-between;
-      gap: 1.25rem;
-      transition: border-color .4s;
-    }
-    .service-card:hover { border-color: rgba(201,168,76,.45); }
+    .services-grid { display: grid; grid-template-columns: 1fr; gap: 1rem; text-align: left; }
+    .service-card { padding: 1.75rem; background: rgba(17,17,17,.95); backdrop-filter: blur(8px); border: 1px solid var(--border); display: flex; flex-direction: column; justify-content: space-between; gap: 1.25rem; transition: border-color .4s, transform .4s; }
+    .service-card:hover { border-color: rgba(201,168,76,.45); transform: translateY(-4px); }
     .service-icon { color: var(--gold); margin-bottom: .25rem; transition: transform .3s; }
-    .service-card:hover .service-icon { transform: scale(1.1); }
-    .service-card h3 {
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: clamp(1.3rem, 3.5vw, 1.75rem);
-      letter-spacing: .1em; text-transform: uppercase;
-      margin-bottom: .5rem;
-    }
+    .service-card:hover .service-icon { transform: scale(1.15) rotate(-5deg); }
+    .service-card h3 { font-family: 'Bebas Neue', sans-serif; font-size: clamp(1.3rem, 3.5vw, 1.75rem); letter-spacing: .1em; text-transform: uppercase; margin-bottom: .5rem; }
     .service-card p { font-size: .8rem; color: rgba(255,255,255,.4); line-height: 1.65; }
     .benefits { display: flex; flex-direction: column; gap: .35rem; }
-    .benefit {
-      display: flex; align-items: center; gap: .45rem;
-      font-size: .6rem; text-transform: uppercase; letter-spacing: .14em;
-      color: rgba(255,255,255,.55);
-    }
+    .benefit { display: flex; align-items: center; gap: .45rem; font-size: .6rem; text-transform: uppercase; letter-spacing: .14em; color: rgba(255,255,255,.55); }
     .benefit svg { color: var(--gold); flex-shrink: 0; }
 
     /* ═══════════════════════════════════════════════════
        PORTAFOLIO
     ═══════════════════════════════════════════════════ */
-    #portafolio {
-      position: relative; z-index: 10;
-      background: rgba(10,10,10,.85);
-      backdrop-filter: blur(4px);
-      border-top: 1px solid var(--border);
-      border-bottom: 1px solid var(--border);
-    }
-    .portfolio-header {
-      display: flex; flex-direction: column;
-      gap: 1.5rem; margin-bottom: 2rem;
-    }
-    .portfolio-header h2 {
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: clamp(3rem, 14vw, 8rem);
-      line-height: 1; text-transform: uppercase; letter-spacing: .08em;
-    }
-    .portfolio-header .sub {
-      color: rgba(255,255,255,.3);
-      text-transform: uppercase; letter-spacing: .3em;
-      font-size: .5rem; margin-top: .4rem;
-    }
+    #portafolio { position: relative; z-index: 10; background: rgba(10,10,10,.85); backdrop-filter: blur(4px); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+    .portfolio-header { display: flex; flex-direction: column; gap: 1.5rem; margin-bottom: 2rem; }
+    .portfolio-header h2 { font-family: 'Bebas Neue', sans-serif; font-size: clamp(3rem, 14vw, 8rem); line-height: 1; text-transform: uppercase; letter-spacing: .08em; }
+    .portfolio-header .sub { color: rgba(255,255,255,.3); text-transform: uppercase; letter-spacing: .3em; font-size: .5rem; margin-top: .4rem; }
     .filter-btns { display: flex; flex-wrap: wrap; gap: .4rem; }
-    .filter-btn {
-      padding: .3rem .9rem;
-      font-size: .5rem; text-transform: uppercase; letter-spacing: .12em;
-      border: 1px solid rgba(255,255,255,.1);
-      background: none; color: rgba(255,255,255,.4);
-      transition: all .25s;
-    }
+    .filter-btn { padding: .3rem .9rem; font-size: .5rem; text-transform: uppercase; letter-spacing: .12em; border: 1px solid rgba(255,255,255,.1); background: none; color: rgba(255,255,255,.4); transition: all .25s; }
     .filter-btn:hover { border-color: rgba(201,168,76,.4); color: var(--gold); }
     .filter-btn.active { background: var(--gold); color: #000; border-color: var(--gold); }
 
-    .portfolio-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: .625rem;
-    }
+    .portfolio-grid { display: grid; grid-template-columns: 1fr 1fr; gap: .625rem; }
 
-    /* Project card */
-    .project-card {
-      position: relative; aspect-ratio: 1;
-      background: var(--bg2); overflow: hidden;
-      border: 1px solid var(--border);
-      transition: border-color .5s;
-    }
-    .project-card:hover { border-color: rgba(201,168,76,.45); }
-    .project-card img {
-      width: 100%; height: 100%;
-      object-fit: contain; padding: 1.25rem;
-      filter: grayscale(1); opacity: .75;
-      transition: all .6s;
-    }
-    .project-card:hover img,
-    .project-card.touch-active img {
-      filter: grayscale(0); opacity: 1; transform: scale(1.06);
-    }
-    .project-overlay {
-      position: absolute; inset: 0;
-      background: linear-gradient(to top, rgba(0,0,0,.92) 0%, rgba(0,0,0,.3) 55%, transparent 100%);
-      display: flex; flex-direction: column; justify-content: flex-end;
-      padding: .875rem 1rem;
-      /* On mobile always visible, desktop on hover */
-      opacity: 1;
-      transition: opacity .4s;
-    }
-    .project-cat {
-      font-size: .42rem; text-transform: uppercase;
-      letter-spacing: .22em; color: var(--gold);
-      margin-bottom: .25rem;
-    }
-    .project-title {
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: clamp(.65rem, 2.8vw, 1rem);
-      color: #fff; line-height: 1.1;
-      text-transform: uppercase; letter-spacing: .04em;
-    }
-    .project-link {
-      margin-top: .5rem;
-      display: inline-flex; align-items: center; gap: .5rem;
-      background: var(--gold); color: #000;
-      padding: .35rem .75rem;
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: .7rem; letter-spacing: .15em;
-      text-decoration: none;
-      transition: background .25s, transform .25s;
-      width: fit-content;
-    }
+    .project-card { position: relative; aspect-ratio: 1; background: var(--bg2); overflow: hidden; border: 1px solid var(--border); transition: border-color .5s, transform .4s; }
+    .project-card:hover { border-color: rgba(201,168,76,.45); transform: translateY(-3px); }
+    .project-card img { width: 100%; height: 100%; object-fit: contain; padding: 1.25rem; filter: grayscale(1); opacity: .75; transition: all .6s; }
+    .project-card:hover img, .project-card.touch-active img { filter: grayscale(0); opacity: 1; transform: scale(1.06); }
+    .project-overlay { position: absolute; inset: 0; background: linear-gradient(to top, rgba(0,0,0,.92) 0%, rgba(0,0,0,.3) 55%, transparent 100%); display: flex; flex-direction: column; justify-content: flex-end; padding: .875rem 1rem; opacity: 1; transition: opacity .4s; }
+    .project-cat { font-size: .42rem; text-transform: uppercase; letter-spacing: .22em; color: var(--gold); margin-bottom: .25rem; }
+    .project-title { font-family: 'Bebas Neue', sans-serif; font-size: clamp(.65rem, 2.8vw, 1rem); color: #fff; line-height: 1.1; text-transform: uppercase; letter-spacing: .04em; }
+    .project-link { margin-top: .5rem; display: inline-flex; align-items: center; gap: .5rem; background: var(--gold); color: #000; padding: .35rem .75rem; font-family: 'Bebas Neue', sans-serif; font-size: .7rem; letter-spacing: .15em; text-decoration: none; transition: background .25s, transform .25s; width: fit-content; }
     .project-link:hover { background: #fff; transform: scale(1.03); }
-    .project-bar {
-      display: none; /* shown on desktop only */
-      width: 0; height: 2px; background: var(--gold); margin-top: 1rem;
-      transition: width .6s .1s;
-    }
+    .project-bar { display: none; width: 0; height: 2px; background: var(--gold); margin-top: 1rem; transition: width .6s .1s; }
     .project-card.hidden { display: none; }
 
     /* ═══════════════════════════════════════════════════
-       CONTACTO
+       CONTACTO — LETS GROW
     ═══════════════════════════════════════════════════ */
-    #contacto { position: relative; z-index: 10; text-align: center; }
-    .lets, .grow {
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: clamp(3.5rem, 18vw, 13rem);
-      line-height: .78;
-      letter-spacing: .04em;
+    #contacto { position: relative; z-index: 10; text-align: center; overflow: hidden; }
+
+    .contact-bg-glow {
+      position: absolute; inset: 0; pointer-events: none;
+      background: radial-gradient(ellipse 80% 60% at 50% 80%, rgba(201,168,76,.08) 0%, transparent 70%);
     }
-    .lets { color: #fff; }
+
+    .lets-grow-wrap {
+      position: relative; z-index: 5;
+      line-height: .78;
+      margin-bottom: 1rem;
+    }
+
+    .lets {
+      display: block;
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(3.5rem, 17vw, 13rem);
+      color: #fff;
+      letter-spacing: .04em;
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity .8s ease, transform .8s ease;
+    }
+    .lets.visible { opacity: 1; transform: none; }
+
     .grow {
+      display: block;
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(3.5rem, 17vw, 13rem);
       color: transparent;
-      -webkit-text-stroke: 1.5px var(--gold);
+      -webkit-text-stroke: 2px var(--gold);
+      letter-spacing: .06em;
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity .8s ease .2s, transform .8s ease .2s;
+      /* shimmer on visible */
+    }
+    .grow.visible {
+      opacity: 1;
+      transform: none;
       animation: shimmer 3s ease-in-out infinite;
     }
-    @keyframes shimmer {
-      0%,100% { filter: drop-shadow(0 0 2px rgba(201,168,76,.35)); }
-      50%      { filter: drop-shadow(0 0 12px rgba(201,168,76,.7)); }
+    @keyframes shimmer { 0%,100% { filter: drop-shadow(0 0 3px rgba(201,168,76,.3)); } 50% { filter: drop-shadow(0 0 18px rgba(201,168,76,.8)); } }
+
+    /* Animated gold underline */
+    .grow-underline {
+      display: block;
+      width: 0; height: 3px;
+      background: linear-gradient(to right, transparent, var(--gold), transparent);
+      margin: .75rem auto 0;
+      transition: width 1s ease .5s;
     }
-    .contact-desc {
-      font-size: clamp(.82rem, 2vw, 1.1rem);
-      color: rgba(255,255,255,.45);
-      margin: 2rem auto 2.5rem;
-      max-width: 32rem;
-    }
-    .contact-btns {
-      display: flex; flex-direction: column;
-      align-items: stretch; gap: .875rem;
-    }
-    .btn-wa, .btn-ig {
-      display: flex; align-items: center; justify-content: center; gap: .875rem;
-      padding: 1.1rem 2rem;
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: 1.35rem; letter-spacing: .18em; text-transform: uppercase;
-      text-decoration: none;
-      transition: transform .25s;
-    }
-    .btn-wa {
-      background: var(--gold); color: #000;
-      box-shadow: 0 4px 28px rgba(0,0,0,.35);
-    }
+    .grow.visible ~ .grow-underline,
+    .lets-grow-wrap.visible .grow-underline { width: min(400px, 80%); }
+
+    .contact-desc { font-size: clamp(.82rem, 2vw, 1.1rem); color: rgba(255,255,255,.45); margin: 2rem auto 2.5rem; max-width: 32rem; position: relative; z-index: 5; }
+    .contact-btns { display: flex; flex-direction: column; align-items: stretch; gap: .875rem; position: relative; z-index: 5; }
+    .btn-wa, .btn-ig { display: flex; align-items: center; justify-content: center; gap: .875rem; padding: 1.1rem 2rem; font-family: 'Bebas Neue', sans-serif; font-size: 1.35rem; letter-spacing: .18em; text-transform: uppercase; text-decoration: none; transition: transform .25s; }
+    .btn-wa { background: var(--gold); color: #000; box-shadow: 0 4px 28px rgba(0,0,0,.35); }
     .btn-wa:hover { transform: scale(1.04); }
-    .btn-ig {
-      border: 2px solid rgba(255,255,255,.12); color: #fff;
-    }
+    .btn-ig { border: 2px solid rgba(255,255,255,.12); color: #fff; }
     .btn-ig:hover { background: #fff; color: #000; }
     .btn-wa img, .btn-ig img { width: 1.75rem; height: 1.75rem; }
 
     /* ═══════════════════════════════════════════════════
        FOOTER
     ═══════════════════════════════════════════════════ */
-    footer {
-      position: relative; z-index: 10;
-      padding: 2.5rem var(--px);
-      border-top: 1px solid var(--border);
-      background: rgba(12,12,12,.95);
-    }
-    .footer-inner {
-      max-width: var(--max-w); margin: 0 auto;
-      display: flex; flex-direction: column;
-      align-items: center; gap: 1.5rem; text-align: center;
-    }
-    .footer-brand {
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: 1.6rem; letter-spacing: .12em;
-    }
+    footer { position: relative; z-index: 10; padding: 2.5rem var(--px); border-top: 1px solid var(--border); background: rgba(12,12,12,.95); }
+    .footer-inner { max-width: var(--max-w); margin: 0 auto; display: flex; flex-direction: column; align-items: center; gap: 1.5rem; text-align: center; }
+    .footer-brand { font-family: 'Bebas Neue', sans-serif; font-size: 1.6rem; letter-spacing: .12em; }
     .footer-brand span { color: var(--gold); }
     .footer-sub { font-size: .6rem; color: rgba(255,255,255,.3); text-transform: uppercase; letter-spacing: .18em; margin-top: .25rem; }
     .footer-copy { font-size: .5rem; color: rgba(255,255,255,.2); text-transform: uppercase; letter-spacing: .12em; }
@@ -547,21 +290,10 @@
     .footer-socials img { width: 1.4rem; height: 1.4rem; filter: grayscale(1); }
 
     /* ═══════════════════════════════════════════════════
-       FLOATING BUTTONS
+       FLOATING
     ═══════════════════════════════════════════════════ */
-    .floating {
-      position: fixed; bottom: 1.25rem; right: 1.25rem;
-      z-index: 300; display: flex; flex-direction: column; gap: .75rem;
-    }
-    #btn-top {
-      display: none;
-      background: #1a1a1a; color: var(--gold);
-      border: 1px solid rgba(201,168,76,.2);
-      border-radius: 50%; width: 3.25rem; height: 3.25rem;
-      align-items: center; justify-content: center;
-      box-shadow: 0 4px 18px rgba(0,0,0,.4);
-      transition: transform .2s;
-    }
+    .floating { position: fixed; bottom: 1.25rem; right: 1.25rem; z-index: 300; display: flex; flex-direction: column; gap: .75rem; }
+    #btn-top { display: none; background: #1a1a1a; color: var(--gold); border: 1px solid rgba(201,168,76,.2); border-radius: 50%; width: 3.25rem; height: 3.25rem; align-items: center; justify-content: center; box-shadow: 0 4px 18px rgba(0,0,0,.4); transition: transform .2s; }
     #btn-top:hover { transform: scale(1.1); }
     #btn-top.visible { display: flex; }
     .float-wa { border-radius: 50%; display: block; transition: transform .2s; }
@@ -569,104 +301,63 @@
     .float-wa img { width: 3.25rem; height: 3.25rem; }
 
     /* ═══════════════════════════════════════════════════
-       TABLET  ≥ 640px
+       TABLET ≥ 640px
     ═══════════════════════════════════════════════════ */
     @media (min-width: 640px) {
       :root { --px: 1.5rem; }
-
-      .hero-h1 { font-size: clamp(5rem, 16vw, 11rem); }
-
       .about-image { aspect-ratio: 3/2; max-height: 320px; }
-      .about-image-caption h3 { font-size: clamp(1.6rem, 3.5vw, 2.25rem); }
-
       .services-grid { grid-template-columns: 1fr 1fr; }
-
       .portfolio-grid { gap: .875rem; }
-
-      .contact-btns {
-        flex-direction: row;
-        justify-content: center;
-      }
+      .contact-btns { flex-direction: row; justify-content: center; }
       .btn-wa, .btn-ig { flex: 1; max-width: 280px; }
     }
 
     /* ═══════════════════════════════════════════════════
-       DESKTOP  ≥ 768px
+       DESKTOP ≥ 768px
     ═══════════════════════════════════════════════════ */
     @media (min-width: 768px) {
-      :root {
-        --nav-h: var(--nav-h-lg);
-        --px: var(--px-lg);
-      }
-
-      /* Nav */
+      :root { --nav-h: var(--nav-h-lg); --px: var(--px-lg); }
       nav { height: var(--nav-h-lg); padding: 0 var(--px-lg); }
       .nav-logo { font-size: 1.4rem; }
       .nav-links { display: flex; }
       .hamburger { display: none; }
 
-      /* Hero */
       #inicio { padding: calc(var(--nav-h-lg) + 4rem) var(--px-lg) 4rem; }
 
-      /* Sobre mí */
-      .about-grid {
-        grid-template-columns: 1fr 1fr;
-        gap: 3rem;
-      }
-      .about-image {
-        order: 1; aspect-ratio: 4/5; max-height: none;
-      }
+      .about-grid { grid-template-columns: 1fr 1fr; gap: 3rem; }
+      .about-image { order: 1; aspect-ratio: 4/5; max-height: none; }
       .about-image-caption { bottom: 2rem; left: 2rem; }
       .about-content { order: 2; }
       .about-content h2 { font-size: clamp(2rem, 4.5vw, 3.25rem); }
 
-      /* Servicios */
       .section-title { margin-bottom: 3rem; }
 
-      /* Portafolio */
-      .portfolio-header {
-        flex-direction: row;
-        align-items: flex-end;
-        margin-bottom: 2.5rem;
-      }
-      .portfolio-grid {
-        grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-        gap: 1.125rem;
-      }
+      .portfolio-header { flex-direction: row; align-items: flex-end; margin-bottom: 2.5rem; }
+      .portfolio-grid { grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 1.125rem; }
       .project-card img { padding: 1.75rem; }
-      /* On desktop: overlay only on hover */
       .project-overlay { opacity: 0; padding: 1.5rem; }
-      .project-card:hover .project-overlay,
-      .project-card.touch-active .project-overlay { opacity: 1; }
+      .project-card:hover .project-overlay, .project-card.touch-active .project-overlay { opacity: 1; }
       .project-bar { display: block; }
       .project-card:hover .project-bar { width: 100%; }
 
-      /* Contact */
       .contact-btns { gap: 1.25rem; }
       .btn-wa, .btn-ig { flex: none; padding: 1.25rem 3rem; font-size: 1.5rem; }
       .btn-wa img, .btn-ig img { width: 2rem; height: 2rem; }
 
-      /* Footer */
-      .footer-inner {
-        flex-direction: row;
-        justify-content: space-between;
-        text-align: left;
-      }
-
-      /* Floating */
+      .footer-inner { flex-direction: row; justify-content: space-between; text-align: left; }
       .floating { bottom: 2rem; right: 2rem; }
-      .float-wa img, #btn-top { width: 3.5rem; height: 3.5rem; }
+      .float-wa img { width: 3.5rem; height: 3.5rem; }
+      #btn-top { width: 3.5rem; height: 3.5rem; }
     }
 
     /* ═══════════════════════════════════════════════════
-       LARGE DESKTOP  ≥ 1024px
+       LARGE ≥ 1024px
     ═══════════════════════════════════════════════════ */
     @media (min-width: 1024px) {
       .services-grid { grid-template-columns: repeat(4, 1fr); }
       .portfolio-grid { grid-template-columns: repeat(3, 1fr); }
     }
 
-    /* Touch active state */
     .project-card.touch-active .project-overlay { opacity: 1; }
   </style>
 </head>
@@ -675,11 +366,10 @@
   <div class="bg-grid"></div>
   <div class="noise-overlay"></div>
 
-  <!-- ══════════════ NAV ══════════════ -->
+  <!-- NAV -->
   <nav id="navbar">
     <div class="nav-inner">
       <a href="#inicio" class="nav-logo">ADRIÁN GARCÍA<span>.</span></a>
-
       <div class="nav-links">
         <a href="#inicio"     onclick="smoothScroll(event,'inicio')">Inicio</a>
         <a href="#sobre-mi"   onclick="smoothScroll(event,'sobre-mi')">Sobre Mí</a>
@@ -688,7 +378,6 @@
         <a href="#contacto"   onclick="smoothScroll(event,'contacto')">Contacto</a>
         <a href="https://wa.link/l9llu6" target="_blank" rel="noopener" class="nav-cta">CONTACTAR</a>
       </div>
-
       <button class="hamburger" id="hamburger" onclick="toggleMenu()" aria-label="Menú">
         <svg id="ico-menu" xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
         <svg id="ico-close" style="display:none" xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
@@ -696,7 +385,7 @@
     </div>
   </nav>
 
-  <!-- ══════════════ MOBILE MENU ══════════════ -->
+  <!-- MOBILE MENU -->
   <div class="mobile-menu" id="mobile-menu">
     <a href="#inicio"     onclick="smoothScroll(event,'inicio');toggleMenu()">Inicio</a>
     <a href="#sobre-mi"   onclick="smoothScroll(event,'sobre-mi');toggleMenu()">Sobre Mí</a>
@@ -706,9 +395,15 @@
     <a href="https://wa.link/l9llu6" target="_blank" rel="noopener" class="mob-cta">CONTACTAR</a>
   </div>
 
-  <!-- ══════════════ HERO ══════════════ -->
+  <!-- HERO -->
   <section id="inicio">
-    <div class="hero-inner fade-in">
+    <canvas id="hero-canvas"></canvas>
+    <div class="hero-rays">
+      <div class="ray"></div><div class="ray"></div><div class="ray"></div>
+      <div class="ray"></div><div class="ray"></div><div class="ray"></div>
+      <div class="ray"></div>
+    </div>
+    <div class="hero-inner">
       <span class="hero-slogan">Estrategia Digital &amp; Growth Management</span>
       <h1 class="hero-h1">
         <span class="line-ventas">VENTAS</span>
@@ -722,13 +417,11 @@
     </div>
   </section>
 
-  <!-- ══════════════ SOBRE MÍ ══════════════ -->
+  <!-- SOBRE MÍ -->
   <section id="sobre-mi" class="section-pad">
     <div class="container about-grid">
-
-      <div class="about-image fade-in">
-        <img src="perfil.png" alt="Adrián García" class="about-photo"
-             onerror="this.style.display='none'" />
+      <div class="about-image reveal-left">
+        <img src="perfil.png" alt="Adrián García" class="about-photo" onerror="this.style.display='none'" />
         <svg xmlns="http://www.w3.org/2000/svg" width="120" height="120" fill="none" stroke="rgba(201,168,76,0.06)" stroke-width="1.5" viewBox="0 0 24 24" style="position:absolute"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/></svg>
         <div class="about-image-caption">
           <h3>ADRIÁN GARCÍA</h3>
@@ -736,322 +429,174 @@
           <p>GROWTH PARTNER</p>
         </div>
       </div>
-
-      <div class="about-content fade-in">
-        <h2>
-          Experiencia –<br>
-          12 AÑOS EN VENTAS TRADICIONALES<br>
-          <span>6 AÑOS EN DIGITAL</span>
-        </h2>
+      <div class="about-content reveal-right">
+        <h2>Experiencia –<br>12 AÑOS EN VENTAS TRADICIONALES<br><span>6 AÑOS EN DIGITAL</span></h2>
         <p class="about-quote">"Ayudo a emprendedores y empresas a crecer con estrategia, diseño y marketing que vende."</p>
         <div class="about-pills">
-          <div class="about-pill">
-            <h4>SOCIO DE CRECIMIENTO</h4>
-            <p>Rentabilidad total para tu negocio digital.</p>
-          </div>
-          <div class="about-pill">
-            <h4>ALTO TICKET</h4>
-            <p>Posicionamiento de élite garantizado en el mercado.</p>
-          </div>
+          <div class="about-pill reveal d1"><h4>SOCIO DE CRECIMIENTO</h4><p>Rentabilidad total para tu negocio digital.</p></div>
+          <div class="about-pill reveal d2"><h4>ALTO TICKET</h4><p>Posicionamiento de élite garantizado en el mercado.</p></div>
         </div>
       </div>
-
     </div>
   </section>
 
-  <!-- ══════════════ SERVICIOS ══════════════ -->
+  <!-- SERVICIOS -->
   <section id="servicios" class="section-pad">
-    <div class="container services-inner fade-in">
-      <h2 class="section-title">SOLUCIONES DE <span>IMPACTO</span></h2>
+    <div class="container">
+      <h2 class="section-title reveal">SOLUCIONES DE <span>IMPACTO</span></h2>
       <div class="services-grid">
-
-        <div class="service-card">
-          <div>
-            <div class="service-icon">
-              <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
-            </div>
-            <h3>Pauta Digital</h3>
-            <p>Facebook, Google y TikTok Ads con enfoque en ROI masivo.</p>
-          </div>
-          <div class="benefits">
-            <div class="benefit">
-              <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
-              Retorno (ROAS) optimizado
-            </div>
-            <div class="benefit">
-              <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
-              Escalabilidad proyectada
-            </div>
-          </div>
+        <div class="service-card reveal d1">
+          <div><div class="service-icon"><svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg></div><h3>Pauta Digital</h3><p>Facebook, Google y TikTok Ads con enfoque en ROI masivo.</p></div>
+          <div class="benefits"><div class="benefit"><svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>Retorno (ROAS) optimizado</div><div class="benefit"><svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>Escalabilidad proyectada</div></div>
         </div>
-
-        <div class="service-card">
-          <div>
-            <div class="service-icon">
-              <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
-            </div>
-            <h3>Desarrollo Web</h3>
-            <p>Sitios High-End diseñados para convertir visitas en ventas.</p>
-          </div>
-          <div class="benefits">
-            <div class="benefit"><svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg> Diseño responsive</div>
-            <div class="benefit"><svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg> Arquitectura de conversión</div>
-          </div>
+        <div class="service-card reveal d2">
+          <div><div class="service-icon"><svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg></div><h3>Desarrollo Web</h3><p>Sitios High-End diseñados para convertir visitas en ventas.</p></div>
+          <div class="benefits"><div class="benefit"><svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>Diseño responsive</div><div class="benefit"><svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>Arquitectura de conversión</div></div>
         </div>
-
-        <div class="service-card">
-          <div>
-            <div class="service-icon">
-              <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="8" rx="2" ry="2"/><rect x="2" y="14" width="20" height="8" rx="2" ry="2"/><line x1="6" y1="6" x2="6.01" y2="6"/><line x1="6" y1="18" x2="6.01" y2="18"/></svg>
-            </div>
-            <h3>Branding</h3>
-            <p>Identidad visual de élite para cobrar lo que realmente vales.</p>
-          </div>
-          <div class="benefits">
-            <div class="benefit"><svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg> Manual de marca</div>
-            <div class="benefit"><svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg> Autoridad visual</div>
-          </div>
+        <div class="service-card reveal d3">
+          <div><div class="service-icon"><svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="8" rx="2"/><rect x="2" y="14" width="20" height="8" rx="2"/><line x1="6" y1="6" x2="6.01" y2="6"/><line x1="6" y1="18" x2="6.01" y2="18"/></svg></div><h3>Branding</h3><p>Identidad visual de élite para cobrar lo que realmente vales.</p></div>
+          <div class="benefits"><div class="benefit"><svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>Manual de marca</div><div class="benefit"><svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>Autoridad visual</div></div>
         </div>
-
-        <div class="service-card">
-          <div>
-            <div class="service-icon">
-              <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 19l7-7 3 3-7 7-3-3z"/><path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"/><path d="M2 2l7.586 7.586"/><circle cx="11" cy="11" r="2"/></svg>
-            </div>
-            <h3>Diseño Gráfico</h3>
-            <p>Creativos publicitarios que detienen el scroll.</p>
-          </div>
-          <div class="benefits">
-            <div class="benefit"><svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg> Alto CTR</div>
-            <div class="benefit"><svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg> Copy persuasivo</div>
-          </div>
+        <div class="service-card reveal d4">
+          <div><div class="service-icon"><svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 19l7-7 3 3-7 7-3-3z"/><path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"/><path d="M2 2l7.586 7.586"/><circle cx="11" cy="11" r="2"/></svg></div><h3>Diseño Gráfico</h3><p>Creativos publicitarios que detienen el scroll.</p></div>
+          <div class="benefits"><div class="benefit"><svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>Alto CTR</div><div class="benefit"><svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>Copy persuasivo</div></div>
         </div>
-
       </div>
     </div>
   </section>
 
-  <!-- ══════════════ PORTAFOLIO ══════════════ -->
+  <!-- PORTAFOLIO -->
   <section id="portafolio" class="section-pad">
     <div class="container portfolio-inner">
-
-      <div class="portfolio-header fade-in">
+      <div class="portfolio-header reveal">
         <div>
           <h2>PORTAFOLIO</h2>
           <p class="sub">Calidad Visual Estratégica</p>
         </div>
         <div class="filter-btns">
+          <button class="filter-btn active" onclick="filterPortfolio(this,'Todos')">Todos</button>
           <button class="filter-btn" onclick="filterPortfolio(this,'Logotipos')">Logotipos</button>
           <button class="filter-btn" onclick="filterPortfolio(this,'Tarjetas')">Tarjetas</button>
           <button class="filter-btn" onclick="filterPortfolio(this,'Páginas Web')">Páginas Web</button>
-          <button class="filter-btn" onclick="filterPortfolio(this,'Manual de Marca')">Manual de Marca</button>
-          <button class="filter-btn active" onclick="filterPortfolio(this,'Todos')">Todos</button>
         </div>
       </div>
 
       <div class="portfolio-grid" id="portfolio-grid">
 
         <!-- LOGOTIPOS -->
-        <div class="project-card" data-cat="Logotipos">
+        <div class="project-card reveal-scale d1" data-cat="Logotipos">
           <img src="nova.png" alt="Nova Integral Services" onerror="this.src='https://placehold.co/400x400/111/C9A84C?text=Nova'" />
-          <div class="project-overlay">
-            <span class="project-cat">Logotipos</span>
-            <h4 class="project-title">Nova Integral Services</h4>
-            <div class="project-bar"></div>
-          </div>
+          <div class="project-overlay"><span class="project-cat">Logotipos</span><h4 class="project-title">Nova Integral Services</h4><div class="project-bar"></div></div>
         </div>
-
-        <div class="project-card" data-cat="Logotipos">
+        <div class="project-card reveal-scale d2" data-cat="Logotipos">
           <img src="angela.png" alt="Ángela Gómez Psicóloga" onerror="this.src='https://placehold.co/400x400/111/C9A84C?text=Ángela'" />
-          <div class="project-overlay">
-            <span class="project-cat">Logotipos</span>
-            <h4 class="project-title">Ángela Gómez Psicóloga</h4>
-            <div class="project-bar"></div>
-          </div>
+          <div class="project-overlay"><span class="project-cat">Logotipos</span><h4 class="project-title">Ángela Gómez Psicóloga</h4><div class="project-bar"></div></div>
         </div>
-
-        <div class="project-card" data-cat="Logotipos">
+        <div class="project-card reveal-scale d1" data-cat="Logotipos">
           <img src="angelica.png" alt="A&W Bienes Raíces" onerror="this.src='https://placehold.co/400x400/111/C9A84C?text=A%26W'" />
-          <div class="project-overlay">
-            <span class="project-cat">Logotipos</span>
-            <h4 class="project-title">A&amp;W Bienes Raíces</h4>
-            <div class="project-bar"></div>
-          </div>
+          <div class="project-overlay"><span class="project-cat">Logotipos</span><h4 class="project-title">A&amp;W Bienes Raíces</h4><div class="project-bar"></div></div>
         </div>
-
-        <div class="project-card" data-cat="Logotipos">
+        <div class="project-card reveal-scale d2" data-cat="Logotipos">
           <img src="hugo.png" alt="Hugo Motta" onerror="this.src='https://placehold.co/400x400/111/C9A84C?text=Hugo'" />
-          <div class="project-overlay">
-            <span class="project-cat">Logotipos</span>
-            <h4 class="project-title">Hugo Motta</h4>
-            <div class="project-bar"></div>
-          </div>
+          <div class="project-overlay"><span class="project-cat">Logotipos</span><h4 class="project-title">Hugo Motta</h4><div class="project-bar"></div></div>
         </div>
-
-        <div class="project-card" data-cat="Logotipos">
+        <div class="project-card reveal-scale d1" data-cat="Logotipos">
           <img src="Revivetech.png" alt="Revive Tech" onerror="this.src='https://placehold.co/400x400/111/C9A84C?text=ReviveTech'" />
-          <div class="project-overlay">
-            <span class="project-cat">Logotipos</span>
-            <h4 class="project-title">Revive Tech</h4>
-            <div class="project-bar"></div>
-          </div>
+          <div class="project-overlay"><span class="project-cat">Logotipos</span><h4 class="project-title">Revive Tech</h4><div class="project-bar"></div></div>
         </div>
-
-        <div class="project-card" data-cat="Logotipos">
-          <img src="bufalux.png" alt="Bufalux" onerror="this.src='https://placehold.co/400x400/111/C9A84C?text=Bufalux'" />
-          <div class="project-overlay">
-            <span class="project-cat">Logotipos</span>
-            <h4 class="project-title">Bufalux</h4>
-            <div class="project-bar"></div>
-          </div>
-        </div>
-
-        <div class="project-card" data-cat="Logotipos">
+        <div class="project-card reveal-scale d2" data-cat="Logotipos">
           <img src="laboratorio.jpg" alt="Laboratorio de Éxito" onerror="this.src='https://placehold.co/400x400/111/C9A84C?text=Lab+Éxito'" />
-          <div class="project-overlay">
-            <span class="project-cat">Logotipos</span>
-            <h4 class="project-title">Laboratorio de Éxito</h4>
-            <div class="project-bar"></div>
-          </div>
+          <div class="project-overlay"><span class="project-cat">Logotipos</span><h4 class="project-title">Laboratorio de Éxito</h4><div class="project-bar"></div></div>
         </div>
-
-        <div class="project-card" data-cat="Logotipos">
+        <div class="project-card reveal-scale d1" data-cat="Logotipos">
           <img src="axevita.jpg" alt="Axevita" onerror="this.src='https://placehold.co/400x400/111/C9A84C?text=Axevita'" />
-          <div class="project-overlay">
-            <span class="project-cat">Logotipos</span>
-            <h4 class="project-title">Axevita</h4>
-            <div class="project-bar"></div>
-          </div>
+          <div class="project-overlay"><span class="project-cat">Logotipos</span><h4 class="project-title">Axevita</h4><div class="project-bar"></div></div>
         </div>
-
-        <div class="project-card" data-cat="Logotipos">
-          <img src="CREW HEALTHY.jpg" alt="CREW HEALTHY" onerror="this.src='https://placehold.co/400x400/111/C9A84C?text=CREW HEALTHY'" />
-          <div class="project-overlay">
-            <span class="project-cat">Logotipos</span>
-            <h4 class="project-title">CREW HEALTHY</h4>
-            <div class="project-bar"></div>
-          </div>
-        </div>
-
-        <div class="project-card" data-cat="Logotipos">
+        <div class="project-card reveal-scale d2" data-cat="Logotipos">
           <img src="webm.png" alt="Webmotion" onerror="this.src='https://placehold.co/400x400/111/C9A84C?text=Webmotion'" />
-          <div class="project-overlay">
-            <span class="project-cat">Logotipos</span>
-            <h4 class="project-title">Webmotion</h4>
-            <div class="project-bar"></div>
-          </div>
+          <div class="project-overlay"><span class="project-cat">Logotipos</span><h4 class="project-title">Webmotion</h4><div class="project-bar"></div></div>
         </div>
-
-        <div class="project-card" data-cat="Logotipos">
-          <img src="axioma.png" alt="Axioma Jurídico" onerror="this.src='https://placehold.co/400x400/111/C9A84C?text=axioma'" />
-          <div class="project-overlay">
-            <span class="project-cat">Logotipos</span>
-            <h4 class="project-title">Axioma Jurídico</h4>
-            <div class="project-bar"></div>
-          </div>
+        <div class="project-card reveal-scale d1" data-cat="Logotipos">
+          <img src="alma.png" alt="ALMA Aliado Legal" onerror="this.src='https://placehold.co/400x400/111/C9A84C?text=ALMA'" />
+          <div class="project-overlay"><span class="project-cat">Logotipos</span><h4 class="project-title">ALMA Aliado Legal</h4><div class="project-bar"></div></div>
+        </div>
+        <div class="project-card reveal-scale d2" data-cat="Logotipos">
+          <img src="mastery.jpg" alt="Mastery Trading" onerror="this.src='https://placehold.co/400x400/111/C9A84C?text=Mastery'" />
+          <div class="project-overlay"><span class="project-cat">Logotipos</span><h4 class="project-title">Mastery Trading</h4><div class="project-bar"></div></div>
         </div>
 
         <!-- TARJETAS -->
-        <div class="project-card" data-cat="Tarjetas">
+        <div class="project-card reveal-scale d1" data-cat="Tarjetas">
           <img src="adrian.png" alt="Corporate Identity" onerror="this.src='https://placehold.co/400x400/111/C9A84C?text=Corporate'" />
-          <div class="project-overlay">
-            <span class="project-cat">Tarjetas</span>
-            <h4 class="project-title">Corporate Identity</h4>
-            <div class="project-bar"></div>
-          </div>
+          <div class="project-overlay"><span class="project-cat">Tarjetas</span><h4 class="project-title">Corporate Identity</h4><div class="project-bar"></div></div>
         </div>
-
-       <div class="project-card" data-cat="Tarjetas">
-          <img src="hugoo.png" alt="Law Identity" onerror="this.src='https://placehold.co/400x400/111/C9A84C?text=Law'" />
-          <div class="project-overlay">
-            <span class="project-cat">Tarjetas</span>
-            <h4 class="project-title">Law Identity</h4>
-            <div class="project-bar"></div>
-          </div>
+        <div class="project-card reveal-scale d2" data-cat="Tarjetas">
+          <img src="angelica.png" alt="Real Estate Card" onerror="this.src='https://placehold.co/400x400/111/C9A84C?text=Real+Estate'" />
+          <div class="project-overlay"><span class="project-cat">Tarjetas</span><h4 class="project-title">Real Estate Card</h4><div class="project-bar"></div></div>
         </div>
-
-      <div class="project-card" data-cat="Tarjetas">
-          <img src="revive.png" alt="ambiental Card" onerror="this.src='https://placehold.co/400x400/111/C9A84C?text=ambiental Card'" />
-          <div class="project-overlay">
-            <span class="project-cat">Tarjetas</span>
-            <h4 class="project-title">ambiental Card</h4>
-            <div class="project-bar"></div>
-          </div>
+        <div class="project-card reveal-scale d1" data-cat="Tarjetas">
+          <img src="angela.png" alt="Card Design Psicología" onerror="this.src='https://placehold.co/400x400/111/C9A84C?text=Card+Psico'" />
+          <div class="project-overlay"><span class="project-cat">Tarjetas</span><h4 class="project-title">Card Design Psicología</h4><div class="project-bar"></div></div>
         </div>
-
-      <div class="project-card" data-cat="Tarjetas">
-          <img src="angelicaa.png" alt="Real Estate Card" onerror="this.src='https://placehold.co/400x400/111/C9A84C?text=Real+Estate'" />
-          <div class="project-overlay">
-            <span class="project-cat">Tarjetas</span>
-            <h4 class="project-title">Real Estate Card</h4>
-            <div class="project-bar"></div>
-          </div>
+        <div class="project-card reveal-scale d2" data-cat="Tarjetas">
+          <img src="mateo.jpg" alt="Card Design Law" onerror="this.src='https://placehold.co/400x400/111/C9A84C?text=Card+Law'" />
+          <div class="project-overlay"><span class="project-cat">Tarjetas</span><h4 class="project-title">Card Design Law</h4><div class="project-bar"></div></div>
         </div>
-           
-       <div class="project-card" data-cat="Tarjetas">
-          <img src="angelaa.png" alt="Card Design - Psicología" onerror="this.src='https://placehold.co/400x400/111/C9A84C?text=Card+Psico'" />
-          <div class="project-overlay">
-            <span class="project-cat">Tarjetas</span>
-            <h4 class="project-title">Card Design - Psicología</h4>
-            <div class="project-bar"></div>
-          </div>
-        </div>
-
-      <div class="project-card" data-cat="Tarjetas">
-          <img src="mateo.png" alt="Card Design - law" onerror="this.src='https://placehold.co/400x400/111/C9A84C?text=Card+mateo'" />
-          <div class="project-overlay">
-            <span class="project-cat">Tarjetas</span>
-            <h4 class="project-title">Card Design - law</h4>
-            <div class="project-bar"></div>
-          </div>
-
-      <div class="project-card" data-cat="Tarjetas">
-          <img src="dani.png" alt="Dan Fit - Coach" onerror="this.src='https://placehold.co/400x400/111/C9A84C?text=Dan+Fit'" />
-          <div class="project-overlay">
-            <span class="project-cat">Tarjetas</span>
-            <h4 class="project-title">Dan Fit - Coach</h4>
-            <div class="project-bar"></div>
-          </div>
+        <div class="project-card reveal-scale d1" data-cat="Tarjetas">
+          <img src="dan.png" alt="Dan Fit Coach" onerror="this.src='https://placehold.co/400x400/111/C9A84C?text=Dan+Fit'" />
+          <div class="project-overlay"><span class="project-cat">Tarjetas</span><h4 class="project-title">Dan Fit Coach</h4><div class="project-bar"></div></div>
         </div>
 
         <!-- PÁGINAS WEB -->
-      <div class="project-card" data-cat="Páginas Web">
+        <div class="project-card reveal-scale d1" data-cat="Páginas Web">
           <img src="nova.png" alt="Nova Integral Services" onerror="this.src='https://placehold.co/400x400/111/C9A84C?text=Nova+Web'" />
           <div class="project-overlay">
             <span class="project-cat">Páginas Web</span>
             <h4 class="project-title">Nova Integral Services</h4>
             <a href="https://novaintegralservices.com/" target="_blank" rel="noopener noreferrer" class="project-link" onclick="event.stopPropagation()">
-              VISITAR WEB
-              <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+              VISITAR WEB <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
             </a>
             <div class="project-bar"></div>
           </div>
         </div>
-
-      <div class="project-card" data-cat="Páginas Web">
-          <img src="evitemultas.png" alt="Evite Multas Ponal" onerror="this.src='https://placehold.co/400x400/111/C9A84C?text=Multas'" />
+        <div class="project-card reveal-scale d2" data-cat="Páginas Web">
+          <img src="sit.png" alt="Evite Multas Ponal" onerror="this.src='https://placehold.co/400x400/111/C9A84C?text=Multas'" />
           <div class="project-overlay">
             <span class="project-cat">Páginas Web</span>
             <h4 class="project-title">Evite Multas Ponal</h4>
             <a href="https://evitemultasponal.com/" target="_blank" rel="noopener noreferrer" class="project-link" onclick="event.stopPropagation()">
-              VISITAR WEB
-              <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+              VISITAR WEB <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+            </a>
+            <div class="project-bar"></div>
+          </div>
+        </div>
+        <div class="project-card reveal-scale d3" data-cat="Páginas Web">
+          <img src="mastery.jpg" alt="SYT Investments" onerror="this.src='https://placehold.co/400x400/111/C9A84C?text=SYT'" />
+          <div class="project-overlay">
+            <span class="project-cat">Páginas Web</span>
+            <h4 class="project-title">SYT Investments</h4>
+            <a href="https://www.sytinvestments.com/" target="_blank" rel="noopener noreferrer" class="project-link" onclick="event.stopPropagation()">
+              VISITAR WEB <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
             </a>
             <div class="project-bar"></div>
           </div>
         </div>
 
-      </div><!-- /portfolio-grid -->
+      </div>
     </div>
   </section>
 
-  <!-- ══════════════ CONTACTO ══════════════ -->
+  <!-- CONTACTO -->
   <section id="contacto" class="section-pad">
-    <div class="container contact-inner fade-in">
-      <div class="lets">LET'S</div>
-      <div class="grow">GROW</div>
-      <p class="contact-desc">Escalemos tu facturación con una marca que proyecte confianza y autoridad.</p>
-      <div class="contact-btns">
+    <div class="contact-bg-glow"></div>
+    <div class="container contact-inner">
+      <div class="lets-grow-wrap">
+        <span class="lets">LET'S</span>
+        <span class="grow">GROW</span>
+        <span class="grow-underline"></span>
+      </div>
+      <p class="contact-desc reveal">Escalemos tu facturación con una marca que proyecte confianza y autoridad.</p>
+      <div class="contact-btns reveal">
         <a href="https://wa.link/l9llu6" target="_blank" rel="noopener noreferrer" class="btn-wa">
           <img src="https://upload.wikimedia.org/wikipedia/commons/5/5e/WhatsApp_icon.png" alt="WhatsApp" />
           WHATSAPP
@@ -1064,26 +609,19 @@
     </div>
   </section>
 
-  <!-- ══════════════ FOOTER ══════════════ -->
+  <!-- FOOTER -->
   <footer>
     <div class="footer-inner">
-      <div>
-        <div class="footer-brand">ADRIÁN GARCÍA<span>.</span></div>
-        <div class="footer-sub">Growth Partner &amp; Creative Agency</div>
-      </div>
+      <div><div class="footer-brand">ADRIÁN GARCÍA<span>.</span></div><div class="footer-sub">Growth Partner &amp; Creative Agency</div></div>
       <p class="footer-copy">© <span id="year"></span> ADRIÁN GARCÍA · TODOS LOS DERECHOS RESERVADOS</p>
       <div class="footer-socials">
-        <a href="https://instagram.com/adriangarcia.co" target="_blank" rel="noopener">
-          <img src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Instagram_icon.png" alt="Instagram" />
-        </a>
-        <a href="https://wa.link/l9llu6" target="_blank" rel="noopener">
-          <img src="https://upload.wikimedia.org/wikipedia/commons/5/5e/WhatsApp_icon.png" alt="WhatsApp" />
-        </a>
+        <a href="https://instagram.com/adriangarcia.co" target="_blank" rel="noopener"><img src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Instagram_icon.png" alt="Instagram" /></a>
+        <a href="https://wa.link/l9llu6" target="_blank" rel="noopener"><img src="https://upload.wikimedia.org/wikipedia/commons/5/5e/WhatsApp_icon.png" alt="WhatsApp" /></a>
       </div>
     </div>
   </footer>
 
-  <!-- ══════════════ FLOATING ══════════════ -->
+  <!-- FLOATING -->
   <div class="floating">
     <button id="btn-top" onclick="window.scrollTo({top:0,behavior:'smooth'})" title="Volver arriba">
       <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="12" y1="19" x2="12" y2="5"/><polyline points="5 12 12 5 19 12"/></svg>
@@ -1093,12 +631,30 @@
     </a>
   </div>
 
-  <!-- ══════════════ SCRIPTS ══════════════ -->
   <script>
     /* Year */
     document.getElementById('year').textContent = new Date().getFullYear();
 
-    /* Scroll effects */
+    /* ── PARTICLES ── */
+    (function() {
+      const canvas = document.getElementById('hero-canvas');
+      const ctx = canvas.getContext('2d');
+      let W, H, particles = [];
+      function resize() { W = canvas.width = canvas.offsetWidth; H = canvas.height = canvas.offsetHeight; }
+      window.addEventListener('resize', resize, { passive: true });
+      resize();
+      function rand(a,b) { return Math.random()*(b-a)+a; }
+      function mk() { return { x: rand(0,W), y: rand(0,H), r: rand(.5,2.2), vx: rand(-.2,.2), vy: rand(-.45,-.08), a: rand(.15,.65), d: rand(.003,.007) }; }
+      for(let i=0;i<90;i++) particles.push(mk());
+      function draw() {
+        ctx.clearRect(0,0,W,H);
+        particles.forEach((p,i)=>{ ctx.beginPath(); ctx.arc(p.x,p.y,p.r,0,Math.PI*2); ctx.fillStyle=`rgba(201,168,76,${p.a})`; ctx.fill(); p.x+=p.vx; p.y+=p.vy; p.a-=p.d; if(p.a<=0||p.y<-10) particles[i]=mk(); });
+        requestAnimationFrame(draw);
+      }
+      draw();
+    })();
+
+    /* ── NAV SCROLL ── */
     const navbar = document.getElementById('navbar');
     const btnTop = document.getElementById('btn-top');
     window.addEventListener('scroll', () => {
@@ -1106,7 +662,7 @@
       btnTop.classList.toggle('visible', window.scrollY > 500);
     }, { passive: true });
 
-    /* Smooth scroll */
+    /* ── SMOOTH SCROLL ── */
     function smoothScroll(e, id) {
       e.preventDefault();
       const el = document.getElementById(id);
@@ -1115,18 +671,18 @@
       window.scrollTo({ top: el.getBoundingClientRect().top + window.scrollY - navH, behavior: 'smooth' });
     }
 
-    /* Hamburger */
+    /* ── HAMBURGER ── */
     function toggleMenu() {
       const menu = document.getElementById('mobile-menu');
       const icoM = document.getElementById('ico-menu');
       const icoC = document.getElementById('ico-close');
       const open = menu.classList.toggle('open');
-      icoM.style.display = open ? 'none'  : 'block';
+      icoM.style.display = open ? 'none' : 'block';
       icoC.style.display = open ? 'block' : 'none';
       document.body.style.overflow = open ? 'hidden' : '';
     }
 
-    /* Portfolio filter */
+    /* ── PORTFOLIO FILTER ── */
     function filterPortfolio(btn, cat) {
       document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
       btn.classList.add('active');
@@ -1135,23 +691,33 @@
       });
     }
 
-    /* Touch overlay toggle */
+    /* ── TOUCH OVERLAY ── */
     if ('ontouchstart' in window) {
       document.querySelectorAll('.project-card').forEach(card => {
         card.addEventListener('click', function(e) {
           if (e.target.closest('.project-link')) return;
-          const wasActive = this.classList.contains('touch-active');
+          const was = this.classList.contains('touch-active');
           document.querySelectorAll('.project-card.touch-active').forEach(c => c.classList.remove('touch-active'));
-          if (!wasActive) this.classList.add('touch-active');
+          if (!was) this.classList.add('touch-active');
         });
       });
     }
 
-    /* Fade-in on scroll */
-    const observer = new IntersectionObserver(entries => {
-      entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
-    }, { threshold: 0.07 });
-    document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+    /* ── SCROLL REVEAL (all elements) ── */
+    const revealObs = new IntersectionObserver(entries => {
+      entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); } });
+    }, { threshold: 0.08 });
+
+    document.querySelectorAll('.reveal, .reveal-left, .reveal-right, .reveal-scale, .lets, .grow').forEach(el => revealObs.observe(el));
+
+    /* ── GROW UNDERLINE trigger ── */
+    const growEl = document.querySelector('.grow');
+    const underline = document.querySelector('.grow-underline');
+    if (growEl && underline) {
+      new IntersectionObserver(entries => {
+        entries.forEach(e => { if (e.isIntersecting) underline.style.width = 'min(400px, 80%)'; });
+      }, { threshold: 0.5 }).observe(growEl);
+    }
   </script>
 </body>
 </html>
