@@ -214,23 +214,30 @@
     }
     .hero-h1 {
       font-family: 'Bebas Neue', sans-serif;
-      /* VENTAS cabe holgado; EXPONENCIALES (13 chars) necesita ~7vw por carácter */
-      font-size: clamp(2.6rem, 8.5vw, 11rem);
       line-height: .85;
       letter-spacing: .02em;
       margin-bottom: 1.5rem;
       filter: drop-shadow(0 8px 30px rgba(0,0,0,.55));
       width: 100%;
-      overflow: hidden;
     }
+    /* VENTAS — 6 chars, puede ser más grande */
+    .hero-h1 .line-ventas {
+      display: block;
+      font-size: clamp(3.5rem, 19vw, 11rem);
+    }
+    /* EXPONENCIALES — 13 chars, debe caber exacto.
+       Bebas Neue ~0.58 aspect ratio → 100vw / (13 × 0.60) ≈ 12.8vw por char
+       Restamos el padding horizontal (≈ 2×1.125rem = 2.25rem) */
     .hero-outline {
       display: block;
       -webkit-text-stroke: 1.5px var(--gold);
       color: transparent;
-      letter-spacing: .02em;
-      /* Ensure it never overflows on any screen */
+      letter-spacing: 0;
+      font-size: clamp(2.5rem, 12.5vw, 11rem);
+      /* Scale to fit: will shrink if still overflows */
+      width: 100%;
       white-space: nowrap;
-      font-size: clamp(2rem, 7vw, 11rem);
+      overflow: hidden;
     }
     .hero-desc {
       font-size: clamp(.85rem, 2.2vw, 1.15rem);
@@ -704,7 +711,7 @@
     <div class="hero-inner fade-in">
       <span class="hero-slogan">Estrategia Digital &amp; Growth Management</span>
       <h1 class="hero-h1">
-        VENTAS<br>
+        <span class="line-ventas">VENTAS</span>
         <span class="hero-outline">EXPONENCIALES</span>
       </h1>
       <p class="hero-desc">Diseñamos sistemas de adquisición premium para marcas que no aceptan menos que el dominio absoluto de su mercado.</p>
