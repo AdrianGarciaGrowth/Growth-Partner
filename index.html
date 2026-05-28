@@ -196,16 +196,40 @@
 
     .portfolio-grid { display: grid; grid-template-columns: 1fr 1fr; gap: .625rem; }
 
-    .project-card { position: relative; aspect-ratio: 1; background: var(--bg2); overflow: hidden; border: 1px solid var(--border); transition: border-color .5s, transform .4s; }
-    .project-card:hover { border-color: rgba(201,168,76,.45); transform: translateY(-3px); }
-    .project-card img { width: 100%; height: 100%; object-fit: contain; padding: 1.25rem; filter: grayscale(1); opacity: .75; transition: all .6s; }
+    /* ── Portfolio card color palettes ── */
+    .project-card:nth-child(6n+1) { --card-color: #C9A84C; --card-color2: #e8c96a; }
+    .project-card:nth-child(6n+2) { --card-color: #4C8FC9; --card-color2: #6aafe8; }
+    .project-card:nth-child(6n+3) { --card-color: #C94C7A; --card-color2: #e86aaa; }
+    .project-card:nth-child(6n+4) { --card-color: #4CC97A; --card-color2: #6ae89a; }
+    .project-card:nth-child(6n+5) { --card-color: #9B4CC9; --card-color2: #bb6ae8; }
+    .project-card:nth-child(6n+6) { --card-color: #C96A4C; --card-color2: #e88a6a; }
+
+    .project-card {
+      position: relative; aspect-ratio: 1; background: var(--bg2); overflow: hidden;
+      border: 1px solid var(--border);
+      transition: border-color .5s, transform .4s, box-shadow .5s;
+    }
+    .project-card::before {
+      content: '';
+      position: absolute; inset: 0; z-index: 0;
+      background: linear-gradient(135deg, var(--card-color) 0%, var(--card-color2) 100%);
+      opacity: 0;
+      transition: opacity .5s ease;
+    }
+    .project-card:hover::before, .project-card.touch-active::before { opacity: .18; }
+    .project-card:hover {
+      border-color: var(--card-color);
+      transform: translateY(-5px) scale(1.02);
+      box-shadow: 0 12px 40px rgba(0,0,0,.5), 0 0 24px color-mix(in srgb, var(--card-color) 35%, transparent);
+    }
+    .project-card img { width: 100%; height: 100%; object-fit: contain; padding: 1.25rem; filter: grayscale(1); opacity: .75; transition: all .6s; position: relative; z-index: 1; }
     .project-card:hover img, .project-card.touch-active img { filter: grayscale(0); opacity: 1; transform: scale(1.06); }
-    .project-overlay { position: absolute; inset: 0; background: linear-gradient(to top, rgba(0,0,0,.92) 0%, rgba(0,0,0,.3) 55%, transparent 100%); display: flex; flex-direction: column; justify-content: flex-end; padding: .875rem 1rem; opacity: 1; transition: opacity .4s; }
-    .project-cat { font-size: .42rem; text-transform: uppercase; letter-spacing: .22em; color: var(--gold); margin-bottom: .25rem; }
+    .project-overlay { position: absolute; inset: 0; background: linear-gradient(to top, rgba(0,0,0,.92) 0%, rgba(0,0,0,.3) 55%, transparent 100%); display: flex; flex-direction: column; justify-content: flex-end; padding: .875rem 1rem; opacity: 1; transition: opacity .4s; z-index: 2; }
+    .project-cat { font-size: .42rem; text-transform: uppercase; letter-spacing: .22em; color: var(--card-color, var(--gold)); margin-bottom: .25rem; transition: color .4s; }
     .project-title { font-family: 'Bebas Neue', sans-serif; font-size: clamp(.65rem, 2.8vw, 1rem); color: #fff; line-height: 1.1; text-transform: uppercase; letter-spacing: .04em; }
     .project-link { margin-top: .5rem; display: inline-flex; align-items: center; gap: .5rem; background: var(--gold); color: #000; padding: .35rem .75rem; font-family: 'Bebas Neue', sans-serif; font-size: .7rem; letter-spacing: .15em; text-decoration: none; transition: background .25s, transform .25s; width: fit-content; }
     .project-link:hover { background: #fff; transform: scale(1.03); }
-    .project-bar { display: none; width: 0; height: 2px; background: var(--gold); margin-top: 1rem; transition: width .6s .1s; }
+    .project-bar { display: none; width: 0; height: 2px; background: var(--card-color, var(--gold)); margin-top: 1rem; transition: width .6s .1s; box-shadow: 0 0 8px var(--card-color, var(--gold)); }
     .project-card.hidden { display: none; }
 
     /* ═══════════════════════════════════════════════════
