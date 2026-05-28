@@ -31,6 +31,7 @@
       margin:0;
       padding:0;
       box-sizing:border-box;
+      cursor:default !important;
     }
 
     html{
@@ -94,6 +95,12 @@
     img{
       max-width:100%;
       display:block;
+      user-select:none;
+      -webkit-user-drag:none;
+    }
+
+    a,button{
+      cursor:default !important;
     }
   </style>
 </head>
@@ -164,22 +171,6 @@ const WEBSITE_DATA = {
     { id: 4, src: 'Logotipo Angélica.png', title: 'A&W Bienes Raíces', category: 'Logotipos' },
     { id: 5, src: 'Logotipo Hugo.png', title: 'Hugo Motta', category: 'Logotipos' },
     { id: 6, src: 'Logotipo Revivetech.jpg', title: 'Revive Tech', category: 'Logotipos' },
-    { id: 7, src: 'WhatsApp Image 2026-04-22 at 1.11.21 PM (2).jpeg', title: 'Bufalux', category: 'Logotipos' },
-    { id: 11, src: 'WhatsApp Image 2026-04-16 at 12.57.46 PM.jpeg', title: 'Laboratorio de Éxito', category: 'Logotipos' },
-    { id: 12, src: 'WhatsApp Image 2026-04-16 at 2.37.40 PM.jpeg', title: 'Axevita', category: 'Logotipos' },
-    { id: 13, src: 'WhatsApp Image 2026-04-22 at 1.11.21 PM (1).jpeg', title: 'Mastery Trading Academy', category: 'Logotipos' },
-    { id: 14, src: 'WhatsApp Image 2026-04-22 at 1.11.21 PM.jpeg', title: 'Webmotion', category: 'Logotipos' },
-    { id: 10, src: 'WhatsApp Image 2026-04-16 at 12.56.13 PM (2).jpeg', title: 'Axioma Jurídico', category: 'Logotipos' },
-
-    { id: 21, src: 'WhatsApp Image 2026-04-16 at 12.56.13 PM (4).jpeg', title: 'Dan Fit - Coach', category: 'Tarjetas' },
-    { id: 24, src: 'WhatsApp Image 2026-04-16 at 12.56.13 PM.jpeg', title: 'Legal Identity - Mateo', category: 'Tarjetas' },
-    { id: 15, src: 'Tarjetas de presentación Ángela1.png', title: 'Card Design - Psicología', category: 'Tarjetas' },
-    { id: 17, src: 'Tarjetas de presentación Angélica1.png', title: 'Real Estate Card', category: 'Tarjetas' },
-    { id: 19, src: 'Tarjetas de presentación Edison1.png', title: 'Corporate Identity', category: 'Tarjetas' },
-
-    { id: 31, src: 'Logo Nova.jpg', title: 'Nova Integral Services', category: 'Páginas Web', url: 'https://novaintegralservices.com/' },
-    { id: 32, src: 'WhatsApp Image 2026-04-22 at 1.11.21 PM (1).jpeg', title: 'SYT Investments', category: 'Páginas Web', url: 'https://www.sytinvestments.com/' },
-    { id: 33, src: 'WhatsApp Image 2026-04-16 at 12.56.13 PM (2).jpeg', title: 'Evite Multas Ponal', category: 'Páginas Web', url: 'https://evitemultasponal.com/' },
   ]
 };
 
@@ -194,68 +185,10 @@ const NAV_LINKS = [
 function App(){
 
   const [menu,setMenu] = useState(false);
-  const [filter,setFilter] = useState("Todos");
-  const [scrolled,setScrolled] = useState(false);
-  const [showScroll,setShowScroll] = useState(false);
-
-  useEffect(()=>{
-
-    const handleScroll = ()=>{
-      setScrolled(window.scrollY > 20);
-      setShowScroll(window.scrollY > 500);
-    }
-
-    window.addEventListener("scroll",handleScroll);
-
-    return ()=>{
-      window.removeEventListener("scroll",handleScroll);
-    }
-
-  },[]);
 
   useEffect(()=>{
     lucide.createIcons();
   });
-
-  const categories = ["Logotipos","Tarjetas","Páginas Web","Manual de Marca","Todos"];
-
-  const filteredProjects = filter === "Todos"
-    ? WEBSITE_DATA.portfolio
-    : WEBSITE_DATA.portfolio.filter(p => p.category === filter);
-
-  const scrollToTop = ()=>{
-    window.scrollTo({
-      top:0,
-      behavior:"smooth"
-    });
-  }
-
-  const handleNavClick = (e,id)=>{
-    e.preventDefault();
-
-    setMenu(false);
-
-    setTimeout(()=>{
-
-      const element = document.getElementById(id);
-
-      if(element){
-
-        const offset = window.innerWidth < 768 ? 70 : 80;
-
-        const top =
-          element.getBoundingClientRect().top +
-          window.scrollY -
-          offset;
-
-        window.scrollTo({
-          top,
-          behavior:"smooth"
-        });
-      }
-
-    },100);
-  }
 
   return(
 
@@ -266,11 +199,7 @@ function App(){
 
       {/* NAVBAR */}
 
-      <nav className={`fixed top-0 left-0 w-full z-50 transition-all duration-500 ${
-        scrolled
-          ? "bg-[#0E0E0E]/95 backdrop-blur-md border-b border-[#C9A84C]/20 py-2"
-          : "bg-transparent py-4 md:py-6"
-      }`}>
+      <nav className="fixed top-0 left-0 w-full z-50 bg-[#0E0E0E]/95 backdrop-blur-md border-b border-[#C9A84C]/20 py-4">
 
         <div className="max-w-7xl mx-auto px-4 md:px-6 flex items-center justify-between">
 
@@ -285,20 +214,11 @@ function App(){
               <a
                 key={item.id}
                 href={`#${item.id}`}
-                onClick={(e)=>handleNavClick(e,item.id)}
                 className="uppercase tracking-[0.15em] text-[10px] font-bold hover:text-[#C9A84C] transition"
               >
                 {item.name}
               </a>
             ))}
-
-            <a
-              href={WEBSITE_DATA.profile.whatsappLink}
-              target="_blank"
-              className="bg-[#C9A84C] text-black px-6 py-2 font-bebas text-lg tracking-wider"
-            >
-              CONTACTAR
-            </a>
 
           </div>
 
@@ -312,36 +232,6 @@ function App(){
         </div>
 
       </nav>
-
-      {/* MOBILE MENU */}
-
-      <AnimatePresence>
-
-        {menu && (
-
-          <motion.div
-            initial={{opacity:0,x:"100%"}}
-            animate={{opacity:1,x:0}}
-            exit={{opacity:0,x:"100%"}}
-            className="fixed inset-0 bg-[#0E0E0E] z-[100] flex flex-col items-center justify-center gap-8"
-          >
-
-            {NAV_LINKS.map((item)=>(
-              <a
-                key={item.id}
-                href={`#${item.id}`}
-                onClick={(e)=>handleNavClick(e,item.id)}
-                className="font-bebas text-5xl tracking-widest hover:text-[#C9A84C]"
-              >
-                {item.name}
-              </a>
-            ))}
-
-          </motion.div>
-
-        )}
-
-      </AnimatePresence>
 
       {/* HERO */}
 
@@ -372,14 +262,6 @@ function App(){
             {WEBSITE_DATA.profile.description}
           </p>
 
-          <a
-            href="#contacto"
-            onClick={(e)=>handleNavClick(e,"contacto")}
-            className="inline-flex items-center gap-3 bg-[#C9A84C] text-black px-8 md:px-12 py-3 md:py-4 font-bebas text-xl md:text-2xl tracking-widest shadow-[0_0_40px_rgba(201,168,76,0.3)]"
-          >
-            ESCALAR VENTAS
-          </a>
-
         </div>
 
       </section>
@@ -395,7 +277,14 @@ function App(){
 
           <div className="bg-[#151515] border border-[#C9A84C]/10 aspect-[4/5] flex items-center justify-center relative overflow-hidden">
 
-            <i data-lucide="trending-up" className="w-32 h-32 text-[#C9A84C]/10"></i>
+            <!-- CAMBIA ESTA URL POR LA TUYA -->
+            <img
+              src="https://raw.githubusercontent.com/TU-USUARIO/TU-REPOSITORIO/main/perfil.jpg"
+              alt="Foto de perfil"
+              className="w-full h-full object-cover"
+            />
+
+            <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
 
             <div className="absolute bottom-8 left-8">
 
@@ -433,88 +322,6 @@ function App(){
               "{WEBSITE_DATA.profile.bioQuote}"
             </p>
 
-            <div className="grid sm:grid-cols-2 gap-6">
-
-              <div>
-                <h4 className="font-bebas text-3xl text-[#C9A84C]">
-                  SOCIO DE CRECIMIENTO
-                </h4>
-
-                <p className="text-sm text-white/40">
-                  Rentabilidad total para tu negocio digital.
-                </p>
-              </div>
-
-              <div>
-                <h4 className="font-bebas text-3xl text-[#C9A84C]">
-                  ALTO TICKET
-                </h4>
-
-                <p className="text-sm text-white/40">
-                  Posicionamiento de élite garantizado.
-                </p>
-              </div>
-
-            </div>
-
-          </div>
-
-        </div>
-
-      </section>
-
-      {/* SERVICIOS */}
-
-      <section
-        id="servicios"
-        className="py-24 md:py-32 px-4 md:px-6 relative z-10"
-      >
-
-        <div className="max-w-7xl mx-auto text-center">
-
-          <h2 className="font-bebas text-6xl md:text-8xl italic mb-16">
-            SOLUCIONES DE
-            <span className="text-[#C9A84C]"> IMPACTO</span>
-          </h2>
-
-          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5 text-left">
-
-            {WEBSITE_DATA.services.map((service)=>(
-              <div
-                key={service.id}
-                className="bg-[#121212]/90 border border-white/5 hover:border-[#C9A84C]/50 transition p-8 flex flex-col justify-between"
-              >
-
-                <div>
-
-                  <i data-lucide={service.icon} className="w-8 h-8 text-[#C9A84C] mb-5"></i>
-
-                  <h3 className="font-bebas text-4xl mb-3">
-                    {service.title}
-                  </h3>
-
-                  <p className="text-sm text-white/40 leading-relaxed mb-5">
-                    {service.desc}
-                  </p>
-
-                </div>
-
-                <div className="space-y-2">
-
-                  {service.benefits.map((b,idx)=>(
-                    <div
-                      key={idx}
-                      className="text-[#C9A84C] uppercase tracking-widest text-[10px] font-bold flex items-center gap-2"
-                    >
-                      ⚡ {b}
-                    </div>
-                  ))}
-
-                </div>
-
-              </div>
-            ))}
-
           </div>
 
         </div>
@@ -530,43 +337,13 @@ function App(){
 
         <div className="max-w-7xl mx-auto">
 
-          <div className="flex flex-col md:flex-row justify-between gap-8 mb-14">
-
-            <div>
-
-              <h2 className="font-bebas text-7xl md:text-9xl italic leading-none">
-                PORTAFOLIO
-              </h2>
-
-              <p className="uppercase tracking-[0.3em] text-[10px] text-white/40 mt-4">
-                Calidad Visual Estratégica
-              </p>
-
-            </div>
-
-            <div className="flex flex-wrap gap-3">
-
-              {categories.map(cat=>(
-                <button
-                  key={cat}
-                  onClick={()=>setFilter(cat)}
-                  className={`px-5 py-2 uppercase tracking-widest text-[10px] border transition ${
-                    filter === cat
-                      ? "bg-[#C9A84C] text-black border-[#C9A84C]"
-                      : "border-white/10 text-white/40 hover:border-[#C9A84C]/40"
-                  }`}
-                >
-                  {cat}
-                </button>
-              ))}
-
-            </div>
-
-          </div>
+          <h2 className="font-bebas text-7xl md:text-9xl italic leading-none mb-14">
+            PORTAFOLIO
+          </h2>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
 
-            {filteredProjects.map(project=>(
+            {WEBSITE_DATA.portfolio.map(project=>(
 
               <div
                 key={project.id}
@@ -579,34 +356,6 @@ function App(){
                   className="w-full h-full object-contain p-6 md:p-10 grayscale group-hover:grayscale-0 opacity-80 group-hover:opacity-100 group-hover:scale-110 transition duration-700"
                 />
 
-                <div className="absolute inset-0 bg-gradient-to-t from-black/95 via-black/40 to-transparent opacity-0 group-hover:opacity-100 transition duration-500 flex flex-col justify-end p-6 md:p-10">
-
-                  <span className="text-[#C9A84C] uppercase tracking-[0.4em] text-[9px] font-bold mb-3">
-                    {project.category}
-                  </span>
-
-                  <h4 className="font-bebas text-3xl md:text-4xl leading-none">
-                    {project.title}
-                  </h4>
-
-                  {project.url ? (
-
-                    <a
-                      href={project.url}
-                      target="_blank"
-                      className="mt-6 bg-[#C9A84C] text-black py-3 px-6 font-bebas text-2xl tracking-widest flex items-center justify-center gap-3 hover:bg-white transition"
-                    >
-                      VISITAR WEB
-                    </a>
-
-                  ) : (
-
-                    <div className="w-0 h-[2px] bg-[#C9A84C] mt-6 group-hover:w-full transition-all duration-700"></div>
-
-                  )}
-
-                </div>
-
               </div>
 
             ))}
@@ -616,113 +365,6 @@ function App(){
         </div>
 
       </section>
-
-      {/* CONTACTO */}
-
-      <section
-        id="contacto"
-        className="py-24 md:py-32 px-4 md:px-6 text-center relative z-10"
-      >
-
-        <div className="max-w-5xl mx-auto">
-
-          <div className="mb-10">
-
-            <div className="font-bebas text-[20vw] md:text-[14rem] leading-[0.7]">
-              LET'S
-            </div>
-
-            <div className="font-bebas text-[20vw] md:text-[14rem] leading-[0.7] text-transparent stroke-gold italic animate-shimmer">
-              GROW
-            </div>
-
-          </div>
-
-          <p className="text-white/50 text-base md:text-xl max-w-xl mx-auto mb-12 px-4">
-            Escalemos tu facturación con una marca que proyecte confianza y autoridad.
-          </p>
-
-          <div className="flex flex-col md:flex-row gap-5 justify-center items-center">
-
-            <a
-              href={WEBSITE_DATA.profile.whatsappLink}
-              target="_blank"
-              className="w-full md:w-auto bg-[#C9A84C] text-black px-12 py-5 font-bebas text-3xl tracking-widest flex items-center justify-center gap-4"
-            >
-              WHATSAPP
-            </a>
-
-            <a
-              href={`https://instagram.com/${WEBSITE_DATA.profile.instagram}`}
-              target="_blank"
-              className="w-full md:w-auto border-2 border-white/10 px-12 py-5 font-bebas text-3xl tracking-widest hover:bg-white hover:text-black transition"
-            >
-              INSTAGRAM
-            </a>
-
-          </div>
-
-        </div>
-
-      </section>
-
-      {/* FOOTER */}
-
-      <footer className="py-12 md:py-16 border-t border-white/5 px-4 md:px-6 bg-[#0E0E0E]/90 relative z-10">
-
-        <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-8 text-center md:text-left">
-
-          <div>
-
-            <div className="font-bebas text-3xl tracking-widest">
-              {WEBSITE_DATA.profile.name}
-              <span className="text-[#C9A84C]">.</span>
-            </div>
-
-            <p className="uppercase tracking-[0.4em] text-[9px] text-white/20 font-bold">
-              {WEBSITE_DATA.profile.role} & Creative Agency
-            </p>
-
-          </div>
-
-          <p className="uppercase tracking-[0.2em] text-[10px] text-white/30 italic">
-            © {new Date().getFullYear()} - {WEBSITE_DATA.profile.name} - TODOS LOS DERECHOS RESERVADOS.
-          </p>
-
-        </div>
-
-      </footer>
-
-      {/* FLOATING BUTTONS */}
-
-      <div className="fixed bottom-6 right-6 z-[300] flex flex-col gap-4">
-
-        {showScroll && (
-
-          <button
-            onClick={scrollToTop}
-            className="bg-[#1A1A1A] text-[#C9A84C] p-4 rounded-full border border-[#C9A84C]/20"
-          >
-            ↑
-          </button>
-
-        )}
-
-        <a
-          href={WEBSITE_DATA.profile.whatsappLink}
-          target="_blank"
-          className="rounded-full overflow-hidden shadow-2xl"
-        >
-
-          <img
-            src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg"
-            alt="WhatsApp"
-            className="w-14 h-14"
-          />
-
-        </a>
-
-      </div>
 
     </div>
 
