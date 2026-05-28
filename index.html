@@ -198,7 +198,11 @@
       overflow: hidden;
       text-align: center;
     }
-    .hero-inner { width: 100%; max-width: 1100px; }
+    .hero-inner {
+      width: 100%;
+      max-width: 1100px;
+      overflow: hidden; /* contiene cualquier desborde del h1 */
+    }
 
     .hero-slogan {
       display: block;
@@ -210,17 +214,23 @@
     }
     .hero-h1 {
       font-family: 'Bebas Neue', sans-serif;
-      font-size: clamp(4rem, 18vw, 11rem);
-      line-height: .8;
-      letter-spacing: .04em;
+      /* VENTAS cabe holgado; EXPONENCIALES (13 chars) necesita ~7vw por carácter */
+      font-size: clamp(2.6rem, 8.5vw, 11rem);
+      line-height: .85;
+      letter-spacing: .02em;
       margin-bottom: 1.5rem;
       filter: drop-shadow(0 8px 30px rgba(0,0,0,.55));
+      width: 100%;
+      overflow: hidden;
     }
     .hero-outline {
       display: block;
       -webkit-text-stroke: 1.5px var(--gold);
       color: transparent;
-      letter-spacing: .06em;
+      letter-spacing: .02em;
+      /* Ensure it never overflows on any screen */
+      white-space: nowrap;
+      font-size: clamp(2rem, 7vw, 11rem);
     }
     .hero-desc {
       font-size: clamp(.85rem, 2.2vw, 1.15rem);
