@@ -7,703 +7,689 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&display=swap" rel="stylesheet" />
-  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
 
   <style>
-    /* ─── RESET & BASE ──────────────────────────────────────── */
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    html {
-      scroll-behavior: smooth;
-      -webkit-tap-highlight-color: transparent;
+    /* ═══════════════════════════════════════════════════
+       VARIABLES & RESET
+    ═══════════════════════════════════════════════════ */
+    :root {
+      --gold:      #C9A84C;
+      --gold-dim:  rgba(201,168,76,.15);
+      --bg:        #0E0E0E;
+      --bg2:       #111;
+      --fg:        #F0EDE6;
+      --fg-dim:    rgba(240,237,230,.45);
+      --border:    rgba(255,255,255,.06);
+      --nav-h:     64px;   /* altura fija del nav en mobile  */
+      --nav-h-lg:  80px;   /* altura fija del nav en desktop */
+      --max-w:     1280px;
+      --px:        1.125rem;  /* padding horizontal mobile  */
+      --px-lg:     2rem;      /* padding horizontal desktop */
     }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; -webkit-tap-highlight-color: transparent; }
+
     body {
-      background: #0E0E0E;
-      color: #F0EDE6;
+      background: var(--bg);
+      color: var(--fg);
       font-family: 'DM Sans', sans-serif;
       overflow-x: hidden;
       min-height: 100vh;
     }
 
-    /* Hero base (desktop-first values, overridden by mobile below) */
-    #inicio {
-      position: relative;
-      display: flex; align-items: center; justify-content: center;
-      padding: 5rem 1.5rem 3rem;
-      z-index: 10;
-      min-height: 100vh;
-      overflow: hidden;
-    }
+    ::selection { background: var(--gold); color: #000; }
 
-    /* ─── CUSTOM CURSOR ──────────────────────────────────────── */
+    ::-webkit-scrollbar { width: 5px; }
+    ::-webkit-scrollbar-track { background: var(--bg); }
+    ::-webkit-scrollbar-thumb { background: var(--gold); border-radius: 10px; }
+
+    /* ── CUSTOM CURSOR (only on fine pointer / desktop) ── */
     @media (pointer: fine) {
       html, body {
-        cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="%23C9A84C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19l7-7 3 3-7 7-3-3z"></path><path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"></path><path d="M2 2l7.586 7.586"></path><circle cx="11" cy="11" r="2"></circle></svg>') 0 24, auto;
+        cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="%23C9A84C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19l7-7 3 3-7 7-3-3z"/><path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"/><path d="M2 2l7.586 7.586"/><circle cx="11" cy="11" r="2"/></svg>') 0 24, auto;
       }
-      a, button, [role="button"], input, select, textarea {
+      a, button, [role="button"] {
         cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="%23F0EDE6" stroke="%23C9A84C" stroke-width="1.5" d="M5 3l14 11-6.5.5 4 7.5-2.5 1.5-4-7.5-5 5z"/></svg>') 5 3, pointer !important;
       }
     }
 
-    /* ─── TYPOGRAPHY ─────────────────────────────────────────── */
-    .bebas { font-family: 'Bebas Neue', sans-serif; }
-
-    /* ─── SELECTION ──────────────────────────────────────────── */
-    ::selection { background: #C9A84C; color: #000; }
-
-    /* ─── SCROLLBAR ──────────────────────────────────────────── */
-    ::-webkit-scrollbar { width: 6px; }
-    ::-webkit-scrollbar-track { background: #0E0E0E; }
-    ::-webkit-scrollbar-thumb { background: #C9A84C; border-radius: 10px; }
-
-    /* ─── BACKGROUND LAYERS ──────────────────────────────────── */
+    /* ═══════════════════════════════════════════════════
+       BACKGROUND LAYERS
+    ═══════════════════════════════════════════════════ */
     .bg-grid {
       position: fixed; inset: 0; z-index: 0; pointer-events: none;
       background-size: 40px 40px;
       background-image:
-        linear-gradient(to right, rgba(201,168,76,.02) 1px, transparent 1px),
-        linear-gradient(to bottom, rgba(201,168,76,.02) 1px, transparent 1px);
+        linear-gradient(to right,  rgba(201,168,76,.018) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(201,168,76,.018) 1px, transparent 1px);
     }
     .noise-overlay {
       position: fixed; inset: 0; z-index: 1; pointer-events: none;
       background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-      opacity: .02; mix-blend-mode: overlay;
+      opacity: .022; mix-blend-mode: overlay;
     }
 
-    /* ─── NAV ────────────────────────────────────────────────── */
+    /* ═══════════════════════════════════════════════════
+       NAVIGATION
+    ═══════════════════════════════════════════════════ */
     nav {
       position: fixed; top: 0; width: 100%; z-index: 160;
-      transition: all .5s;
-      padding: 1.5rem 1.5rem;
+      height: var(--nav-h);
+      display: flex; align-items: center;
+      padding: 0 var(--px);
+      transition: background .4s, border-color .4s, box-shadow .4s;
     }
     nav.scrolled {
-      background: rgba(14,14,14,.95);
-      backdrop-filter: blur(12px);
-      padding: .5rem 1.5rem;
-      border-bottom: 1px solid rgba(201,168,76,.2);
+      background: rgba(14,14,14,.96);
+      backdrop-filter: blur(14px);
+      border-bottom: 1px solid rgba(201,168,76,.18);
+      box-shadow: 0 2px 30px rgba(0,0,0,.5);
     }
     .nav-inner {
-      max-width: 1280px; margin: 0 auto;
+      width: 100%; max-width: var(--max-w);
+      margin: 0 auto;
       display: flex; justify-content: space-between; align-items: center;
-      position: relative;
     }
     .nav-logo {
       font-family: 'Bebas Neue', sans-serif;
-      font-size: 1.4rem; letter-spacing: .15em;
-      text-decoration: none; color: #F0EDE6; z-index: 70;
+      font-size: 1.25rem; letter-spacing: .14em;
+      text-decoration: none; color: var(--fg); z-index: 70;
+      white-space: nowrap;
     }
-    .nav-logo span { color: #C9A84C; }
-    .nav-links { display: flex; gap: .25rem; align-items: center; }
+    .nav-logo span { color: var(--gold); }
+
+    /* Desktop links — hidden on mobile */
+    .nav-links { display: none; gap: .2rem; align-items: center; }
     .nav-links a {
-      padding: .375rem .75rem;
-      border-radius: .5rem;
-      font-size: .625rem;
+      padding: .35rem .7rem;
+      border-radius: .4rem;
+      font-size: .6rem;
       text-transform: uppercase;
-      letter-spacing: .15em;
+      letter-spacing: .14em;
       text-decoration: none;
-      color: #F0EDE6;
-      transition: color .3s, background .3s;
+      color: var(--fg);
+      transition: color .25s, background .25s;
     }
-    .nav-links a:hover { color: #C9A84C; background: rgba(201,168,76,.1); }
+    .nav-links a:hover { color: var(--gold); background: var(--gold-dim); }
     .nav-cta {
       margin-left: .5rem;
-      background: #C9A84C; color: #000 !important;
-      padding: .5rem 1.5rem !important;
+      background: var(--gold) !important;
+      color: #000 !important;
+      padding: .45rem 1.4rem !important;
       font-family: 'Bebas Neue', sans-serif !important;
-      font-size: 1rem !important;
-      letter-spacing: .15em !important;
+      font-size: .95rem !important;
+      letter-spacing: .14em !important;
       border-radius: 0 !important;
-      box-shadow: 0 4px 20px rgba(0,0,0,.3);
-      transition: background .3s !important;
     }
     .nav-cta:hover { background: #fff !important; }
+
+    /* Hamburger */
     .hamburger {
-      display: none; background: none; border: none;
-      color: #C9A84C; padding: .75rem; position: relative; z-index: 220;
+      background: none; border: none;
+      color: var(--gold); padding: .5rem;
+      display: flex; align-items: center; justify-content: center;
+      position: relative; z-index: 220;
     }
 
-    /* ─── MOBILE MENU ────────────────────────────────────────── */
+    /* ═══════════════════════════════════════════════════
+       MOBILE MENU
+    ═══════════════════════════════════════════════════ */
     .mobile-menu {
-      display: none; position: fixed; inset: 0; z-index: 200;
-      background: #0E0E0E;
+      display: none;
+      position: fixed; inset: 0; z-index: 200;
+      background: var(--bg);
       flex-direction: column; align-items: center; justify-content: center;
-      gap: 1rem; padding: 1.5rem;
-      animation: slideIn .35s ease;
+      gap: .75rem; padding: var(--px);
     }
-    .mobile-menu.open { display: flex; }
+    .mobile-menu.open { display: flex; animation: slideIn .3s ease; }
     @keyframes slideIn {
       from { opacity: 0; transform: translateX(100%); }
       to   { opacity: 1; transform: translateX(0); }
     }
     .mobile-menu a {
       width: 100%; text-align: center;
-      padding: 1.25rem 0;
+      padding: 1rem 0;
       font-family: 'Bebas Neue', sans-serif;
-      font-size: 2.5rem; letter-spacing: .12em;
+      font-size: 2.25rem; letter-spacing: .1em;
       text-decoration: none; color: #fff;
-      transition: color .3s;
+      border-bottom: 1px solid var(--border);
+      transition: color .25s;
     }
-    .mobile-menu a:hover { color: #C9A84C; }
+    .mobile-menu a:last-child { border-bottom: none; }
+    .mobile-menu a:hover { color: var(--gold); }
     .mobile-menu .mob-cta {
-      margin-top: 2rem; width: 100%; max-width: 320px;
-      background: #C9A84C; color: #000;
-      padding: 1.25rem 0;
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: 1.75rem; letter-spacing: .15em;
-      text-align: center; text-decoration: none;
-      box-shadow: 0 10px 40px rgba(0,0,0,.5);
+      margin-top: 1.5rem; width: 100%; max-width: 300px;
+      background: var(--gold); color: #000;
+      padding: 1rem 0; border-bottom: none !important;
+      font-size: 1.6rem;
+      box-shadow: 0 8px 30px rgba(0,0,0,.4);
     }
 
-    .hero-inner { max-width: 1152px; margin: 0 auto; text-align: center; }
+    /* ═══════════════════════════════════════════════════
+       SHARED UTILITIES
+    ═══════════════════════════════════════════════════ */
+    .container { max-width: var(--max-w); margin: 0 auto; }
+
+    .section-pad { padding: 5rem var(--px); }
+
+    .section-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(2.5rem, 9vw, 5.5rem);
+      text-transform: uppercase; letter-spacing: .1em;
+      font-style: italic; line-height: 1;
+      margin-bottom: 2.5rem;
+      text-align: center;
+    }
+    .section-title span { color: var(--gold); }
+
+    .fade-in { opacity: 0; transform: translateY(22px); transition: opacity .75s, transform .75s; }
+    .fade-in.visible { opacity: 1; transform: none; }
+
+    /* ═══════════════════════════════════════════════════
+       HERO
+    ═══════════════════════════════════════════════════ */
+    #inicio {
+      position: relative; z-index: 10;
+      min-height: 100svh;
+      display: flex; align-items: center; justify-content: center;
+      padding: calc(var(--nav-h) + 3rem) var(--px) 3rem;
+      overflow: hidden;
+      text-align: center;
+    }
+    .hero-inner { width: 100%; max-width: 1100px; }
+
     .hero-slogan {
-      color: #C9A84C; text-transform: uppercase;
-      display: block; margin-bottom: 1rem;
+      display: block;
+      color: var(--gold);
+      font-size: clamp(.55rem, 2.2vw, .75rem);
+      text-transform: uppercase;
+      letter-spacing: .22em;
+      margin-bottom: 1rem;
     }
     .hero-h1 {
       font-family: 'Bebas Neue', sans-serif;
-      font-size: clamp(5rem, 18vw, 11rem);
-      line-height: .75; letter-spacing: .06em;
+      font-size: clamp(4rem, 18vw, 11rem);
+      line-height: .8;
+      letter-spacing: .04em;
       margin-bottom: 1.5rem;
-      filter: drop-shadow(0 8px 30px rgba(0,0,0,.6));
+      filter: drop-shadow(0 8px 30px rgba(0,0,0,.55));
     }
     .hero-outline {
-      -webkit-text-stroke: 1px #C9A84C;
-      color: transparent; display: block;
-      letter-spacing: .08em;
+      display: block;
+      -webkit-text-stroke: 1.5px var(--gold);
+      color: transparent;
+      letter-spacing: .06em;
     }
     .hero-desc {
-      font-size: clamp(.875rem, 2vw, 1.25rem);
-      color: rgba(240,237,230,.5); max-width: 36rem;
-      margin: 0 auto 3rem; padding: 0 1rem;
-      line-height: 1.6;
+      font-size: clamp(.85rem, 2.2vw, 1.15rem);
+      color: var(--fg-dim);
+      max-width: 34rem;
+      margin: 0 auto 2.5rem;
+      line-height: 1.65;
     }
     .btn-primary {
-      display: inline-flex; align-items: center; gap: .75rem;
-      background: #C9A84C; color: #000;
-      padding: .875rem 3rem;
+      display: inline-flex; align-items: center; gap: .6rem;
+      background: var(--gold); color: #000;
+      padding: .9rem 2.5rem;
       font-family: 'Bebas Neue', sans-serif;
-      font-size: 1.25rem; letter-spacing: .2em;
+      font-size: 1.15rem; letter-spacing: .2em;
       text-decoration: none;
-      transition: transform .3s;
-      box-shadow: 0 0 40px rgba(201,168,76,.3);
-      position: relative; z-index: 50;
+      transition: transform .25s, box-shadow .25s;
+      box-shadow: 0 0 36px rgba(201,168,76,.28);
+      position: relative; z-index: 10;
     }
-    .btn-primary:hover { transform: scale(1.05); }
+    .btn-primary:hover { transform: scale(1.05); box-shadow: 0 0 50px rgba(201,168,76,.45); }
 
-    /* ─── SOBRE MÍ ───────────────────────────────────────────── */
+    /* ═══════════════════════════════════════════════════
+       SOBRE MÍ
+    ═══════════════════════════════════════════════════ */
     #sobre-mi {
       position: relative; z-index: 10;
-      padding: 6rem 1.5rem;
-      background: rgba(11,11,11,.8);
+      background: rgba(10,10,10,.85);
       backdrop-filter: blur(4px);
-      border-top: 1px solid rgba(255,255,255,.05);
-      border-bottom: 1px solid rgba(255,255,255,.05);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
     }
     .about-grid {
-      max-width: 1280px; margin: 0 auto;
-      display: grid; grid-template-columns: 1fr;
-      gap: 2rem; align-items: center;
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 2rem;
+      align-items: center;
     }
+
+    /* Image block */
     .about-image {
       position: relative;
-      aspect-ratio: 4/5;
       background: #151515;
       border: 1px solid rgba(201,168,76,.1);
       overflow: hidden;
       display: flex; align-items: center; justify-content: center;
-      order: 2;
+      aspect-ratio: 4 / 5;
+      order: 1;
+    }
+    .about-photo {
+      width: 100%; height: 100%;
+      object-fit: cover; object-position: center top;
+      display: block;
     }
     .about-image-caption {
-      position: absolute; bottom: 2.5rem; left: 2.5rem; text-align: left;
+      position: absolute; bottom: 1.5rem; left: 1.5rem;
     }
     .about-image-caption h3 {
       font-family: 'Bebas Neue', sans-serif;
-      font-size: clamp(2rem, 5vw, 3rem);
-      color: #fff; margin-bottom: .5rem; line-height: 1;
-      letter-spacing: .08em;
+      font-size: clamp(1.5rem, 4vw, 2.5rem);
+      color: #fff; line-height: 1; letter-spacing: .08em;
+      margin-bottom: .4rem;
     }
-    .about-image-caption .gold-bar {
-      width: 3rem; height: 4px; background: #C9A84C; margin-bottom: .75rem;
-    }
+    .gold-bar { width: 2.5rem; height: 3px; background: var(--gold); margin-bottom: .6rem; }
     .about-image-caption p {
-      color: #C9A84C; text-transform: uppercase;
+      color: var(--gold);
+      font-size: .65rem;
+      text-transform: uppercase;
+      letter-spacing: .2em;
     }
-    /* ── FOTO DE PERFIL ── */
-    .about-photo {
-      width: 100%; height: 100%;
-      object-fit: cover;
-      object-position: center top;
-      display: block;
-    }
-    .about-content { order: 1; }
+
+    /* Text block */
+    .about-content { order: 2; }
     .about-content h2 {
       font-family: 'Bebas Neue', sans-serif;
-      font-size: clamp(2.5rem, 7vw, 4rem);
-      line-height: 1.05; font-style: italic; margin-bottom: 1.5rem;
+      font-size: clamp(1.75rem, 5.5vw, 3.5rem);
+      line-height: 1.05; font-style: italic;
       letter-spacing: .03em;
+      margin-bottom: 1.25rem;
     }
-    .about-content h2 span { color: #C9A84C; }
+    .about-content h2 span { color: var(--gold); }
     .about-quote {
-      font-size: clamp(.9rem, 2vw, 1.125rem);
-      color: rgba(255,255,255,.6); line-height: 1.7;
-      font-style: italic; margin-bottom: 1.5rem;
+      font-size: clamp(.82rem, 1.8vw, 1rem);
+      color: rgba(255,255,255,.55);
+      line-height: 1.75; font-style: italic;
+      margin-bottom: 1.5rem;
     }
     .about-pills {
-      display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem;
+      display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem;
     }
     .about-pill h4 {
       font-family: 'Bebas Neue', sans-serif;
-      font-size: 1.5rem; color: #C9A84C; margin-bottom: .25rem;
-      letter-spacing: .14em;
+      font-size: clamp(1rem, 2.5vw, 1.4rem);
+      color: var(--gold); letter-spacing: .12em;
+      margin-bottom: .2rem;
     }
-    .about-pill p { font-size: .75rem; color: rgba(255,255,255,.4); }
+    .about-pill p { font-size: .72rem; color: rgba(255,255,255,.35); line-height: 1.5; }
 
-    /* ─── SERVICIOS ──────────────────────────────────────────── */
-    #servicios {
-      position: relative; z-index: 10;
-      padding: 6rem 1.5rem;
-    }
-    .services-inner { max-width: 1280px; margin: 0 auto; text-align: center; }
-    .section-title {
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: clamp(3rem, 9vw, 5.5rem);
-      text-transform: uppercase; letter-spacing: .12em;
-      font-style: italic; margin-bottom: 4rem;
-    }
-    .section-title span { color: #C9A84C; }
+    /* ═══════════════════════════════════════════════════
+       SERVICIOS
+    ═══════════════════════════════════════════════════ */
+    #servicios { position: relative; z-index: 10; }
+
     .services-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 1.25rem; text-align: left;
+      grid-template-columns: 1fr;
+      gap: 1rem;
+      text-align: left;
     }
     .service-card {
-      padding: 2rem;
-      background: rgba(18,18,18,.9);
+      padding: 1.75rem;
+      background: rgba(17,17,17,.95);
       backdrop-filter: blur(8px);
-      border: 1px solid rgba(255,255,255,.05);
+      border: 1px solid var(--border);
       display: flex; flex-direction: column; justify-content: space-between;
-      transition: border-color .5s;
+      gap: 1.25rem;
+      transition: border-color .4s;
     }
-    .service-card:hover { border-color: rgba(201,168,76,.5); }
-    .service-card .icon { color: #C9A84C; margin-bottom: 1.25rem; transition: transform .3s; }
-    .service-card:hover .icon { transform: scale(1.1); }
+    .service-card:hover { border-color: rgba(201,168,76,.45); }
+    .service-icon { color: var(--gold); margin-bottom: .25rem; transition: transform .3s; }
+    .service-card:hover .service-icon { transform: scale(1.1); }
     .service-card h3 {
       font-family: 'Bebas Neue', sans-serif;
-      font-size: 1.75rem; margin-bottom: .75rem;
-      letter-spacing: .12em; text-transform: uppercase;
+      font-size: clamp(1.3rem, 3.5vw, 1.75rem);
+      letter-spacing: .1em; text-transform: uppercase;
+      margin-bottom: .5rem;
     }
-    .service-card p { font-size: .8125rem; color: rgba(255,255,255,.4); line-height: 1.6; margin-bottom: 1.25rem; }
+    .service-card p { font-size: .8rem; color: rgba(255,255,255,.4); line-height: 1.65; }
+    .benefits { display: flex; flex-direction: column; gap: .35rem; }
     .benefit {
-      display: flex; align-items: center; gap: .5rem;
-      text-transform: uppercase; letter-spacing: .15em; margin-bottom: .375rem;
+      display: flex; align-items: center; gap: .45rem;
+      font-size: .6rem; text-transform: uppercase; letter-spacing: .14em;
+      color: rgba(255,255,255,.55);
     }
+    .benefit svg { color: var(--gold); flex-shrink: 0; }
 
-    /* ─── PORTAFOLIO ─────────────────────────────────────────── */
+    /* ═══════════════════════════════════════════════════
+       PORTAFOLIO
+    ═══════════════════════════════════════════════════ */
     #portafolio {
       position: relative; z-index: 10;
-      padding: 6rem 1.5rem;
-      background: rgba(11,11,11,.8);
+      background: rgba(10,10,10,.85);
       backdrop-filter: blur(4px);
-      border-top: 1px solid rgba(255,255,255,.05);
-      border-bottom: 1px solid rgba(255,255,255,.05);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
     }
-    .portfolio-inner { max-width: 1280px; margin: 0 auto; }
     .portfolio-header {
       display: flex; flex-direction: column;
-      justify-content: space-between; align-items: flex-start;
-      gap: 2rem; margin-bottom: 3rem;
+      gap: 1.5rem; margin-bottom: 2rem;
     }
     .portfolio-header h2 {
       font-family: 'Bebas Neue', sans-serif;
-      font-size: clamp(3.5rem, 12vw, 8rem);
-      line-height: 1; font-style: normal; text-transform: uppercase;
-      letter-spacing: .1em;
+      font-size: clamp(3rem, 14vw, 8rem);
+      line-height: 1; text-transform: uppercase; letter-spacing: .08em;
     }
-    .portfolio-header p {
-      color: rgba(255,255,255,.4); text-transform: uppercase;
-      letter-spacing: .3em; font-size: .5625rem; margin-top: .5rem;
+    .portfolio-header .sub {
+      color: rgba(255,255,255,.3);
+      text-transform: uppercase; letter-spacing: .3em;
+      font-size: .5rem; margin-top: .4rem;
     }
-    .filter-btns { display: flex; flex-wrap: wrap; gap: .5rem; }
+    .filter-btns { display: flex; flex-wrap: wrap; gap: .4rem; }
     .filter-btn {
-      padding: .375rem 1.25rem;
-      text-transform: uppercase; letter-spacing: .15em;
+      padding: .3rem .9rem;
+      font-size: .5rem; text-transform: uppercase; letter-spacing: .12em;
       border: 1px solid rgba(255,255,255,.1);
       background: none; color: rgba(255,255,255,.4);
-      transition: all .3s;
+      transition: all .25s;
     }
-    .filter-btn:hover { border-color: rgba(201,168,76,.4); }
-    .filter-btn.active { background: #C9A84C; color: #000; border-color: #C9A84C; }
+    .filter-btn:hover { border-color: rgba(201,168,76,.4); color: var(--gold); }
+    .filter-btn.active { background: var(--gold); color: #000; border-color: var(--gold); }
+
     .portfolio-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-      gap: 1.25rem;
+      grid-template-columns: 1fr 1fr;
+      gap: .625rem;
     }
 
-    /* PROJECT CARD */
+    /* Project card */
     .project-card {
       position: relative; aspect-ratio: 1;
-      background: #111; overflow: hidden;
-      border: 1px solid rgba(255,255,255,.05);
-      transition: border-color .7s;
+      background: var(--bg2); overflow: hidden;
+      border: 1px solid var(--border);
+      transition: border-color .5s;
     }
-    .project-card:hover { border-color: rgba(201,168,76,.5); }
+    .project-card:hover { border-color: rgba(201,168,76,.45); }
     .project-card img {
       width: 100%; height: 100%;
-      object-fit: contain; padding: 2rem;
-      filter: grayscale(1);
-      opacity: .8;
-      transition: all .7s;
-      transform-origin: center;
+      object-fit: contain; padding: 1.25rem;
+      filter: grayscale(1); opacity: .75;
+      transition: all .6s;
     }
-    .project-card:hover img {
-      filter: grayscale(0);
-      opacity: 1;
-      transform: scale(1.1);
+    .project-card:hover img,
+    .project-card.touch-active img {
+      filter: grayscale(0); opacity: 1; transform: scale(1.06);
     }
     .project-overlay {
       position: absolute; inset: 0;
-      background: linear-gradient(to top, rgba(0,0,0,.95) 0%, rgba(0,0,0,.4) 50%, transparent 100%);
-      opacity: 0; transition: opacity .5s;
+      background: linear-gradient(to top, rgba(0,0,0,.92) 0%, rgba(0,0,0,.3) 55%, transparent 100%);
       display: flex; flex-direction: column; justify-content: flex-end;
-      padding: 1.75rem 2rem;
+      padding: .875rem 1rem;
+      /* On mobile always visible, desktop on hover */
+      opacity: 1;
+      transition: opacity .4s;
     }
-    .project-card:hover .project-overlay { opacity: 1; }
     .project-cat {
-      text-transform: uppercase; letter-spacing: .4em; margin-bottom: .5rem;
+      font-size: .42rem; text-transform: uppercase;
+      letter-spacing: .22em; color: var(--gold);
+      margin-bottom: .25rem;
     }
     .project-title {
       font-family: 'Bebas Neue', sans-serif;
-      font-size: clamp(1.25rem, 3.5vw, 1.875rem);
-      color: #fff; line-height: 1.1; letter-spacing: .05em;
-      text-transform: uppercase;
+      font-size: clamp(.65rem, 2.8vw, 1rem);
+      color: #fff; line-height: 1.1;
+      text-transform: uppercase; letter-spacing: .04em;
     }
     .project-link {
-      margin-top: 1.25rem;
-      display: flex; align-items: center; justify-content: center; gap: .75rem;
-      background: #C9A84C; color: #000;
-      padding: .625rem 1.25rem;
+      margin-top: .5rem;
+      display: inline-flex; align-items: center; gap: .5rem;
+      background: var(--gold); color: #000;
+      padding: .35rem .75rem;
       font-family: 'Bebas Neue', sans-serif;
-      font-size: 1rem; letter-spacing: .2em; text-transform: uppercase;
+      font-size: .7rem; letter-spacing: .15em;
       text-decoration: none;
-      transition: all .3s;
+      transition: background .25s, transform .25s;
+      width: fit-content;
     }
-    .project-link:hover { background: #fff; transform: scale(1.03); box-shadow: 0 0 20px rgba(201,168,76,.6); }
+    .project-link:hover { background: #fff; transform: scale(1.03); }
     .project-bar {
-      width: 0; height: 2px; background: #C9A84C; margin-top: 1.25rem;
-      transition: width .7s .1s;
+      display: none; /* shown on desktop only */
+      width: 0; height: 2px; background: var(--gold); margin-top: 1rem;
+      transition: width .6s .1s;
     }
-    .project-card:hover .project-bar { width: 100%; }
-
-    /* Hidden class for filtering */
     .project-card.hidden { display: none; }
 
-    /* ─── CONTACTO ───────────────────────────────────────────── */
-    #contacto {
-      position: relative; z-index: 10;
-      padding: 6rem 1.5rem; text-align: center;
-    }
-    .contact-inner { max-width: 1152px; margin: 0 auto; position: relative; z-index: 10; }
-    .lets { font-family: 'Bebas Neue', sans-serif; font-size: clamp(5rem, 20vw, 14rem); line-height: .75; color: #fff; letter-spacing: .05em; }
-    .grow {
+    /* ═══════════════════════════════════════════════════
+       CONTACTO
+    ═══════════════════════════════════════════════════ */
+    #contacto { position: relative; z-index: 10; text-align: center; }
+    .lets, .grow {
       font-family: 'Bebas Neue', sans-serif;
-      font-size: clamp(5rem, 20vw, 14rem); line-height: .75;
-      color: transparent; -webkit-text-stroke: 1px #C9A84C;
-      font-style: normal;
-      letter-spacing: .06em;
+      font-size: clamp(3.5rem, 18vw, 13rem);
+      line-height: .78;
+      letter-spacing: .04em;
+    }
+    .lets { color: #fff; }
+    .grow {
+      color: transparent;
+      -webkit-text-stroke: 1.5px var(--gold);
       animation: shimmer 3s ease-in-out infinite;
     }
     @keyframes shimmer {
-      0%,100% { filter: drop-shadow(0 0 2px rgba(201,168,76,.4)); }
-      50%      { filter: drop-shadow(0 0 10px rgba(201,168,76,.7)); }
+      0%,100% { filter: drop-shadow(0 0 2px rgba(201,168,76,.35)); }
+      50%      { filter: drop-shadow(0 0 12px rgba(201,168,76,.7)); }
     }
     .contact-desc {
-      font-size: clamp(.9rem, 2.5vw, 1.25rem);
-      color: rgba(255,255,255,.5); margin: 3rem auto 3rem;
-      max-width: 36rem; padding: 0 1rem;
+      font-size: clamp(.82rem, 2vw, 1.1rem);
+      color: rgba(255,255,255,.45);
+      margin: 2rem auto 2.5rem;
+      max-width: 32rem;
     }
     .contact-btns {
-      display: flex; flex-direction: column; align-items: center; gap: 1rem;
-      position: relative; z-index: 50;
+      display: flex; flex-direction: column;
+      align-items: stretch; gap: .875rem;
+    }
+    .btn-wa, .btn-ig {
+      display: flex; align-items: center; justify-content: center; gap: .875rem;
+      padding: 1.1rem 2rem;
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.35rem; letter-spacing: .18em; text-transform: uppercase;
+      text-decoration: none;
+      transition: transform .25s;
     }
     .btn-wa {
-      width: 100%; max-width: 340px;
-      display: flex; align-items: center; justify-content: center; gap: 1rem;
-      background: #C9A84C; color: #000;
-      padding: 1.25rem 3rem;
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: 1.5rem; letter-spacing: .2em; text-transform: uppercase;
-      text-decoration: none;
-      transition: transform .3s; box-shadow: 0 4px 30px rgba(0,0,0,.4);
+      background: var(--gold); color: #000;
+      box-shadow: 0 4px 28px rgba(0,0,0,.35);
     }
-    .btn-wa:hover { transform: scale(1.05); }
+    .btn-wa:hover { transform: scale(1.04); }
     .btn-ig {
-      width: 100%; max-width: 340px;
-      display: flex; align-items: center; justify-content: center; gap: 1rem;
-      border: 2px solid rgba(255,255,255,.1); color: #fff;
-      padding: 1.25rem 3rem;
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: 1.5rem; letter-spacing: .2em; text-transform: uppercase;
-      text-decoration: none;
-      transition: background .3s, color .3s;
+      border: 2px solid rgba(255,255,255,.12); color: #fff;
     }
     .btn-ig:hover { background: #fff; color: #000; }
-    .btn-wa img, .btn-ig img { width: 2rem; height: 2rem; }
+    .btn-wa img, .btn-ig img { width: 1.75rem; height: 1.75rem; }
 
-    /* ─── FOOTER ─────────────────────────────────────────────── */
+    /* ═══════════════════════════════════════════════════
+       FOOTER
+    ═══════════════════════════════════════════════════ */
     footer {
       position: relative; z-index: 10;
-      padding: 3rem 1.5rem;
-      border-top: 1px solid rgba(255,255,255,.05);
-      background: rgba(14,14,14,.9);
+      padding: 2.5rem var(--px);
+      border-top: 1px solid var(--border);
+      background: rgba(12,12,12,.95);
     }
     .footer-inner {
-      max-width: 1280px; margin: 0 auto;
-      display: flex; flex-direction: column; align-items: center;
-      gap: 2rem; text-align: center;
+      max-width: var(--max-w); margin: 0 auto;
+      display: flex; flex-direction: column;
+      align-items: center; gap: 1.5rem; text-align: center;
     }
-    .footer-brand { font-family: 'Bebas Neue', sans-serif; font-size: 1.75rem; letter-spacing: .12em; }
-    .footer-brand span { color: #C9A84C; }
-    .footer-socials { display: flex; gap: 2rem; }
-    .footer-socials a { opacity: .3; transition: opacity .3s; }
+    .footer-brand {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.6rem; letter-spacing: .12em;
+    }
+    .footer-brand span { color: var(--gold); }
+    .footer-sub { font-size: .6rem; color: rgba(255,255,255,.3); text-transform: uppercase; letter-spacing: .18em; margin-top: .25rem; }
+    .footer-copy { font-size: .5rem; color: rgba(255,255,255,.2); text-transform: uppercase; letter-spacing: .12em; }
+    .footer-socials { display: flex; gap: 1.75rem; }
+    .footer-socials a { opacity: .28; transition: opacity .25s; }
     .footer-socials a:hover { opacity: 1; }
-    .footer-socials img { width: 1.5rem; height: 1.5rem; filter: grayscale(1); }
+    .footer-socials img { width: 1.4rem; height: 1.4rem; filter: grayscale(1); }
 
-    /* ─── FLOATING BUTTONS ───────────────────────────────────── */
+    /* ═══════════════════════════════════════════════════
+       FLOATING BUTTONS
+    ═══════════════════════════════════════════════════ */
     .floating {
-      position: fixed; bottom: 1.5rem; right: 1.5rem;
-      z-index: 300; display: flex; flex-direction: column; gap: 1rem;
+      position: fixed; bottom: 1.25rem; right: 1.25rem;
+      z-index: 300; display: flex; flex-direction: column; gap: .75rem;
     }
     #btn-top {
       display: none;
-      background: #1A1A1A; color: #C9A84C;
+      background: #1a1a1a; color: var(--gold);
       border: 1px solid rgba(201,168,76,.2);
-      border-radius: 50%; width: 3.5rem; height: 3.5rem;
+      border-radius: 50%; width: 3.25rem; height: 3.25rem;
       align-items: center; justify-content: center;
-      box-shadow: 0 4px 20px rgba(0,0,0,.4);
+      box-shadow: 0 4px 18px rgba(0,0,0,.4);
       transition: transform .2s;
     }
     #btn-top:hover { transform: scale(1.1); }
     #btn-top.visible { display: flex; }
     .float-wa { border-radius: 50%; display: block; transition: transform .2s; }
     .float-wa:hover { transform: scale(1.1); }
-    .float-wa img { width: 3.5rem; height: 3.5rem; }
+    .float-wa img { width: 3.25rem; height: 3.25rem; }
 
-    /* ═══════════════════════════════════════════════════════════
-       RESPONSIVE — mobile-first, breakpoints: 480 / 768 / 1024
-    ═══════════════════════════════════════════════════════════ */
+    /* ═══════════════════════════════════════════════════
+       TABLET  ≥ 640px
+    ═══════════════════════════════════════════════════ */
+    @media (min-width: 640px) {
+      :root { --px: 1.5rem; }
 
-    /* ── BASE MOBILE (< 480px) ─────────────────────────────── */
+      .hero-h1 { font-size: clamp(5rem, 16vw, 11rem); }
 
-    /* Nav */
-    nav { padding: .875rem 1rem; }
-    nav.scrolled { padding: .5rem 1rem; }
-    .nav-logo { font-size: 1.1rem; letter-spacing: .12em; }
-    .nav-links { display: none; }
-    .hamburger { display: flex; align-items: center; justify-content: center; }
+      .about-image { aspect-ratio: 3/2; max-height: 320px; }
+      .about-image-caption h3 { font-size: clamp(1.6rem, 3.5vw, 2.25rem); }
 
-    /* Hero — clave: texto nunca desborda el ancho */
-    #inicio {
-      padding: 5.5rem 1rem 2.5rem;
-      min-height: auto;
-      height: auto;
-      overflow: hidden;
-    }
-    .hero-inner { width: 100%; max-width: 100%; overflow: hidden; }
-    .hero-slogan { font-size: .52rem; letter-spacing: .15em; margin-bottom: .75rem; }
-    .hero-h1 {
-      font-size: clamp(2.8rem, 13vw, 4.5rem);
-      line-height: .85;
-      letter-spacing: .02em;
-      margin-bottom: 1rem;
-      word-break: break-word;
-      overflow: hidden;
-    }
-    .hero-outline {
-      letter-spacing: .02em;
-      display: block;
-      overflow: hidden;
-    }
-    .hero-desc { font-size: .8rem; margin-bottom: 2rem; padding: 0 .25rem; line-height: 1.55; }
-    .btn-primary { padding: .75rem 1.5rem; font-size: .95rem; letter-spacing: .12em; width: 100%; justify-content: center; }
-
-    /* Sobre mí */
-    #sobre-mi { padding: 4rem 1rem; }
-    .about-grid { gap: 1.5rem; }
-    .about-image { order: 1; aspect-ratio: 3/2; max-height: 240px; }
-    .about-image-caption { bottom: 1rem; left: 1rem; }
-    .about-image-caption h3 { font-size: 1.4rem; }
-    .about-image-caption .gold-bar { width: 2rem; margin-bottom: .5rem; }
-    .about-content { order: 2; }
-    .about-content h2 { font-size: clamp(1.6rem, 7vw, 2.4rem); line-height: 1.05; margin-bottom: 1rem; }
-    .about-quote { font-size: .78rem; margin-bottom: 1rem; }
-    .about-pills { grid-template-columns: 1fr 1fr; gap: .875rem; }
-    .about-pill h4 { font-size: .95rem; letter-spacing: .08em; }
-    .about-pill p { font-size: .63rem; }
-
-    /* Servicios */
-    #servicios { padding: 3.5rem 1rem; }
-    .section-title { font-size: clamp(1.8rem, 9vw, 3rem); letter-spacing: .06em; margin-bottom: 1.75rem; line-height: 1.05; }
-    .services-grid { grid-template-columns: 1fr; gap: .875rem; }
-    .service-card { padding: 1.25rem; }
-    .service-card .icon { margin-bottom: .875rem; }
-    .service-card h3 { font-size: 1.3rem; margin-bottom: .5rem; }
-    .service-card p { font-size: .73rem; margin-bottom: .875rem; }
-    .benefit { font-size: .52rem; }
-
-    /* Portafolio */
-    #portafolio { padding: 3.5rem 1rem; }
-    .portfolio-header { gap: 1.25rem; margin-bottom: 1.5rem; }
-    .portfolio-header h2 { font-size: clamp(2.5rem, 14vw, 4rem); letter-spacing: .04em; }
-    .portfolio-header p { font-size: .48rem; }
-    .filter-btns { gap: .35rem; }
-    .filter-btn { padding: .3rem .7rem; font-size: .48rem; letter-spacing: .08em; }
-    .portfolio-grid { grid-template-columns: 1fr 1fr; gap: .5rem; }
-    .project-card img { padding: .875rem; }
-    .project-overlay { padding: .75rem .875rem; opacity: 1; background: linear-gradient(to top, rgba(0,0,0,.9) 0%, rgba(0,0,0,.2) 60%, transparent 100%); }
-    .project-cat { font-size: .42rem; letter-spacing: .2em; margin-bottom: .2rem; }
-    .project-title { font-size: clamp(.65rem, 3vw, .95rem); }
-    .project-link { margin-top: .4rem; padding: .35rem .6rem; font-size: .7rem; letter-spacing: .08em; }
-    .project-bar { display: none; }
-
-    /* Contacto */
-    #contacto { padding: 3.5rem 1rem; }
-    .lets  { font-size: clamp(3.5rem, 18vw, 5.5rem); line-height: .82; }
-    .grow  { font-size: clamp(3.5rem, 18vw, 5.5rem); line-height: .82; }
-    .contact-desc { font-size: .78rem; margin: 1.5rem auto; }
-    .contact-btns { flex-direction: column; align-items: stretch; gap: .75rem; }
-    .btn-wa, .btn-ig { width: 100%; max-width: 100%; padding: .875rem 1.25rem; font-size: 1.15rem; letter-spacing: .12em; }
-    .btn-wa img, .btn-ig img { width: 1.4rem; height: 1.4rem; }
-
-    /* Footer */
-    footer { padding: 2rem 1rem; }
-    .footer-inner { flex-direction: column; align-items: center; gap: 1.25rem; text-align: center; }
-    .footer-brand { font-size: 1.3rem; }
-    .footer-copy { font-size: .48rem; }
-    .footer-socials { gap: 1.5rem; }
-
-    /* Floating */
-    .floating { bottom: 1rem; right: 1rem; gap: .75rem; }
-    .float-wa img { width: 3rem; height: 3rem; }
-    #btn-top { width: 3rem; height: 3rem; }
-
-    /* ── SMALL-MEDIUM (≥ 480px) ────────────────────────────── */
-    @media (min-width: 480px) {
-      .hero-h1 { font-size: clamp(4.5rem, 20vw, 7rem); }
       .services-grid { grid-template-columns: 1fr 1fr; }
-      .btn-primary { width: auto; }
-      .contact-btns { flex-direction: row; flex-wrap: wrap; justify-content: center; }
-      .btn-wa, .btn-ig { width: auto; flex: 1; min-width: 200px; max-width: 280px; }
+
+      .portfolio-grid { gap: .875rem; }
+
+      .contact-btns {
+        flex-direction: row;
+        justify-content: center;
+      }
+      .btn-wa, .btn-ig { flex: 1; max-width: 280px; }
     }
 
-    /* ── TABLET (≥ 768px) ──────────────────────────────────── */
+    /* ═══════════════════════════════════════════════════
+       DESKTOP  ≥ 768px
+    ═══════════════════════════════════════════════════ */
     @media (min-width: 768px) {
-      nav { padding: 1.5rem; }
-      nav.scrolled { padding: .5rem 1.5rem; }
+      :root {
+        --nav-h: var(--nav-h-lg);
+        --px: var(--px-lg);
+      }
+
+      /* Nav */
+      nav { height: var(--nav-h-lg); padding: 0 var(--px-lg); }
       .nav-logo { font-size: 1.4rem; }
       .nav-links { display: flex; }
       .hamburger { display: none; }
 
-      #inicio { padding: 6rem 1.5rem 3rem; }
-      .hero-slogan { font-size: .6875rem; }
-      .hero-h1 { font-size: clamp(6rem, 16vw, 11rem); line-height: .75; }
-      .hero-desc { font-size: clamp(.9rem, 1.8vw, 1.2rem); margin-bottom: 3rem; }
-      .btn-primary { padding: .875rem 3rem; font-size: 1.25rem; }
+      /* Hero */
+      #inicio { padding: calc(var(--nav-h-lg) + 4rem) var(--px-lg) 4rem; }
 
-      #sobre-mi { padding: 6rem 1.5rem; }
-      .about-grid { grid-template-columns: 1fr 1fr; gap: 2.5rem; }
-      .about-image { order: 1; aspect-ratio: 4/5; max-height: none; }
-      .about-image-caption { bottom: 2.5rem; left: 2.5rem; }
-      .about-image-caption h3 { font-size: clamp(2rem, 4vw, 2.75rem); }
+      /* Sobre mí */
+      .about-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 3rem;
+      }
+      .about-image {
+        order: 1; aspect-ratio: 4/5; max-height: none;
+      }
+      .about-image-caption { bottom: 2rem; left: 2rem; }
       .about-content { order: 2; }
-      .about-content h2 { font-size: clamp(2.5rem, 5vw, 3.5rem); }
-      .about-quote { font-size: .95rem; }
-      .about-pill h4 { font-size: 1.25rem; }
+      .about-content h2 { font-size: clamp(2rem, 4.5vw, 3.25rem); }
 
-      #servicios { padding: 6rem 1.5rem; }
-      .section-title { font-size: clamp(3rem, 7vw, 5rem); margin-bottom: 3rem; }
-      .services-grid { grid-template-columns: repeat(2, 1fr); gap: 1.25rem; }
-      .service-card { padding: 2rem; }
-      .service-card h3 { font-size: 1.75rem; }
-      .benefit { font-size: .6rem; }
+      /* Servicios */
+      .section-title { margin-bottom: 3rem; }
 
-      #portafolio { padding: 6rem 1.5rem; }
-      .portfolio-header { flex-direction: row; align-items: flex-end; margin-bottom: 2.5rem; }
-      .portfolio-header h2 { font-size: clamp(4rem, 10vw, 7rem); }
-      .filter-btn { padding: .375rem 1.25rem; font-size: .55rem; }
-      .portfolio-grid { grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 1rem; }
-      .project-card img { padding: 1.5rem; }
-      .project-overlay { opacity: 0; padding: 1.25rem 1.5rem; }
-      .project-card:hover .project-overlay { opacity: 1; }
-      .project-title { font-size: clamp(1rem, 2.5vw, 1.5rem); }
+      /* Portafolio */
+      .portfolio-header {
+        flex-direction: row;
+        align-items: flex-end;
+        margin-bottom: 2.5rem;
+      }
+      .portfolio-grid {
+        grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+        gap: 1.125rem;
+      }
+      .project-card img { padding: 1.75rem; }
+      /* On desktop: overlay only on hover */
+      .project-overlay { opacity: 0; padding: 1.5rem; }
+      .project-card:hover .project-overlay,
+      .project-card.touch-active .project-overlay { opacity: 1; }
       .project-bar { display: block; }
+      .project-card:hover .project-bar { width: 100%; }
 
-      #contacto { padding: 6rem 1.5rem; }
-      .lets, .grow { font-size: clamp(5rem, 18vw, 14rem); line-height: .75; }
-      .contact-desc { font-size: 1rem; margin: 2.5rem auto; }
-      .contact-btns { flex-direction: row; justify-content: center; gap: 1.25rem; }
-      .btn-wa, .btn-ig { width: auto; max-width: none; padding: 1.25rem 3rem; font-size: 1.5rem; }
+      /* Contact */
+      .contact-btns { gap: 1.25rem; }
+      .btn-wa, .btn-ig { flex: none; padding: 1.25rem 3rem; font-size: 1.5rem; }
       .btn-wa img, .btn-ig img { width: 2rem; height: 2rem; }
 
-      footer { padding: 3rem 1.5rem; }
-      .footer-inner { flex-direction: row; justify-content: space-between; text-align: left; }
+      /* Footer */
+      .footer-inner {
+        flex-direction: row;
+        justify-content: space-between;
+        text-align: left;
+      }
 
-      .floating { bottom: 2.5rem; right: 2.5rem; }
-      .float-wa img { width: 3.5rem; height: 3.5rem; }
-      #btn-top { width: 3.5rem; height: 3.5rem; }
+      /* Floating */
+      .floating { bottom: 2rem; right: 2rem; }
+      .float-wa img, #btn-top { width: 3.5rem; height: 3.5rem; }
     }
 
-    /* ── DESKTOP (≥ 1024px) ────────────────────────────────── */
+    /* ═══════════════════════════════════════════════════
+       LARGE DESKTOP  ≥ 1024px
+    ═══════════════════════════════════════════════════ */
     @media (min-width: 1024px) {
       .services-grid { grid-template-columns: repeat(4, 1fr); }
-      .portfolio-grid { grid-template-columns: repeat(3, 1fr); gap: 1.25rem; }
-      .portfolio-header h2 { font-size: clamp(5rem, 9vw, 8rem); }
+      .portfolio-grid { grid-template-columns: repeat(3, 1fr); }
     }
 
-    /* Touch active state for mobile portfolio cards */
+    /* Touch active state */
     .project-card.touch-active .project-overlay { opacity: 1; }
-    .project-card.touch-active img { filter: grayscale(0); opacity: 1; transform: scale(1.05); }
-    .project-card.touch-active .project-bar { width: 100%; }
-
-    /* ─── ANIMATIONS ─────────────────────────────────────────── */
-    .fade-in { opacity: 0; transform: translateY(20px); transition: opacity .8s, transform .8s; }
-    .fade-in.visible { opacity: 1; transform: none; }
   </style>
 </head>
 <body>
 
-  <!-- BG LAYERS -->
   <div class="bg-grid"></div>
   <div class="noise-overlay"></div>
 
-  <!-- ═══════════ NAV ═══════════ -->
+  <!-- ══════════════ NAV ══════════════ -->
   <nav id="navbar">
     <div class="nav-inner">
       <a href="#inicio" class="nav-logo">ADRIÁN GARCÍA<span>.</span></a>
+
       <div class="nav-links">
-        <a href="#inicio"    onclick="smoothScroll(event,'inicio')">Inicio</a>
-        <a href="#sobre-mi"  onclick="smoothScroll(event,'sobre-mi')">Sobre Mí</a>
-        <a href="#servicios" onclick="smoothScroll(event,'servicios')">Servicios</a>
-        <a href="#portafolio"onclick="smoothScroll(event,'portafolio')">Portafolio</a>
-        <a href="#contacto"  onclick="smoothScroll(event,'contacto')">Contacto</a>
+        <a href="#inicio"     onclick="smoothScroll(event,'inicio')">Inicio</a>
+        <a href="#sobre-mi"   onclick="smoothScroll(event,'sobre-mi')">Sobre Mí</a>
+        <a href="#servicios"  onclick="smoothScroll(event,'servicios')">Servicios</a>
+        <a href="#portafolio" onclick="smoothScroll(event,'portafolio')">Portafolio</a>
+        <a href="#contacto"   onclick="smoothScroll(event,'contacto')">Contacto</a>
         <a href="https://wa.link/l9llu6" target="_blank" rel="noopener" class="nav-cta">CONTACTAR</a>
       </div>
+
       <button class="hamburger" id="hamburger" onclick="toggleMenu()" aria-label="Menú">
-        <svg id="ico-menu" xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
-        <svg id="ico-close" style="display:none" xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        <svg id="ico-menu" xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+        <svg id="ico-close" style="display:none" xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
       </button>
     </div>
   </nav>
 
-  <!-- ═══════════ MOBILE MENU ═══════════ -->
+  <!-- ══════════════ MOBILE MENU ══════════════ -->
   <div class="mobile-menu" id="mobile-menu">
-    <a href="#inicio"    onclick="smoothScroll(event,'inicio');toggleMenu()">Inicio</a>
-    <a href="#sobre-mi"  onclick="smoothScroll(event,'sobre-mi');toggleMenu()">Sobre Mí</a>
-    <a href="#servicios" onclick="smoothScroll(event,'servicios');toggleMenu()">Servicios</a>
-    <a href="#portafolio"onclick="smoothScroll(event,'portafolio');toggleMenu()">Portafolio</a>
-    <a href="#contacto"  onclick="smoothScroll(event,'contacto');toggleMenu()">Contacto</a>
+    <a href="#inicio"     onclick="smoothScroll(event,'inicio');toggleMenu()">Inicio</a>
+    <a href="#sobre-mi"   onclick="smoothScroll(event,'sobre-mi');toggleMenu()">Sobre Mí</a>
+    <a href="#servicios"  onclick="smoothScroll(event,'servicios');toggleMenu()">Servicios</a>
+    <a href="#portafolio" onclick="smoothScroll(event,'portafolio');toggleMenu()">Portafolio</a>
+    <a href="#contacto"   onclick="smoothScroll(event,'contacto');toggleMenu()">Contacto</a>
     <a href="https://wa.link/l9llu6" target="_blank" rel="noopener" class="mob-cta">CONTACTAR</a>
   </div>
 
-  <!-- ═══════════ HERO ═══════════ -->
+  <!-- ══════════════ HERO ══════════════ -->
   <section id="inicio">
     <div class="hero-inner fade-in">
       <span class="hero-slogan">Estrategia Digital &amp; Growth Management</span>
@@ -714,28 +700,19 @@
       <p class="hero-desc">Diseñamos sistemas de adquisición premium para marcas que no aceptan menos que el dominio absoluto de su mercado.</p>
       <a href="#contacto" onclick="smoothScroll(event,'contacto')" class="btn-primary">
         ESCALAR VENTAS
-        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
       </a>
     </div>
   </section>
 
-  <!-- ═══════════ SOBRE MÍ ═══════════ -->
-  <section id="sobre-mi">
-    <div class="about-grid">
+  <!-- ══════════════ SOBRE MÍ ══════════════ -->
+  <section id="sobre-mi" class="section-pad">
+    <div class="container about-grid">
 
-      <!-- 
-        ╔══════════════════════════════════════════════════════════╗
-        ║  FOTO DE PERFIL                                          ║
-        ║  Reemplaza "fotos/perfil.jpg" con el nombre de tu foto. ║
-        ║  Coloca la foto en la misma carpeta que index.html       ║
-        ║  o en una subcarpeta "fotos/".                          ║
-        ╚══════════════════════════════════════════════════════════╝
-      -->
       <div class="about-image fade-in">
-        <img src="fotos/perfil.jpg" alt="Adrián García" class="about-photo" 
+        <img src="fotos/perfil.jpg" alt="Adrián García" class="about-photo"
              onerror="this.style.display='none'" />
-        <!-- Ícono decorativo visible si no hay foto -->
-        <svg xmlns="http://www.w3.org/2000/svg" width="150" height="150" fill="none" stroke="rgba(201,168,76,0.05)" stroke-width="1.5" viewBox="0 0 24 24" style="position:absolute"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" width="120" height="120" fill="none" stroke="rgba(201,168,76,0.06)" stroke-width="1.5" viewBox="0 0 24 24" style="position:absolute"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/></svg>
         <div class="about-image-caption">
           <h3>ADRIÁN GARCÍA</h3>
           <div class="gold-bar"></div>
@@ -765,19 +742,21 @@
     </div>
   </section>
 
-  <!-- ═══════════ SERVICIOS ═══════════ -->
-  <section id="servicios">
-    <div class="services-inner fade-in">
+  <!-- ══════════════ SERVICIOS ══════════════ -->
+  <section id="servicios" class="section-pad">
+    <div class="container services-inner fade-in">
       <h2 class="section-title">SOLUCIONES DE <span>IMPACTO</span></h2>
       <div class="services-grid">
 
         <div class="service-card">
           <div>
-            <div class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg></div>
+            <div class="service-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+            </div>
             <h3>Pauta Digital</h3>
             <p>Facebook, Google y TikTok Ads con enfoque en ROI masivo.</p>
           </div>
-          <div>
+          <div class="benefits">
             <div class="benefit">
               <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
               Retorno (ROAS) optimizado
@@ -791,11 +770,13 @@
 
         <div class="service-card">
           <div>
-            <div class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg></div>
+            <div class="service-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+            </div>
             <h3>Desarrollo Web</h3>
             <p>Sitios High-End diseñados para convertir visitas en ventas.</p>
           </div>
-          <div>
+          <div class="benefits">
             <div class="benefit"><svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg> Diseño responsive</div>
             <div class="benefit"><svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg> Arquitectura de conversión</div>
           </div>
@@ -803,11 +784,13 @@
 
         <div class="service-card">
           <div>
-            <div class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="8" rx="2" ry="2"/><rect x="2" y="14" width="20" height="8" rx="2" ry="2"/><line x1="6" y1="6" x2="6.01" y2="6"/><line x1="6" y1="18" x2="6.01" y2="18"/></svg></div>
+            <div class="service-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="8" rx="2" ry="2"/><rect x="2" y="14" width="20" height="8" rx="2" ry="2"/><line x1="6" y1="6" x2="6.01" y2="6"/><line x1="6" y1="18" x2="6.01" y2="18"/></svg>
+            </div>
             <h3>Branding</h3>
             <p>Identidad visual de élite para cobrar lo que realmente vales.</p>
           </div>
-          <div>
+          <div class="benefits">
             <div class="benefit"><svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg> Manual de marca</div>
             <div class="benefit"><svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg> Autoridad visual</div>
           </div>
@@ -815,11 +798,13 @@
 
         <div class="service-card">
           <div>
-            <div class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 19l7-7 3 3-7 7-3-3z"/><path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"/><path d="M2 2l7.586 7.586"/><circle cx="11" cy="11" r="2"/></svg></div>
+            <div class="service-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 19l7-7 3 3-7 7-3-3z"/><path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"/><path d="M2 2l7.586 7.586"/><circle cx="11" cy="11" r="2"/></svg>
+            </div>
             <h3>Diseño Gráfico</h3>
             <p>Creativos publicitarios que detienen el scroll.</p>
           </div>
-          <div>
+          <div class="benefits">
             <div class="benefit"><svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg> Alto CTR</div>
             <div class="benefit"><svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg> Copy persuasivo</div>
           </div>
@@ -829,35 +814,14 @@
     </div>
   </section>
 
-  <!-- ═══════════ PORTAFOLIO ═══════════ -->
-  <!--
-    ╔══════════════════════════════════════════════════════════════════╗
-    ║  INSTRUCCIONES PARA LAS FOTOS DEL PORTAFOLIO                    ║
-    ║                                                                  ║
-    ║  1. Coloca todas las imágenes en una carpeta llamada "fotos/"    ║
-    ║     junto a este archivo index.html.                             ║
-    ║                                                                  ║
-    ║  2. Cada <img src="fotos/NOMBRE_ARCHIVO.jpg"> debe coincidir     ║
-    ║     exactamente con el nombre del archivo en tu carpeta.         ║
-    ║                                                                  ║
-    ║  3. Estructura de carpetas recomendada:                          ║
-    ║     mi-web/                                                      ║
-    ║     ├── index.html          ← este archivo                      ║
-    ║     └── fotos/                                                   ║
-    ║         ├── perfil.jpg                                           ║
-    ║         ├── logo-alma.png                                        ║
-    ║         ├── logo-nova.jpg                                        ║
-    ║         └── ... (todas las demás fotos)                          ║
-    ║                                                                  ║
-    ║  4. Para GitHub Pages: sube la carpeta completa al repositorio.  ║
-    ╚══════════════════════════════════════════════════════════════════╝
-  -->
-  <section id="portafolio">
-    <div class="portfolio-inner">
+  <!-- ══════════════ PORTAFOLIO ══════════════ -->
+  <section id="portafolio" class="section-pad">
+    <div class="container portfolio-inner">
+
       <div class="portfolio-header fade-in">
         <div>
           <h2>PORTAFOLIO</h2>
-          <p>Calidad Visual Estratégica</p>
+          <p class="sub">Calidad Visual Estratégica</p>
         </div>
         <div class="filter-btns">
           <button class="filter-btn active" onclick="filterPortfolio(this,'Todos')">Todos</button>
@@ -870,12 +834,9 @@
 
       <div class="portfolio-grid" id="portfolio-grid">
 
-        <!-- ── LOGOTIPOS ── -->
-        <!-- INSTRUCCIÓN: cambia "fotos/NOMBRE.ext" por la ruta real de tu imagen -->
-
+        <!-- LOGOTIPOS -->
         <div class="project-card" data-cat="Logotipos">
-          <img src="fotos/LOGO FONDO OSCURO.png" alt="ALMA - Aliado Legal"
-               onerror="this.src='https://placehold.co/400x400/111/C9A84C?text=ALMA'" />
+          <img src="fotos/LOGO FONDO OSCURO.png" alt="ALMA - Aliado Legal" onerror="this.src='https://placehold.co/400x400/111/C9A84C?text=ALMA'" />
           <div class="project-overlay">
             <span class="project-cat">Logotipos</span>
             <h4 class="project-title">ALMA - Aliado Legal</h4>
@@ -884,8 +845,7 @@
         </div>
 
         <div class="project-card" data-cat="Logotipos">
-          <img src="fotos/Logo Nova.jpg" alt="Nova Integral Services"
-               onerror="this.src='https://placehold.co/400x400/111/C9A84C?text=Nova'" />
+          <img src="fotos/Logo Nova.jpg" alt="Nova Integral Services" onerror="this.src='https://placehold.co/400x400/111/C9A84C?text=Nova'" />
           <div class="project-overlay">
             <span class="project-cat">Logotipos</span>
             <h4 class="project-title">Nova Integral Services</h4>
@@ -894,8 +854,7 @@
         </div>
 
         <div class="project-card" data-cat="Logotipos">
-          <img src="fotos/Logotipo Ángela.jpg" alt="Ángela Gómez Psicóloga"
-               onerror="this.src='https://placehold.co/400x400/111/C9A84C?text=Ángela'" />
+          <img src="fotos/Logotipo Ángela.jpg" alt="Ángela Gómez Psicóloga" onerror="this.src='https://placehold.co/400x400/111/C9A84C?text=Ángela'" />
           <div class="project-overlay">
             <span class="project-cat">Logotipos</span>
             <h4 class="project-title">Ángela Gómez Psicóloga</h4>
@@ -904,8 +863,7 @@
         </div>
 
         <div class="project-card" data-cat="Logotipos">
-          <img src="fotos/Logotipo Angélica.png" alt="A&W Bienes Raíces"
-               onerror="this.src='https://placehold.co/400x400/111/C9A84C?text=A%26W'" />
+          <img src="fotos/Logotipo Angélica.png" alt="A&W Bienes Raíces" onerror="this.src='https://placehold.co/400x400/111/C9A84C?text=A%26W'" />
           <div class="project-overlay">
             <span class="project-cat">Logotipos</span>
             <h4 class="project-title">A&amp;W Bienes Raíces</h4>
@@ -914,8 +872,7 @@
         </div>
 
         <div class="project-card" data-cat="Logotipos">
-          <img src="fotos/Logotipo Hugo.png" alt="Hugo Motta"
-               onerror="this.src='https://placehold.co/400x400/111/C9A84C?text=Hugo'" />
+          <img src="fotos/Logotipo Hugo.png" alt="Hugo Motta" onerror="this.src='https://placehold.co/400x400/111/C9A84C?text=Hugo'" />
           <div class="project-overlay">
             <span class="project-cat">Logotipos</span>
             <h4 class="project-title">Hugo Motta</h4>
@@ -924,8 +881,7 @@
         </div>
 
         <div class="project-card" data-cat="Logotipos">
-          <img src="fotos/Logotipo Revivetech.jpg" alt="Revive Tech"
-               onerror="this.src='https://placehold.co/400x400/111/C9A84C?text=ReviveTech'" />
+          <img src="fotos/Logotipo Revivetech.jpg" alt="Revive Tech" onerror="this.src='https://placehold.co/400x400/111/C9A84C?text=ReviveTech'" />
           <div class="project-overlay">
             <span class="project-cat">Logotipos</span>
             <h4 class="project-title">Revive Tech</h4>
@@ -934,8 +890,7 @@
         </div>
 
         <div class="project-card" data-cat="Logotipos">
-          <img src="fotos/WhatsApp Image 2026-04-22 at 1.11.21 PM (2).jpeg" alt="Bufalux"
-               onerror="this.src='https://placehold.co/400x400/111/C9A84C?text=Bufalux'" />
+          <img src="fotos/WhatsApp Image 2026-04-22 at 1.11.21 PM (2).jpeg" alt="Bufalux" onerror="this.src='https://placehold.co/400x400/111/C9A84C?text=Bufalux'" />
           <div class="project-overlay">
             <span class="project-cat">Logotipos</span>
             <h4 class="project-title">Bufalux</h4>
@@ -944,8 +899,7 @@
         </div>
 
         <div class="project-card" data-cat="Logotipos">
-          <img src="fotos/WhatsApp Image 2026-04-16 at 12.57.46 PM.jpeg" alt="Laboratorio de Éxito"
-               onerror="this.src='https://placehold.co/400x400/111/C9A84C?text=Lab+Éxito'" />
+          <img src="fotos/WhatsApp Image 2026-04-16 at 12.57.46 PM.jpeg" alt="Laboratorio de Éxito" onerror="this.src='https://placehold.co/400x400/111/C9A84C?text=Lab+Éxito'" />
           <div class="project-overlay">
             <span class="project-cat">Logotipos</span>
             <h4 class="project-title">Laboratorio de Éxito</h4>
@@ -954,8 +908,7 @@
         </div>
 
         <div class="project-card" data-cat="Logotipos">
-          <img src="fotos/WhatsApp Image 2026-04-16 at 2.37.40 PM.jpeg" alt="Axevita"
-               onerror="this.src='https://placehold.co/400x400/111/C9A84C?text=Axevita'" />
+          <img src="fotos/WhatsApp Image 2026-04-16 at 2.37.40 PM.jpeg" alt="Axevita" onerror="this.src='https://placehold.co/400x400/111/C9A84C?text=Axevita'" />
           <div class="project-overlay">
             <span class="project-cat">Logotipos</span>
             <h4 class="project-title">Axevita</h4>
@@ -964,8 +917,7 @@
         </div>
 
         <div class="project-card" data-cat="Logotipos">
-          <img src="fotos/WhatsApp Image 2026-04-22 at 1.11.21 PM (1).jpeg" alt="Mastery Trading Academy"
-               onerror="this.src='https://placehold.co/400x400/111/C9A84C?text=Mastery'" />
+          <img src="fotos/WhatsApp Image 2026-04-22 at 1.11.21 PM (1).jpeg" alt="Mastery Trading Academy" onerror="this.src='https://placehold.co/400x400/111/C9A84C?text=Mastery'" />
           <div class="project-overlay">
             <span class="project-cat">Logotipos</span>
             <h4 class="project-title">Mastery Trading Academy</h4>
@@ -974,8 +926,7 @@
         </div>
 
         <div class="project-card" data-cat="Logotipos">
-          <img src="fotos/WhatsApp Image 2026-04-22 at 1.11.21 PM.jpeg" alt="Webmotion"
-               onerror="this.src='https://placehold.co/400x400/111/C9A84C?text=Webmotion'" />
+          <img src="fotos/WhatsApp Image 2026-04-22 at 1.11.21 PM.jpeg" alt="Webmotion" onerror="this.src='https://placehold.co/400x400/111/C9A84C?text=Webmotion'" />
           <div class="project-overlay">
             <span class="project-cat">Logotipos</span>
             <h4 class="project-title">Webmotion</h4>
@@ -984,8 +935,7 @@
         </div>
 
         <div class="project-card" data-cat="Logotipos">
-          <img src="fotos/WhatsApp Image 2026-04-16 at 12.56.13 PM (2).jpeg" alt="Axioma Jurídico"
-               onerror="this.src='https://placehold.co/400x400/111/C9A84C?text=Axioma'" />
+          <img src="fotos/WhatsApp Image 2026-04-16 at 12.56.13 PM (2).jpeg" alt="Axioma Jurídico" onerror="this.src='https://placehold.co/400x400/111/C9A84C?text=Axioma'" />
           <div class="project-overlay">
             <span class="project-cat">Logotipos</span>
             <h4 class="project-title">Axioma Jurídico</h4>
@@ -993,11 +943,9 @@
           </div>
         </div>
 
-        <!-- ── TARJETAS ── -->
-
+        <!-- TARJETAS -->
         <div class="project-card" data-cat="Tarjetas">
-          <img src="fotos/WhatsApp Image 2026-04-16 at 12.56.13 PM (4).jpeg" alt="Dan Fit - Coach"
-               onerror="this.src='https://placehold.co/400x400/111/C9A84C?text=Dan+Fit'" />
+          <img src="fotos/WhatsApp Image 2026-04-16 at 12.56.13 PM (4).jpeg" alt="Dan Fit - Coach" onerror="this.src='https://placehold.co/400x400/111/C9A84C?text=Dan+Fit'" />
           <div class="project-overlay">
             <span class="project-cat">Tarjetas</span>
             <h4 class="project-title">Dan Fit - Coach</h4>
@@ -1006,8 +954,7 @@
         </div>
 
         <div class="project-card" data-cat="Tarjetas">
-          <img src="fotos/WhatsApp Image 2026-04-16 at 12.56.13 PM.jpeg" alt="Legal Identity - Mateo"
-               onerror="this.src='https://placehold.co/400x400/111/C9A84C?text=Legal+ID'" />
+          <img src="fotos/WhatsApp Image 2026-04-16 at 12.56.13 PM.jpeg" alt="Legal Identity - Mateo" onerror="this.src='https://placehold.co/400x400/111/C9A84C?text=Legal+ID'" />
           <div class="project-overlay">
             <span class="project-cat">Tarjetas</span>
             <h4 class="project-title">Legal Identity - Mateo</h4>
@@ -1016,8 +963,7 @@
         </div>
 
         <div class="project-card" data-cat="Tarjetas">
-          <img src="fotos/Tarjetas de presentación Ángela1.png" alt="Card Design - Psicología"
-               onerror="this.src='https://placehold.co/400x400/111/C9A84C?text=Card+Psico'" />
+          <img src="fotos/Tarjetas de presentación Ángela1.png" alt="Card Design - Psicología" onerror="this.src='https://placehold.co/400x400/111/C9A84C?text=Card+Psico'" />
           <div class="project-overlay">
             <span class="project-cat">Tarjetas</span>
             <h4 class="project-title">Card Design - Psicología</h4>
@@ -1026,8 +972,7 @@
         </div>
 
         <div class="project-card" data-cat="Tarjetas">
-          <img src="fotos/Tarjetas de presentación Angélica1.png" alt="Real Estate Card"
-               onerror="this.src='https://placehold.co/400x400/111/C9A84C?text=Real+Estate'" />
+          <img src="fotos/Tarjetas de presentación Angélica1.png" alt="Real Estate Card" onerror="this.src='https://placehold.co/400x400/111/C9A84C?text=Real+Estate'" />
           <div class="project-overlay">
             <span class="project-cat">Tarjetas</span>
             <h4 class="project-title">Real Estate Card</h4>
@@ -1036,8 +981,7 @@
         </div>
 
         <div class="project-card" data-cat="Tarjetas">
-          <img src="fotos/Tarjetas de presentación Edison1.png" alt="Corporate Identity"
-               onerror="this.src='https://placehold.co/400x400/111/C9A84C?text=Corporate'" />
+          <img src="fotos/Tarjetas de presentación Edison1.png" alt="Corporate Identity" onerror="this.src='https://placehold.co/400x400/111/C9A84C?text=Corporate'" />
           <div class="project-overlay">
             <span class="project-cat">Tarjetas</span>
             <h4 class="project-title">Corporate Identity</h4>
@@ -1045,44 +989,43 @@
           </div>
         </div>
 
-        <!-- ── PÁGINAS WEB ── -->
-
+        <!-- PÁGINAS WEB -->
         <div class="project-card" data-cat="Páginas Web">
-          <img src="fotos/Logo Nova.jpg" alt="Nova Integral Services"
-               onerror="this.src='https://placehold.co/400x400/111/C9A84C?text=Nova+Web'" />
+          <img src="fotos/Logo Nova.jpg" alt="Nova Integral Services" onerror="this.src='https://placehold.co/400x400/111/C9A84C?text=Nova+Web'" />
           <div class="project-overlay">
             <span class="project-cat">Páginas Web</span>
             <h4 class="project-title">Nova Integral Services</h4>
             <a href="https://novaintegralservices.com/" target="_blank" rel="noopener noreferrer" class="project-link" onclick="event.stopPropagation()">
               VISITAR WEB
-              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+              <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
             </a>
+            <div class="project-bar"></div>
           </div>
         </div>
 
         <div class="project-card" data-cat="Páginas Web">
-          <img src="fotos/WhatsApp Image 2026-04-22 at 1.11.21 PM (1).jpeg" alt="SYT Investments"
-               onerror="this.src='https://placehold.co/400x400/111/C9A84C?text=SYT'" />
+          <img src="fotos/WhatsApp Image 2026-04-22 at 1.11.21 PM (1).jpeg" alt="SYT Investments" onerror="this.src='https://placehold.co/400x400/111/C9A84C?text=SYT'" />
           <div class="project-overlay">
             <span class="project-cat">Páginas Web</span>
             <h4 class="project-title">SYT Investments</h4>
             <a href="https://www.sytinvestments.com/" target="_blank" rel="noopener noreferrer" class="project-link" onclick="event.stopPropagation()">
               VISITAR WEB
-              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+              <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
             </a>
+            <div class="project-bar"></div>
           </div>
         </div>
 
         <div class="project-card" data-cat="Páginas Web">
-          <img src="fotos/WhatsApp Image 2026-04-16 at 12.56.13 PM (2).jpeg" alt="Evite Multas Ponal"
-               onerror="this.src='https://placehold.co/400x400/111/C9A84C?text=Multas'" />
+          <img src="fotos/WhatsApp Image 2026-04-16 at 12.56.13 PM (2).jpeg" alt="Evite Multas Ponal" onerror="this.src='https://placehold.co/400x400/111/C9A84C?text=Multas'" />
           <div class="project-overlay">
             <span class="project-cat">Páginas Web</span>
             <h4 class="project-title">Evite Multas Ponal</h4>
             <a href="https://evitemultasponal.com/" target="_blank" rel="noopener noreferrer" class="project-link" onclick="event.stopPropagation()">
               VISITAR WEB
-              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+              <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
             </a>
+            <div class="project-bar"></div>
           </div>
         </div>
 
@@ -1090,9 +1033,9 @@
     </div>
   </section>
 
-  <!-- ═══════════ CONTACTO ═══════════ -->
-  <section id="contacto">
-    <div class="contact-inner fade-in">
+  <!-- ══════════════ CONTACTO ══════════════ -->
+  <section id="contacto" class="section-pad">
+    <div class="container contact-inner fade-in">
       <div class="lets">LET'S</div>
       <div class="grow">GROW</div>
       <p class="contact-desc">Escalemos tu facturación con una marca que proyecte confianza y autoridad.</p>
@@ -1109,14 +1052,14 @@
     </div>
   </section>
 
-  <!-- ═══════════ FOOTER ═══════════ -->
+  <!-- ══════════════ FOOTER ══════════════ -->
   <footer>
     <div class="footer-inner">
       <div>
         <div class="footer-brand">ADRIÁN GARCÍA<span>.</span></div>
         <div class="footer-sub">Growth Partner &amp; Creative Agency</div>
       </div>
-      <p class="footer-copy">© <span id="year"></span> - ADRIÁN GARCÍA - TODOS LOS DERECHOS RESERVADOS.</p>
+      <p class="footer-copy">© <span id="year"></span> ADRIÁN GARCÍA · TODOS LOS DERECHOS RESERVADOS</p>
       <div class="footer-socials">
         <a href="https://instagram.com/adriangarcia.co" target="_blank" rel="noopener">
           <img src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Instagram_icon.png" alt="Instagram" />
@@ -1128,78 +1071,74 @@
     </div>
   </footer>
 
-  <!-- ═══════════ FLOATING BUTTONS ═══════════ -->
+  <!-- ══════════════ FLOATING ══════════════ -->
   <div class="floating">
     <button id="btn-top" onclick="window.scrollTo({top:0,behavior:'smooth'})" title="Volver arriba">
-      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="12" y1="19" x2="12" y2="5"/><polyline points="5 12 12 5 19 12"/></svg>
+      <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="12" y1="19" x2="12" y2="5"/><polyline points="5 12 12 5 19 12"/></svg>
     </button>
     <a href="https://wa.link/l9llu6" target="_blank" rel="noopener noreferrer" class="float-wa">
       <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp" />
     </a>
   </div>
 
-  <!-- ═══════════ SCRIPTS ═══════════ -->
+  <!-- ══════════════ SCRIPTS ══════════════ -->
   <script>
-    /* ── YEAR ── */
+    /* Year */
     document.getElementById('year').textContent = new Date().getFullYear();
 
-    /* ── SCROLL EVENTS ── */
-    const navbar  = document.getElementById('navbar');
-    const btnTop  = document.getElementById('btn-top');
-
+    /* Scroll effects */
+    const navbar = document.getElementById('navbar');
+    const btnTop = document.getElementById('btn-top');
     window.addEventListener('scroll', () => {
       navbar.classList.toggle('scrolled', window.scrollY > 20);
       btnTop.classList.toggle('visible', window.scrollY > 500);
     }, { passive: true });
 
-    /* ── SMOOTH SCROLL ── */
+    /* Smooth scroll */
     function smoothScroll(e, id) {
       e.preventDefault();
       const el = document.getElementById(id);
       if (!el) return;
-      const offset = window.innerWidth < 768 ? 64 : 80;
-      window.scrollTo({ top: el.getBoundingClientRect().top + window.scrollY - offset, behavior: 'smooth' });
+      const navH = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--nav-h'));
+      window.scrollTo({ top: el.getBoundingClientRect().top + window.scrollY - navH, behavior: 'smooth' });
     }
 
-    /* ── HAMBURGER ── */
+    /* Hamburger */
     function toggleMenu() {
-      const menu  = document.getElementById('mobile-menu');
-      const icoM  = document.getElementById('ico-menu');
-      const icoC  = document.getElementById('ico-close');
-      const open  = menu.classList.toggle('open');
+      const menu = document.getElementById('mobile-menu');
+      const icoM = document.getElementById('ico-menu');
+      const icoC = document.getElementById('ico-close');
+      const open = menu.classList.toggle('open');
       icoM.style.display = open ? 'none'  : 'block';
       icoC.style.display = open ? 'block' : 'none';
-      // Prevent body scroll when menu is open
       document.body.style.overflow = open ? 'hidden' : '';
     }
 
-    /* ── PORTFOLIO FILTER ── */
+    /* Portfolio filter */
     function filterPortfolio(btn, cat) {
       document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
       btn.classList.add('active');
       document.querySelectorAll('.project-card').forEach(card => {
-        const match = cat === 'Todos' || card.dataset.cat === cat;
-        card.classList.toggle('hidden', !match);
+        card.classList.toggle('hidden', cat !== 'Todos' && card.dataset.cat !== cat);
       });
     }
 
-    /* ── TOUCH: toggle overlay on mobile tap ── */
+    /* Touch overlay toggle */
     if ('ontouchstart' in window) {
       document.querySelectorAll('.project-card').forEach(card => {
         card.addEventListener('click', function(e) {
-          // Allow link clicks to pass through
           if (e.target.closest('.project-link')) return;
-          const isActive = this.classList.contains('touch-active');
+          const wasActive = this.classList.contains('touch-active');
           document.querySelectorAll('.project-card.touch-active').forEach(c => c.classList.remove('touch-active'));
-          if (!isActive) this.classList.add('touch-active');
+          if (!wasActive) this.classList.add('touch-active');
         });
       });
     }
 
-    /* ── FADE-IN ON SCROLL ── */
+    /* Fade-in on scroll */
     const observer = new IntersectionObserver(entries => {
       entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
-    }, { threshold: 0.08 });
+    }, { threshold: 0.07 });
     document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
   </script>
 </body>
