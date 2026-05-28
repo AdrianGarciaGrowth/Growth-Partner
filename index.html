@@ -484,23 +484,164 @@
     .float-wa:hover { transform: scale(1.1); }
     .float-wa img { width: 3.5rem; height: 3.5rem; }
 
-    /* ─── RESPONSIVE ─────────────────────────────────────────── */
+    /* ═══════════════════════════════════════════════════════════
+       RESPONSIVE — mobile-first, breakpoints: 480 / 768 / 1024
+    ═══════════════════════════════════════════════════════════ */
+
+    /* ── BASE MOBILE (< 480px) ─────────────────────────────── */
+
+    /* Nav */
+    nav { padding: .875rem 1rem; }
+    nav.scrolled { padding: .5rem 1rem; }
+    .nav-logo { font-size: 1.1rem; letter-spacing: .12em; }
+    .nav-links { display: none; }
+    .hamburger { display: flex; align-items: center; justify-content: center; }
+
+    /* Hero */
+    #inicio { padding: 5.5rem 1rem 2.5rem; min-height: 100svh; }
+    .hero-slogan { font-size: .55rem; letter-spacing: .2em; margin-bottom: .75rem; }
+    .hero-h1 { font-size: clamp(3.8rem, 22vw, 5.5rem); line-height: .8; letter-spacing: .04em; margin-bottom: 1rem; }
+    .hero-outline { letter-spacing: .05em; }
+    .hero-desc { font-size: .8rem; margin-bottom: 2rem; padding: 0 .5rem; }
+    .btn-primary { padding: .75rem 2rem; font-size: 1rem; letter-spacing: .15em; width: 100%; justify-content: center; }
+
+    /* Sobre mí */
+    #sobre-mi { padding: 4rem 1rem; }
+    .about-grid { gap: 1.5rem; }
+    .about-image { order: 1; aspect-ratio: 3/2; max-height: 260px; }
+    .about-image-caption { bottom: 1rem; left: 1rem; }
+    .about-image-caption h3 { font-size: 1.5rem; }
+    .about-image-caption .gold-bar { width: 2rem; margin-bottom: .5rem; }
+    .about-content { order: 2; }
+    .about-content h2 { font-size: clamp(1.8rem, 8vw, 2.5rem); line-height: 1.05; margin-bottom: 1rem; }
+    .about-quote { font-size: .8rem; margin-bottom: 1rem; }
+    .about-pills { grid-template-columns: 1fr 1fr; gap: .875rem; }
+    .about-pill h4 { font-size: 1rem; letter-spacing: .1em; }
+    .about-pill p { font-size: .65rem; }
+
+    /* Servicios */
+    #servicios { padding: 4rem 1rem; }
+    .section-title { font-size: clamp(2rem, 10vw, 3.5rem); letter-spacing: .08em; margin-bottom: 2rem; line-height: 1.05; }
+    .services-grid { grid-template-columns: 1fr; gap: .875rem; }
+    .service-card { padding: 1.25rem; }
+    .service-card .icon { margin-bottom: .875rem; }
+    .service-card h3 { font-size: 1.4rem; margin-bottom: .5rem; }
+    .service-card p { font-size: .75rem; margin-bottom: .875rem; }
+    .benefit { font-size: .55rem; }
+
+    /* Portafolio */
+    #portafolio { padding: 4rem 1rem; }
+    .portfolio-header { gap: 1.25rem; margin-bottom: 1.75rem; }
+    .portfolio-header h2 { font-size: clamp(3rem, 16vw, 5rem); letter-spacing: .06em; }
+    .portfolio-header p { font-size: .5rem; }
+    .filter-btns { gap: .375rem; }
+    .filter-btn { padding: .3rem .75rem; font-size: .5rem; letter-spacing: .1em; }
+    .portfolio-grid { grid-template-columns: 1fr 1fr; gap: .625rem; }
+    .project-card img { padding: 1rem; }
+    .project-overlay { padding: .875rem 1rem; opacity: 1; background: linear-gradient(to top, rgba(0,0,0,.9) 0%, rgba(0,0,0,.2) 60%, transparent 100%); }
+    .project-cat { font-size: .45rem; letter-spacing: .25em; margin-bottom: .25rem; }
+    .project-title { font-size: clamp(.7rem, 3.5vw, 1rem); }
+    .project-link { margin-top: .5rem; padding: .4rem .75rem; font-size: .75rem; letter-spacing: .1em; }
+    .project-bar { display: none; }
+
+    /* Contacto */
+    #contacto { padding: 4rem 1rem; }
+    .lets { font-size: clamp(4rem, 22vw, 6rem); line-height: .8; }
+    .grow { font-size: clamp(4rem, 22vw, 6rem); line-height: .8; }
+    .contact-desc { font-size: .8rem; margin: 1.5rem auto; }
+    .contact-btns { flex-direction: column; align-items: stretch; gap: .75rem; }
+    .btn-wa, .btn-ig { width: 100%; max-width: 100%; padding: 1rem 1.5rem; font-size: 1.25rem; letter-spacing: .15em; }
+    .btn-wa img, .btn-ig img { width: 1.5rem; height: 1.5rem; }
+
+    /* Footer */
+    footer { padding: 2rem 1rem; }
+    .footer-inner { flex-direction: column; align-items: center; gap: 1.25rem; text-align: center; }
+    .footer-brand { font-size: 1.4rem; }
+    .footer-copy { font-size: .5rem; }
+    .footer-socials { gap: 1.5rem; }
+
+    /* Floating */
+    .floating { bottom: 1rem; right: 1rem; gap: .75rem; }
+    .float-wa img { width: 3rem; height: 3rem; }
+    #btn-top { width: 3rem; height: 3rem; }
+
+    /* ── SMALL-MEDIUM (≥ 480px) ────────────────────────────── */
+    @media (min-width: 480px) {
+      .hero-h1 { font-size: clamp(4.5rem, 20vw, 7rem); }
+      .services-grid { grid-template-columns: 1fr 1fr; }
+      .btn-primary { width: auto; }
+      .contact-btns { flex-direction: row; flex-wrap: wrap; justify-content: center; }
+      .btn-wa, .btn-ig { width: auto; flex: 1; min-width: 200px; max-width: 280px; }
+    }
+
+    /* ── TABLET (≥ 768px) ──────────────────────────────────── */
     @media (min-width: 768px) {
+      nav { padding: 1.5rem; }
+      nav.scrolled { padding: .5rem 1.5rem; }
+      .nav-logo { font-size: 1.4rem; }
       .nav-links { display: flex; }
       .hamburger { display: none; }
-      .about-grid { grid-template-columns: 1fr 1fr; }
-      .about-image { order: 1; }
+
+      #inicio { padding: 6rem 1.5rem 3rem; }
+      .hero-slogan { font-size: .6875rem; }
+      .hero-h1 { font-size: clamp(6rem, 16vw, 11rem); line-height: .75; }
+      .hero-desc { font-size: clamp(.9rem, 1.8vw, 1.2rem); margin-bottom: 3rem; }
+      .btn-primary { padding: .875rem 3rem; font-size: 1.25rem; }
+
+      #sobre-mi { padding: 6rem 1.5rem; }
+      .about-grid { grid-template-columns: 1fr 1fr; gap: 2.5rem; }
+      .about-image { order: 1; aspect-ratio: 4/5; max-height: none; }
+      .about-image-caption { bottom: 2.5rem; left: 2.5rem; }
+      .about-image-caption h3 { font-size: clamp(2rem, 4vw, 2.75rem); }
       .about-content { order: 2; }
-      .portfolio-header { flex-direction: row; align-items: flex-end; }
-      .contact-btns { flex-direction: row; justify-content: center; }
-      .btn-wa, .btn-ig { width: auto; }
+      .about-content h2 { font-size: clamp(2.5rem, 5vw, 3.5rem); }
+      .about-quote { font-size: .95rem; }
+      .about-pill h4 { font-size: 1.25rem; }
+
+      #servicios { padding: 6rem 1.5rem; }
+      .section-title { font-size: clamp(3rem, 7vw, 5rem); margin-bottom: 3rem; }
+      .services-grid { grid-template-columns: repeat(2, 1fr); gap: 1.25rem; }
+      .service-card { padding: 2rem; }
+      .service-card h3 { font-size: 1.75rem; }
+      .benefit { font-size: .6rem; }
+
+      #portafolio { padding: 6rem 1.5rem; }
+      .portfolio-header { flex-direction: row; align-items: flex-end; margin-bottom: 2.5rem; }
+      .portfolio-header h2 { font-size: clamp(4rem, 10vw, 7rem); }
+      .filter-btn { padding: .375rem 1.25rem; font-size: .55rem; }
+      .portfolio-grid { grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 1rem; }
+      .project-card img { padding: 1.5rem; }
+      .project-overlay { opacity: 0; padding: 1.25rem 1.5rem; }
+      .project-card:hover .project-overlay { opacity: 1; }
+      .project-title { font-size: clamp(1rem, 2.5vw, 1.5rem); }
+      .project-bar { display: block; }
+
+      #contacto { padding: 6rem 1.5rem; }
+      .lets, .grow { font-size: clamp(5rem, 18vw, 14rem); line-height: .75; }
+      .contact-desc { font-size: 1rem; margin: 2.5rem auto; }
+      .contact-btns { flex-direction: row; justify-content: center; gap: 1.25rem; }
+      .btn-wa, .btn-ig { width: auto; max-width: none; padding: 1.25rem 3rem; font-size: 1.5rem; }
+      .btn-wa img, .btn-ig img { width: 2rem; height: 2rem; }
+
+      footer { padding: 3rem 1.5rem; }
       .footer-inner { flex-direction: row; justify-content: space-between; text-align: left; }
+
       .floating { bottom: 2.5rem; right: 2.5rem; }
+      .float-wa img { width: 3.5rem; height: 3.5rem; }
+      #btn-top { width: 3.5rem; height: 3.5rem; }
     }
-    @media (max-width: 767px) {
-      .nav-links { display: none; }
-      .hamburger { display: flex; align-items: center; justify-content: center; }
+
+    /* ── DESKTOP (≥ 1024px) ────────────────────────────────── */
+    @media (min-width: 1024px) {
+      .services-grid { grid-template-columns: repeat(4, 1fr); }
+      .portfolio-grid { grid-template-columns: repeat(3, 1fr); gap: 1.25rem; }
+      .portfolio-header h2 { font-size: clamp(5rem, 9vw, 8rem); }
     }
+
+    /* Touch active state for mobile portfolio cards */
+    .project-card.touch-active .project-overlay { opacity: 1; }
+    .project-card.touch-active img { filter: grayscale(0); opacity: 1; transform: scale(1.05); }
+    .project-card.touch-active .project-bar { width: 100%; }
 
     /* ─── ANIMATIONS ─────────────────────────────────────────── */
     .fade-in { opacity: 0; transform: translateY(20px); transition: opacity .8s, transform .8s; }
@@ -989,14 +1130,14 @@
     window.addEventListener('scroll', () => {
       navbar.classList.toggle('scrolled', window.scrollY > 20);
       btnTop.classList.toggle('visible', window.scrollY > 500);
-    });
+    }, { passive: true });
 
     /* ── SMOOTH SCROLL ── */
     function smoothScroll(e, id) {
       e.preventDefault();
       const el = document.getElementById(id);
       if (!el) return;
-      const offset = window.innerWidth < 768 ? 70 : 80;
+      const offset = window.innerWidth < 768 ? 64 : 80;
       window.scrollTo({ top: el.getBoundingClientRect().top + window.scrollY - offset, behavior: 'smooth' });
     }
 
@@ -1008,6 +1149,8 @@
       const open  = menu.classList.toggle('open');
       icoM.style.display = open ? 'none'  : 'block';
       icoC.style.display = open ? 'block' : 'none';
+      // Prevent body scroll when menu is open
+      document.body.style.overflow = open ? 'hidden' : '';
     }
 
     /* ── PORTFOLIO FILTER ── */
@@ -1020,10 +1163,23 @@
       });
     }
 
+    /* ── TOUCH: toggle overlay on mobile tap ── */
+    if ('ontouchstart' in window) {
+      document.querySelectorAll('.project-card').forEach(card => {
+        card.addEventListener('click', function(e) {
+          // Allow link clicks to pass through
+          if (e.target.closest('.project-link')) return;
+          const isActive = this.classList.contains('touch-active');
+          document.querySelectorAll('.project-card.touch-active').forEach(c => c.classList.remove('touch-active'));
+          if (!isActive) this.classList.add('touch-active');
+        });
+      });
+    }
+
     /* ── FADE-IN ON SCROLL ── */
     const observer = new IntersectionObserver(entries => {
       entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
-    }, { threshold: 0.12 });
+    }, { threshold: 0.08 });
     document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
   </script>
 </body>
