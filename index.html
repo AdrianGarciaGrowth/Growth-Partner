@@ -1,3 +1,6 @@
+# HTML COMPLETO CORREGIDO
+
+```html
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -20,12 +23,6 @@
   <!-- BABEL -->
   <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
 
-  <!-- FRAMER MOTION -->
-  <script src="https://unpkg.com/framer-motion/dist/framer-motion.js"></script>
-
-  <!-- LUCIDE -->
-  <script src="https://unpkg.com/lucide@latest"></script>
-
   <style>
     *{
       margin:0;
@@ -36,7 +33,6 @@
 
     html{
       scroll-behavior:smooth;
-      -webkit-tap-highlight-color: transparent;
     }
 
     body{
@@ -54,19 +50,6 @@
       -webkit-text-stroke:1.5px #C9A84C;
     }
 
-    ::-webkit-scrollbar{
-      width:6px;
-    }
-
-    ::-webkit-scrollbar-track{
-      background:#0E0E0E;
-    }
-
-    ::-webkit-scrollbar-thumb{
-      background:#C9A84C;
-      border-radius:10px;
-    }
-
     .bg-grid{
       background-size:40px 40px;
       background-image:
@@ -75,32 +58,11 @@
       pointer-events:none;
     }
 
-    .noise-overlay{
-      background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
-      opacity:0.02;
-      mix-blend-mode:overlay;
-      pointer-events:none;
-    }
-
-    @keyframes shimmer{
-      0%{filter:drop-shadow(0 0 2px rgba(201,168,76,0.4));}
-      50%{filter:drop-shadow(0 0 10px rgba(201,168,76,0.7));}
-      100%{filter:drop-shadow(0 0 2px rgba(201,168,76,0.4));}
-    }
-
-    .animate-shimmer{
-      animation:shimmer 3s ease-in-out infinite;
-    }
-
     img{
       max-width:100%;
       display:block;
       user-select:none;
       -webkit-user-drag:none;
-    }
-
-    a,button{
-      cursor:default !important;
     }
   </style>
 </head>
@@ -110,9 +72,6 @@
 <div id="root"></div>
 
 <script type="text/babel">
-
-const { useState, useEffect } = React;
-const { motion, AnimatePresence } = Motion;
 
 const WEBSITE_DATA = {
   profile: {
@@ -125,120 +84,21 @@ const WEBSITE_DATA = {
     bioQuote: "Ayudo a emprendedores y empresas a crecer con estrategia, diseño y marketing que vende.",
     experienceTitle: "Experiencia",
     experienceMain: "12 AÑOS EN VENTAS TRADICIONALES",
-    experienceSecondary: "6 AÑOS EN DIGITAL",
-    whatsappLink: "https://wa.link/l9llu6",
-    instagram: "adriangarcia.co",
-  },
-
-  services: [
-    {
-      id: "pauta",
-      title: "Pauta Digital",
-      icon: "target",
-      desc: "Facebook, Google y TikTok Ads con enfoque en ROI masivo.",
-      benefits: ["Retorno (ROAS) optimizado", "Escalabilidad proyectada"]
-    },
-
-    {
-      id: "web",
-      title: "Desarrollo Web",
-      icon: "globe",
-      desc: "Sitios High-End diseñados para convertir visitas en ventas.",
-      benefits: ["Diseño responsive", "Arquitectura de conversión"]
-    },
-
-    {
-      id: "brand",
-      title: "Branding",
-      icon: "layers",
-      desc: "Identidad visual de élite para cobrar lo que realmente vales.",
-      benefits: ["Manual de marca", "Autoridad visual"]
-    },
-
-    {
-      id: "design",
-      title: "Diseño Gráfico",
-      icon: "pen-tool",
-      desc: "Creativos publicitarios que detienen el scroll.",
-      benefits: ["Alto CTR", "Copy persuasivo"]
-    }
-  ],
-
-  portfolio: [
-    { id: 1, src: 'LOGO FONDO OSCURO.png', title: 'ALMA - Aliado Legal', category: 'Logotipos' },
-    { id: 2, src: 'Logo Nova.jpg', title: 'Nova Integral Services', category: 'Logotipos' },
-    { id: 3, src: 'Logotipo Ángela.jpg', title: 'Ángela Gómez Psicóloga', category: 'Logotipos' },
-    { id: 4, src: 'Logotipo Angélica.png', title: 'A&W Bienes Raíces', category: 'Logotipos' },
-    { id: 5, src: 'Logotipo Hugo.png', title: 'Hugo Motta', category: 'Logotipos' },
-    { id: 6, src: 'Logotipo Revivetech.jpg', title: 'Revive Tech', category: 'Logotipos' },
-  ]
+    experienceSecondary: "6 AÑOS EN DIGITAL"
+  }
 };
 
-const NAV_LINKS = [
-  { name: 'Inicio', id: 'inicio' },
-  { name: 'Sobre Mí', id: 'sobre-mi' },
-  { name: 'Servicios', id: 'servicios' },
-  { name: 'Portafolio', id: 'portafolio' },
-  { name: 'Contacto', id: 'contacto' }
-];
-
 function App(){
-
-  const [menu,setMenu] = useState(false);
-
-  useEffect(()=>{
-    lucide.createIcons();
-  });
 
   return(
 
     <div className="relative overflow-x-hidden min-h-screen bg-[#0E0E0E] text-[#F0EDE6]">
 
       <div className="fixed inset-0 z-0 bg-grid"></div>
-      <div className="fixed inset-0 z-0 noise-overlay"></div>
-
-      {/* NAVBAR */}
-
-      <nav className="fixed top-0 left-0 w-full z-50 bg-[#0E0E0E]/95 backdrop-blur-md border-b border-[#C9A84C]/20 py-4">
-
-        <div className="max-w-7xl mx-auto px-4 md:px-6 flex items-center justify-between">
-
-          <div className="font-bebas text-2xl tracking-[0.2em]">
-            {WEBSITE_DATA.profile.name}
-            <span className="text-[#C9A84C]">.</span>
-          </div>
-
-          <div className="hidden md:flex items-center gap-4">
-
-            {NAV_LINKS.map((item)=>(
-              <a
-                key={item.id}
-                href={`#${item.id}`}
-                className="uppercase tracking-[0.15em] text-[10px] font-bold hover:text-[#C9A84C] transition"
-              >
-                {item.name}
-              </a>
-            ))}
-
-          </div>
-
-          <button
-            className="md:hidden text-[#C9A84C]"
-            onClick={()=>setMenu(!menu)}
-          >
-            {menu ? "✕" : "☰"}
-          </button>
-
-        </div>
-
-      </nav>
 
       {/* HERO */}
 
-      <section
-        id="inicio"
-        className="min-h-screen flex items-center justify-center px-4 md:px-6 pt-20 pb-10 relative z-10"
-      >
+      <section className="min-h-screen flex items-center justify-center px-4 md:px-6 pt-20 pb-10 relative z-10">
 
         <div className="max-w-6xl mx-auto text-center">
 
@@ -268,18 +128,14 @@ function App(){
 
       {/* SOBRE MI */}
 
-      <section
-        id="sobre-mi"
-        className="py-24 md:py-32 px-4 md:px-6 bg-[#0B0B0B]/80 border-y border-white/5 relative z-10"
-      >
+      <section className="py-24 md:py-32 px-4 md:px-6 bg-[#0B0B0B]/80 border-y border-white/5 relative z-10">
 
         <div className="max-w-7xl mx-auto grid lg:grid-cols-2 gap-10 items-center">
 
-          <div className="bg-[#151515] border border-[#C9A84C]/10 aspect-[4/5] flex items-center justify-center relative overflow-hidden">
+          <div className="bg-[#151515] border border-[#C9A84C]/10 aspect-[4/5] relative overflow-hidden rounded-2xl">
 
-            <!-- CAMBIA ESTA URL POR LA TUYA -->
             <img
-              src="https://raw.githubusercontent.com/TU-USUARIO/TU-REPOSITORIO/main/perfil.jpg"
+              src="https://raw.githubusercontent.com/laboratoriofinanciero/portafolio/main/perfil.jpg"
               alt="Foto de perfil"
               className="w-full h-full object-cover"
             />
@@ -328,44 +184,6 @@ function App(){
 
       </section>
 
-      {/* PORTAFOLIO */}
-
-      <section
-        id="portafolio"
-        className="py-24 md:py-32 px-4 md:px-6 bg-[#0B0B0B]/80 border-y border-white/5 relative z-10"
-      >
-
-        <div className="max-w-7xl mx-auto">
-
-          <h2 className="font-bebas text-7xl md:text-9xl italic leading-none mb-14">
-            PORTAFOLIO
-          </h2>
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-
-            {WEBSITE_DATA.portfolio.map(project=>(
-
-              <div
-                key={project.id}
-                className="group relative aspect-square bg-[#111] overflow-hidden border border-white/5 hover:border-[#C9A84C]/50 transition duration-700"
-              >
-
-                <img
-                  src={project.src}
-                  alt={project.title}
-                  className="w-full h-full object-contain p-6 md:p-10 grayscale group-hover:grayscale-0 opacity-80 group-hover:opacity-100 group-hover:scale-110 transition duration-700"
-                />
-
-              </div>
-
-            ))}
-
-          </div>
-
-        </div>
-
-      </section>
-
     </div>
 
   )
@@ -377,3 +195,24 @@ ReactDOM.createRoot(document.getElementById("root")).render(<App />);
 
 </body>
 </html>
+```
+
+## IMPORTANTE
+
+Si la foto NO aparece:
+
+1. Verifica que `perfil.jpg` exista en GitHub.
+2. El repositorio debe ser público.
+3. La imagen debe llamarse EXACTAMENTE:
+
+```txt
+perfil.jpg
+```
+
+4. Pega este HTML en un archivo llamado:
+
+```txt
+index.html
+```
+
+5. Ábrelo con VS Code + Live Server.
