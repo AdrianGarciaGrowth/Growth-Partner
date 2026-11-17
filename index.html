@@ -271,6 +271,22 @@
     /* Vista previa de la página: llena toda la tarjeta */
     .project-card[data-cat="Páginas Web"] img.web-preview { padding: 0; object-fit: cover; object-position: top center; }
 
+    /* Marco de navegador para las páginas web (siempre se ve, aunque no haya captura) */
+    .web-frame { position: absolute; inset: .9rem .9rem 3.4rem; z-index: 1; display: flex; flex-direction: column; border: 1px solid rgba(255,255,255,.15); border-radius: .5rem; overflow: hidden; background: #0b0b0b; box-shadow: 0 10px 30px rgba(0,0,0,.55); transition: transform .3s ease; }
+    .project-card:hover .web-frame { transform: translateZ(40px); }
+    .wf-bar { flex: none; display: flex; align-items: center; gap: .3rem; padding: .35rem .6rem; background: #1b1b1b; border-bottom: 1px solid rgba(255,255,255,.08); }
+    .wf-bar i { width: .45rem; height: .45rem; border-radius: 50%; background: #ff5f57; }
+    .wf-bar i:nth-child(2) { background: #febc2e; }
+    .wf-bar i:nth-child(3) { background: #28c840; }
+    .wf-url { margin-left: .5rem; flex: 1; padding: .12rem .6rem; border-radius: 1rem; background: #0b0b0b; color: rgba(255,255,255,.55); font-size: .6rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .wf-body { position: relative; flex: 1; overflow: hidden; background: linear-gradient(135deg, var(--a), var(--b)); }
+    .wf-fallback { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: .55rem; padding: 1rem; text-align: center; }
+    .wf-fallback strong { font-family: 'Bebas Neue', sans-serif; font-weight: 400; font-size: clamp(1.1rem, 4vw, 2rem); letter-spacing: .08em; color: #fff; }
+    .wf-line { display: block; height: .4rem; border-radius: 1rem; background: rgba(255,255,255,.28); }
+    .wf-line.w1 { width: 60%; } .wf-line.w2 { width: 40%; }
+    .wf-btn { display: block; width: 4rem; height: 1rem; border-radius: .25rem; background: #fff; opacity: .85; margin-top: .3rem; }
+    .project-card .web-frame .wf-body img { position: absolute; inset: 0; width: 100%; height: 100%; padding: 0; object-fit: cover; object-position: top center; z-index: 2; transform: none !important; }
+
     /* ═══════════════════════════════════════════════════
        CONTACTO — LETS GROW
     ═══════════════════════════════════════════════════ */
@@ -552,7 +568,17 @@
 
         <!-- PÁGINAS WEB (primero y destacadas) -->
         <div class="project-card reveal-scale d1" data-cat="Páginas Web">
-          <img class="web-preview" src="https://image.thum.io/get/width/900/crop/506/noanimate/https://novaintegralservices.com/" data-fallbacks="https://s.wordpress.com/mshots/v1/https%3A%2F%2Fnovaintegralservices.com%2F?w=900&h=506|nova.png|https://placehold.co/900x506/111/C9A84C?text=Nova+Integral+Services" alt="Vista previa de Nova Integral Services" onerror="nextSrc(this)" />
+          <div class="web-frame" style="--a:#17140c;--b:#6b5416">
+            <div class="wf-bar"><i></i><i></i><i></i><span class="wf-url">novaintegralservices.com</span></div>
+            <div class="wf-body">
+              <div class="wf-fallback">
+                <strong>Nova Integral Services</strong>
+                <span class="wf-line w1"></span><span class="wf-line w2"></span>
+                <span class="wf-btn"></span>
+              </div>
+              <img src="nova-web.png" alt="Vista previa de Nova Integral Services" onerror="this.remove()" />
+            </div>
+          </div>
           <div class="project-overlay">
             <span class="project-cat">Páginas Web</span>
             <h4 class="project-title">Nova Integral Services</h4>
@@ -563,7 +589,17 @@
           </div>
         </div>
         <div class="project-card reveal-scale d2" data-cat="Páginas Web">
-          <img class="web-preview" src="https://image.thum.io/get/width/900/crop/506/noanimate/https://emprendereposteria.com/" data-fallbacks="https://s.wordpress.com/mshots/v1/https%3A%2F%2Femprendereposteria.com%2F?w=900&h=506|emprendereposteria.png|https://placehold.co/900x506/111/C9A84C?text=Emprende+Reposteria" alt="Vista previa de Emprende Reposteria" onerror="nextSrc(this)" />
+          <div class="web-frame" style="--a:#3a1426;--b:#c94c7a">
+            <div class="wf-bar"><i></i><i></i><i></i><span class="wf-url">emprendereposteria.com</span></div>
+            <div class="wf-body">
+              <div class="wf-fallback">
+                <strong>Emprende Repostería</strong>
+                <span class="wf-line w1"></span><span class="wf-line w2"></span>
+                <span class="wf-btn"></span>
+              </div>
+              <img src="emprendereposteria.png" alt="Vista previa de Emprende Repostería" onerror="this.remove()" />
+            </div>
+          </div>
           <div class="project-overlay">
             <span class="project-cat">Páginas Web</span>
             <h4 class="project-title">Emprende Repostería</h4>
