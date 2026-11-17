@@ -268,6 +268,9 @@
     .project-card[data-cat="Páginas Web"] .project-cat { font-size: .55rem; }
     .project-card[data-cat="Páginas Web"] .project-title { font-size: clamp(1rem, 4vw, 1.6rem); }
 
+    /* Vista previa de la página: llena toda la tarjeta */
+    .project-card[data-cat="Páginas Web"] img.web-preview { padding: 0; object-fit: cover; object-position: top center; }
+
     /* ═══════════════════════════════════════════════════
        CONTACTO — LETS GROW
     ═══════════════════════════════════════════════════ */
@@ -549,7 +552,7 @@
 
         <!-- PÁGINAS WEB (primero y destacadas) -->
         <div class="project-card reveal-scale d1" data-cat="Páginas Web">
-          <img src="nova.png" alt="Nova Integral Services" onerror="this.src='https://placehold.co/800x450/111/C9A84C?text=Nova+Web'" />
+          <img class="web-preview" src="https://image.thum.io/get/width/900/crop/506/noanimate/https://novaintegralservices.com/" data-fallbacks="https://s.wordpress.com/mshots/v1/https%3A%2F%2Fnovaintegralservices.com%2F?w=900&h=506|nova.png|https://placehold.co/900x506/111/C9A84C?text=Nova+Integral+Services" alt="Vista previa de Nova Integral Services" onerror="nextSrc(this)" />
           <div class="project-overlay">
             <span class="project-cat">Páginas Web</span>
             <h4 class="project-title">Nova Integral Services</h4>
@@ -560,7 +563,7 @@
           </div>
         </div>
         <div class="project-card reveal-scale d2" data-cat="Páginas Web">
-          <img src="emprendereposteria.png" alt="Emprende Repostería" onerror="this.src='https://placehold.co/800x450/111/C9A84C?text=Emprende+Reposter%C3%ADa'" />
+          <img class="web-preview" src="https://image.thum.io/get/width/900/crop/506/noanimate/https://emprendereposteria.com/" data-fallbacks="https://s.wordpress.com/mshots/v1/https%3A%2F%2Femprendereposteria.com%2F?w=900&h=506|emprendereposteria.png|https://placehold.co/900x506/111/C9A84C?text=Emprende+Reposteria" alt="Vista previa de Emprende Reposteria" onerror="nextSrc(this)" />
           <div class="project-overlay">
             <span class="project-cat">Páginas Web</span>
             <h4 class="project-title">Emprende Repostería</h4>
@@ -733,6 +736,14 @@
       icoM.style.display = open ? 'none' : 'block';
       icoC.style.display = open ? 'block' : 'none';
       document.body.style.overflow = open ? 'hidden' : '';
+    }
+
+    /* ── VISTA PREVIA: prueba varias fuentes si una falla ── */
+    function nextSrc(img) {
+      const list = (img.dataset.fallbacks || '').split('|').filter(Boolean);
+      if (!list.length) { img.onerror = null; return; }
+      img.dataset.fallbacks = list.slice(1).join('|');
+      img.src = list[0];
     }
 
     /* ── PORTFOLIO FILTER ── */
