@@ -194,7 +194,8 @@
     .filter-btn:hover { border-color: rgba(201,168,76,.4); color: var(--gold); }
     .filter-btn.active { background: var(--gold); color: #000; border-color: var(--gold); }
 
-    .portfolio-grid { display: grid; grid-template-columns: 1fr 1fr; gap: .625rem; }
+    /* Grilla más compacta: 3 columnas en móvil, 4 en tablet, 6 en escritorio */
+    .portfolio-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: .5rem; perspective: 1400px; }
 
     /* ── Portfolio card color palettes ── */
     .project-card:nth-child(6n+1) { --card-color: #C9A84C; --card-color2: #e8c96a; }
@@ -205,32 +206,67 @@
     .project-card:nth-child(6n+6) { --card-color: #C96A4C; --card-color2: #e88a6a; }
 
     .project-card {
-      position: relative; aspect-ratio: 1; background: var(--bg2); overflow: hidden;
+      position: relative; aspect-ratio: 1; background: var(--bg2);
       border: 1px solid var(--border);
-      transition: border-color .5s, transform .4s, box-shadow .5s;
+      transform-style: preserve-3d;
+      will-change: transform;
+      /* Sobrescribe la transición de .reveal-scale: el tilt 3D debe responder rápido */
+      transition: opacity .7s ease, transform .18s ease-out, border-color .5s, box-shadow .5s;
     }
+    .project-card.reveal-scale,
+    .project-card.reveal-scale.visible { transform: none; }
+
+    /* Fondo de color al pasar el cursor */
     .project-card::before {
       content: '';
       position: absolute; inset: 0; z-index: 0;
       background: linear-gradient(135deg, var(--card-color) 0%, var(--card-color2) 100%);
-      opacity: 0;
+      opacity: .1;
       transition: opacity .5s ease;
     }
-    .project-card:hover::before, .project-card.touch-active::before { opacity: .18; }
+    /* Brillo que sigue al cursor (efecto 3D) */
+    .project-card::after {
+      content: '';
+      position: absolute; inset: 0; z-index: 3; pointer-events: none;
+      background: radial-gradient(circle at var(--mx, 50%) var(--my, 50%), rgba(255,255,255,.28), transparent 55%);
+      opacity: 0;
+      transition: opacity .3s;
+    }
+    .project-card:hover::before, .project-card.touch-active::before { opacity: .28; }
+    .project-card:hover::after { opacity: 1; }
     .project-card:hover {
       border-color: var(--card-color);
-      transform: translateY(-5px) scale(1.02);
-      box-shadow: 0 12px 40px rgba(0,0,0,.5), 0 0 24px color-mix(in srgb, var(--card-color) 35%, transparent);
+      box-shadow: 0 22px 50px rgba(0,0,0,.65), 0 0 30px color-mix(in srgb, var(--card-color) 45%, transparent);
     }
-    .project-card img { width: 100%; height: 100%; object-fit: contain; padding: 1.25rem; filter: grayscale(1); opacity: .75; transition: all .6s; position: relative; z-index: 1; }
-    .project-card:hover img, .project-card.touch-active img { filter: grayscale(0); opacity: 1; transform: scale(1.06); }
-    .project-overlay { position: absolute; inset: 0; background: linear-gradient(to top, rgba(0,0,0,.92) 0%, rgba(0,0,0,.3) 55%, transparent 100%); display: flex; flex-direction: column; justify-content: flex-end; padding: .875rem 1rem; opacity: 1; transition: opacity .4s; z-index: 2; }
-    .project-cat { font-size: .42rem; text-transform: uppercase; letter-spacing: .22em; color: var(--card-color, var(--gold)); margin-bottom: .25rem; transition: color .4s; }
-    .project-title { font-family: 'Bebas Neue', sans-serif; font-size: clamp(.65rem, 2.8vw, 1rem); color: #fff; line-height: 1.1; text-transform: uppercase; letter-spacing: .04em; }
+
+    /* Todo a color desde el inicio */
+    .project-card img {
+      width: 100%; height: 100%; object-fit: contain; padding: .75rem;
+      position: relative; z-index: 1;
+      transition: transform .3s ease;
+    }
+    .project-card:hover img, .project-card.touch-active img { transform: translateZ(45px) scale(1.08); }
+
+    .project-overlay { position: absolute; inset: 0; background: linear-gradient(to top, rgba(0,0,0,.88) 0%, rgba(0,0,0,.2) 45%, transparent 100%); display: flex; flex-direction: column; justify-content: flex-end; padding: .5rem .6rem; opacity: 1; transition: opacity .4s, transform .3s; z-index: 2; }
+    .project-card:hover .project-overlay { transform: translateZ(30px); }
+    .project-cat { font-size: .38rem; text-transform: uppercase; letter-spacing: .18em; color: var(--card-color, var(--gold)); margin-bottom: .2rem; transition: color .4s; }
+    .project-title { font-family: 'Bebas Neue', sans-serif; font-size: clamp(.55rem, 2.4vw, .8rem); color: #fff; line-height: 1.1; text-transform: uppercase; letter-spacing: .04em; }
     .project-link { margin-top: .5rem; display: inline-flex; align-items: center; gap: .5rem; background: var(--gold); color: #000; padding: .35rem .75rem; font-family: 'Bebas Neue', sans-serif; font-size: .7rem; letter-spacing: .15em; text-decoration: none; transition: background .25s, transform .25s; width: fit-content; }
     .project-link:hover { background: #fff; transform: scale(1.03); }
-    .project-bar { display: none; width: 0; height: 2px; background: var(--card-color, var(--gold)); margin-top: 1rem; transition: width .6s .1s; box-shadow: 0 0 8px var(--card-color, var(--gold)); }
+    .project-bar { display: none; width: 0; height: 2px; background: var(--card-color, var(--gold)); margin-top: .6rem; transition: width .6s .1s; box-shadow: 0 0 8px var(--card-color, var(--gold)); }
     .project-card.hidden { display: none; }
+
+    /* ── Páginas web: protagonistas (más grandes, primeras y siempre con su botón visible) ── */
+    .project-card[data-cat="Páginas Web"] {
+      grid-column: span 3;
+      aspect-ratio: 16 / 9;
+      border-color: rgba(201,168,76,.4);
+    }
+    .project-card[data-cat="Páginas Web"]::before { opacity: .22; }
+    .project-card[data-cat="Páginas Web"] img { padding: 1.25rem 1.5rem 3.5rem; }
+    .project-card[data-cat="Páginas Web"] .project-overlay { padding: 1rem 1.25rem; opacity: 1 !important; }
+    .project-card[data-cat="Páginas Web"] .project-cat { font-size: .55rem; }
+    .project-card[data-cat="Páginas Web"] .project-title { font-size: clamp(1rem, 4vw, 1.6rem); }
 
     /* ═══════════════════════════════════════════════════
        CONTACTO — LETS GROW
@@ -270,7 +306,6 @@
       opacity: 0;
       transform: translateY(30px);
       transition: opacity .8s ease .2s, transform .8s ease .2s;
-      /* shimmer on visible */
     }
     .grow.visible {
       opacity: 1;
@@ -279,7 +314,6 @@
     }
     @keyframes shimmer { 0%,100% { filter: drop-shadow(0 0 3px rgba(201,168,76,.3)); } 50% { filter: drop-shadow(0 0 18px rgba(201,168,76,.8)); } }
 
-    /* Animated gold underline */
     .grow-underline {
       display: block;
       width: 0; height: 3px;
@@ -331,7 +365,8 @@
       :root { --px: 1.5rem; }
       .about-image { aspect-ratio: 3/2; max-height: 320px; }
       .services-grid { grid-template-columns: 1fr 1fr; }
-      .portfolio-grid { gap: .875rem; }
+      .portfolio-grid { grid-template-columns: repeat(4, 1fr); gap: .65rem; }
+      .project-card[data-cat="Páginas Web"] { grid-column: span 2; aspect-ratio: 4 / 3; }
       .contact-btns { flex-direction: row; justify-content: center; }
       .btn-wa, .btn-ig { flex: 1; max-width: 280px; }
     }
@@ -357,9 +392,9 @@
       .section-title { margin-bottom: 3rem; }
 
       .portfolio-header { flex-direction: row; align-items: flex-end; margin-bottom: 2.5rem; }
-      .portfolio-grid { grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 1.125rem; }
-      .project-card img { padding: 1.75rem; }
-      .project-overlay { opacity: 0; padding: 1.5rem; }
+      .portfolio-grid { gap: .8rem; }
+      .project-card img { padding: 1rem; }
+      .project-overlay { opacity: 0; padding: .75rem; }
       .project-card:hover .project-overlay, .project-card.touch-active .project-overlay { opacity: 1; }
       .project-bar { display: block; }
       .project-card:hover .project-bar { width: 100%; }
@@ -379,10 +414,15 @@
     ═══════════════════════════════════════════════════ */
     @media (min-width: 1024px) {
       .services-grid { grid-template-columns: repeat(4, 1fr); }
-      .portfolio-grid { grid-template-columns: repeat(3, 1fr); }
+      .portfolio-grid { grid-template-columns: repeat(6, 1fr); }
+      .project-card[data-cat="Páginas Web"] { grid-column: span 3; aspect-ratio: 16 / 9; }
     }
 
     .project-card.touch-active .project-overlay { opacity: 1; }
+
+    @media (prefers-reduced-motion: reduce) {
+      .project-card { transition: opacity .3s, border-color .3s, box-shadow .3s; }
+    }
   </style>
 </head>
 <body>
@@ -499,13 +539,37 @@
         </div>
         <div class="filter-btns">
           <button class="filter-btn active" onclick="filterPortfolio(this,'Todos')">Todos</button>
+          <button class="filter-btn" onclick="filterPortfolio(this,'Páginas Web')">Páginas Web</button>
           <button class="filter-btn" onclick="filterPortfolio(this,'Logotipos')">Logotipos</button>
           <button class="filter-btn" onclick="filterPortfolio(this,'Tarjetas')">Tarjetas</button>
-          <button class="filter-btn" onclick="filterPortfolio(this,'Páginas Web')">Páginas Web</button>
         </div>
       </div>
 
       <div class="portfolio-grid" id="portfolio-grid">
+
+        <!-- PÁGINAS WEB (primero y destacadas) -->
+        <div class="project-card reveal-scale d1" data-cat="Páginas Web">
+          <img src="nova.png" alt="Nova Integral Services" onerror="this.src='https://placehold.co/800x450/111/C9A84C?text=Nova+Web'" />
+          <div class="project-overlay">
+            <span class="project-cat">Páginas Web</span>
+            <h4 class="project-title">Nova Integral Services</h4>
+            <a href="https://novaintegralservices.com/" target="_blank" rel="noopener noreferrer" class="project-link" onclick="event.stopPropagation()">
+              VISITAR WEB <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+            </a>
+            <div class="project-bar"></div>
+          </div>
+        </div>
+        <div class="project-card reveal-scale d2" data-cat="Páginas Web">
+          <img src="emprendereposteria.png" alt="Emprende Repostería" onerror="this.src='https://placehold.co/800x450/111/C9A84C?text=Emprende+Reposter%C3%ADa'" />
+          <div class="project-overlay">
+            <span class="project-cat">Páginas Web</span>
+            <h4 class="project-title">Emprende Repostería</h4>
+            <a href="https://emprendereposteria.com/" target="_blank" rel="noopener noreferrer" class="project-link" onclick="event.stopPropagation()">
+              VISITAR WEB <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+            </a>
+            <div class="project-bar"></div>
+          </div>
+        </div>
 
         <!-- LOGOTIPOS -->
         <div class="project-card reveal-scale d1" data-cat="Logotipos">
@@ -569,30 +633,6 @@
         <div class="project-card reveal-scale d1" data-cat="Tarjetas">
           <img src="dani.png" alt="Dan Fit Coach" onerror="this.src='https://placehold.co/400x400/111/C9A84C?text=Dan+Fit'" />
           <div class="project-overlay"><span class="project-cat">Tarjetas</span><h4 class="project-title">Dan Fit Coach</h4><div class="project-bar"></div></div>
-        </div>
-
-        <!-- PÁGINAS WEB -->
-        <div class="project-card reveal-scale d1" data-cat="Páginas Web">
-          <img src="nova.png" alt="Nova Integral Services" onerror="this.src='https://placehold.co/400x400/111/C9A84C?text=Nova+Web'" />
-          <div class="project-overlay">
-            <span class="project-cat">Páginas Web</span>
-            <h4 class="project-title">Nova Integral Services</h4>
-            <a href="https://novaintegralservices.com/" target="_blank" rel="noopener noreferrer" class="project-link" onclick="event.stopPropagation()">
-              VISITAR WEB <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
-            </a>
-            <div class="project-bar"></div>
-          </div>
-        </div>
-        <div class="project-card reveal-scale d2" data-cat="Páginas Web">
-          <img src="evitemultas.png" alt="Evite Multas Ponal" onerror="this.src='https://placehold.co/400x400/111/C9A84C?text=Multas'" />
-          <div class="project-overlay">
-            <span class="project-cat">Páginas Web</span>
-            <h4 class="project-title">Evite Multas Ponal</h4>
-            <a href="https://evitemultasponal.com/" target="_blank" rel="noopener noreferrer" class="project-link" onclick="event.stopPropagation()">
-              VISITAR WEB <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
-            </a>
-            <div class="project-bar"></div>
-          </div>
         </div>
 
       </div>
@@ -703,6 +743,31 @@
         card.classList.toggle('hidden', cat !== 'Todos' && card.dataset.cat !== cat);
       });
     }
+
+    /* ── EFECTO 3D AL PASAR EL CURSOR ── */
+    (function() {
+      const canFinePointer = window.matchMedia('(pointer: fine)').matches;
+      const reduceMotion  = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      if (!canFinePointer || reduceMotion) return;
+
+      document.querySelectorAll('.project-card').forEach(card => {
+        const MAX_TILT = card.dataset.cat === 'Páginas Web' ? 7 : 14; // grados
+
+        card.addEventListener('mousemove', e => {
+          const r = card.getBoundingClientRect();
+          const x = (e.clientX - r.left) / r.width;   // 0 → 1
+          const y = (e.clientY - r.top)  / r.height;  // 0 → 1
+          card.style.setProperty('--mx', (x * 100) + '%');
+          card.style.setProperty('--my', (y * 100) + '%');
+          card.style.transform =
+            `perspective(900px) rotateX(${(0.5 - y) * MAX_TILT * 2}deg) rotateY(${(x - 0.5) * MAX_TILT * 2}deg) translateZ(18px) scale(1.04)`;
+        });
+
+        card.addEventListener('mouseleave', () => {
+          card.style.transform = '';
+        });
+      });
+    })();
 
     /* ── TOUCH OVERLAY ── */
     if ('ontouchstart' in window) {
